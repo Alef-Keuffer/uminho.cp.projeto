@@ -1035,9 +1035,17 @@ g_eval_exp x (Right (Right (Right (Negate,a)))) = negate a
 g_eval_exp x (Right (Right (Right (E,a)))) = exp a
 
 ---
-clean = undefined
+clean X = i1 ()
+clean (N a) = i2 $ i1 a
+clean (Bin Product (N 0) r) = i2 $ i1 0
+clean (Bin Product l (N 0)) = i2 $ i1 0
+clean (Bin op l r) = i2 $ i2 $ i1 (op,(l,r))
+clean (Un E (N 0)) = i2 $ i1 1
+clean (Un Negate (N 0)) = i2 $ i1 0
+clean (Un op a) = i2 $ i2 $ i2 (op,a)
 ---
-gopt = undefined 
+gopt :: Floating a => a -> Either () (Either a (Either (BinOp, (a, a)) (UnOp, a))) -> a
+gopt = g_eval_exp 
 \end{code}
 
 \begin{code}
