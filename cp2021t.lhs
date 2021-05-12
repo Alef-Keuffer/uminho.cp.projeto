@@ -1063,7 +1063,13 @@ sd_gen (Right (Right (Right (E,(e,d))))) = (Un E e , Bin Product (Un E e) d)
 \end{code}
 
 \begin{code}
-ad_gen = undefined
+ad_gen x (Left ()) = (x, 1)
+ad_gen x (Right (Left a)) = (a, 0)
+ad_gen x (Right (Right (Left (Sum,((e1,d1),(e2,d2)))))) = (e1+e2, d1+d2)
+ad_gen x (Right (Right (Left (Product,((e1,d1),(e2,d2)))))) = (e1*e2, e1*d2 + e2*d1)
+ad_gen x (Right (Right (Right (Negate,(e,d))))) = (negate e, negate d)
+ad_gen x (Right (Right (Right (E,(e,d))))) = (exp e, d * (exp e))
+
 \end{code}
 
 \subsection*{Problema 2}
