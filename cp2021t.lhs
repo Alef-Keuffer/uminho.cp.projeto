@@ -1075,9 +1075,9 @@ ad_gen x (Right (Right (Right (E,(e,d))))) = (exp e, d * (exp e))
 \subsection*{Problema 2}
 Definir
 \begin{code}
-loop = undefined
-inic = undefined
-prj = undefined
+loop = g where g(a,b,c) = ( div (a*b) c, b+4, c+1)
+inic = (1,2,2)
+prj = p where p(a,_,_) = a
 \end{code}
 por forma a que
 \begin{code}
