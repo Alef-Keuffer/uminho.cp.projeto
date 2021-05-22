@@ -1109,7 +1109,7 @@ avg = p1.avg_aux
 \begin{code}
 avg_aux = cataList (either b q) where
    b () = (0,0)
-   q (h,(a,l)) = (  (h + (a*l)) / (l+1) ,l+1)
+   q (h,(a,l)) = ((h + (a*l)) / (l+1) ,l+1)
 \end{code}
 Solução para árvores de tipo \LTree:
 \begin{code}
