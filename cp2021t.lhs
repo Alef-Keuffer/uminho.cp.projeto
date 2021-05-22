@@ -702,7 +702,6 @@ Verifique as suas funções testando a propriedade seguinte:
 A média de uma lista não vazia e de uma \LTree\ com os mesmos elementos coincide,
 a menos de um erro de 0.1 milésimas:
 \begin{code}
-prop_avg :: Ord a => [a] -> Property
 prop_avg = nonempty .==>. diff .<=. const 0.000001 where
    diff l = avg l - (avgLTree . genLTree) l
    genLTree = anaLTree lsplit
@@ -1059,7 +1058,6 @@ sd_gen (Right (Right (Left (Sum,((e1,d1),(e2,d2)))))) = (Bin Sum e1 e2, Bin Sum 
 sd_gen (Right (Right (Left (Product,((e1,d1),(e2,d2)))))) = (Bin Product e1 e2, Bin Sum (Bin Product e1 d2) (Bin Product d1 e2 ))
 sd_gen (Right (Right (Right (Negate,(e,d))))) = (Un Negate e , Un Negate d)
 sd_gen (Right (Right (Right (E,(e,d))))) = (Un E e , Bin Product (Un E e) d)
-
 \end{code}
 
 \begin{code}
@@ -1069,7 +1067,6 @@ ad_gen x (Right (Right (Left (Sum,((e1,d1),(e2,d2)))))) = (e1+e2, d1+d2)
 ad_gen x (Right (Right (Left (Product,((e1,d1),(e2,d2)))))) = (e1*e2, e1*d2 + e2*d1)
 ad_gen x (Right (Right (Right (Negate,(e,d))))) = (negate e, negate d)
 ad_gen x (Right (Right (Right (E,(e,d))))) = (expd e, d * (expd e))
-
 \end{code}
 
 \subsection*{Problema 2}
@@ -1091,9 +1088,8 @@ Apresentar de seguida a justificação da solução encontrada.
 
 \begin{code}
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
-calcLine = undefined
-
-
+calcLine = cataList h where
+   h = undefined
 
 deCasteljau :: [NPoint] -> OverTime NPoint
 deCasteljau = hyloAlgForm alg coalg where
@@ -1111,20 +1107,16 @@ avg = p1.avg_aux
 \end{code}
 
 \begin{code}
-avg_aux= cataList (either b q) where
+avg_aux = cataList (either b q) where
    b () = (0,0)
-   q (h,(a,l)) = ((a*l + h)/(l+1) ,l+1)
-
+   q (h,(a,l)) = (  (h + (a*l)) / (l+1) ,l+1)
 \end{code}
 Solução para árvores de tipo \LTree:
 \begin{code}
 avgLTree = p1.cataLTree gene where
-   gene = undefined
-\end{code}
-
-\begin{code}
-
-
+   gene = either g q where
+      g a = (a,1)
+      q((a1,l1),(a2,l2)) = (((a1*l1)+(a2*l2))/(l1+l2),l1+l2) 
 \end{code}
 
 \subsection*{Problema 5}
