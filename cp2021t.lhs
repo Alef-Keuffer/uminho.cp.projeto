@@ -1032,7 +1032,7 @@ g_eval_exp x (Right (Left a)) = a
 g_eval_exp x (Right (Right (Left (Sum,(e,d))))) = e+d
 g_eval_exp x (Right (Right (Left (Product,(e,d))))) = e*d
 g_eval_exp x (Right (Right (Right (Negate,a)))) = negate a
-g_eval_exp x (Right (Right (Right (E,a)))) = exp a
+g_eval_exp x (Right (Right (Right (E,a)))) = expd a
 
 ---
 clean X = i1 ()
@@ -1068,7 +1068,7 @@ ad_gen x (Right (Left a)) = (a, 0)
 ad_gen x (Right (Right (Left (Sum,((e1,d1),(e2,d2)))))) = (e1+e2, d1+d2)
 ad_gen x (Right (Right (Left (Product,((e1,d1),(e2,d2)))))) = (e1*e2, e1*d2 + e2*d1)
 ad_gen x (Right (Right (Right (Negate,(e,d))))) = (negate e, negate d)
-ad_gen x (Right (Right (Right (E,(e,d))))) = (exp e, d * (exp e))
+ad_gen x (Right (Right (Right (E,(e,d))))) = (expd e, d * (expd e))
 
 \end{code}
 
@@ -1081,7 +1081,7 @@ prj = p where p(a,_,_) = a
 \end{code}
 por forma a que
 \begin{code}
-cat = prj . (for loop inic)s
+cat = prj . (for loop inic)
 \end{code}
 seja a função pretendida.
 \textbf{NB}: usar divisão inteira.
@@ -1091,8 +1091,9 @@ Apresentar de seguida a justificação da solução encontrada.
 
 \begin{code}
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
-calcLine = cataList h where
-   h = undefined
+calcLine = undefined
+
+
 
 deCasteljau :: [NPoint] -> OverTime NPoint
 deCasteljau = hyloAlgForm alg coalg where
@@ -1110,12 +1111,20 @@ avg = p1.avg_aux
 \end{code}
 
 \begin{code}
-avg_aux = undefined
+avg_aux= cataList (either b q) where
+   b () = (0,0)
+   q (h,(a,l)) = ((a*l + h)/(l+1) ,l+1)
+
 \end{code}
 Solução para árvores de tipo \LTree:
 \begin{code}
 avgLTree = p1.cataLTree gene where
    gene = undefined
+\end{code}
+
+\begin{code}
+
+
 \end{code}
 
 \subsection*{Problema 5}
