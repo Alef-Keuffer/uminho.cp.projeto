@@ -25,7 +25,13 @@ executable cp2021t
     Main
     Nat
 
-  other-modules:    Solucoes
+  other-modules:
+    Cp
+    List
+    LTree
+    Nat
+    Solucoes
+
   other-extensions:
   build-depends:
     , base        ^>=4.14.1.0

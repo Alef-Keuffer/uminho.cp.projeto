@@ -13,6 +13,7 @@
 {-# OPTIONS_HADDOCK show-extensions #-}
 -- =============================================================================
 
+{-# LANGUAGE FlexibleContexts           #-}
 module Solucoes where
 
 import           Control.Applicative                hiding ((<|>))
@@ -33,6 +34,7 @@ import qualified Test.QuickCheck                    as QuickCheck
 
 -- | == Problema 1
 
+-- =============================================================================
 -- | === Código Fornecido
 data ExpAr a
   = X
@@ -50,7 +52,7 @@ data UnOp
   = Negate
   | E
   deriving (Eq, Show)
--- =============================================================================
+-- -----------------------------------------------------------------------------
 inExpAr :: b ∐ a ∐ BinExp a ∐ UnExp a -> ExpAr a
 -- | @'inExpAr'@ ≡ @'const' X '∐' 'N' '∐' bin '∐' ('Un' '＾') where bin (op, (a, b)) = 'Bin' op a b@
 inExpAr = either (const X) num_ops
@@ -82,10 +84,10 @@ hyloExpAr ::
   (() ∐ c ∐ BinOp × d × d ∐ UnOp × d -> d) ->
   (a -> b ∐ c ∐ BinOp × a × a ∐ UnOp × a) -> a -> d
 hyloExpAr h g = cataExpAr h . anaExpAr g
--- =============================================================================
+-- -----------------------------------------------------------------------------
 expd :: Floating a => a -> a
 expd = Prelude.exp
--- =============================================================================
+-- -----------------------------------------------------------------------------
 eval_exp :: Floating a => a -> (ExpAr a) -> a
 eval_exp a = cataExpAr (g_eval_exp a)
 
@@ -97,7 +99,7 @@ sd = p2 . cataExpAr sd_gen
 
 ad :: Floating a => a -> ExpAr a -> a
 ad v = p2 . cataExpAr (ad_gen v)
-
+-- =============================================================================
 -- | === Solução
 
 infixr 6 ×
@@ -105,24 +107,24 @@ type a × b = (a, b)
 -- | bimap for tuple
 (×) :: (a -> b) -> (c -> d) -> (a, c) -> (b, d)
 (×) = (><)
--- ========================================================================== --
+-- -----------------------------------------------------------------------------
 infixr 4 ⊕
 -- | bimap for either
 (⊕) :: (a -> b) -> (c -> d) -> a ∐ c ->  b ∐ d
 (⊕) = (-|-)
--- ========================================================================== --
+-- -----------------------------------------------------------------------------
 infixr 4 ∐
 type (∐) = Either
 (∐) :: (a -> c) -> (b -> c) -> a ∐ b -> c
 (∐) = either
--- ========================================================================== --
+-- -----------------------------------------------------------------------------
 type BinExp d = BinOp × ExpAr d × ExpAr d -- ≡ BinOp × (ExpAr d × ExpAr d)
 type UnExp d = UnOp × ExpAr d
 type OutExpAr a = () ∐ a ∐ BinExp a ∐ UnExp a
--- ========================================================================== --
+-- -----------------------------------------------------------------------------
 class Injective a b where
     to :: forall b1 a1. (b1 ~ b, a1 ~ a) => a -> b
--- ========================================================================== --
+-- -----------------------------------------------------------------------------
 instance Injective (ExpAr a) (OutExpAr a) where
   to X            = Left ()
   to (N a)        = Right $ Left a
@@ -131,10 +133,10 @@ instance Injective (ExpAr a) (OutExpAr a) where
 
 outExpAr :: ExpAr a -> OutExpAr a
 outExpAr = to :: ExpAr a -> OutExpAr a
--- ========================================================================== --
+-- -----------------------------------------------------------------------------
 recExpAr :: (a -> e) -> b ∐ c ∐ d × a × a ∐ g × a -> b ∐ c ∐ d × e × e ∐ g × e
 recExpAr f = baseExpAr id id id f f id f
--- ========================================================================== --
+-- -----------------------------------------------------------------------------
 instance (Num c) => Injective BinOp ((c, c) -> c) where
   to Sum     = add
   to Product = mul
@@ -148,21 +150,19 @@ g_eval_exp a = const a ∐ id ∐ Cp.ap . (toBin × id) ∐ Cp.ap . (toUn × id)
  where
   toBin = to :: (Num c) => BinOp -> (c × c -> c)
   toUn = to :: (Floating c) => UnOp -> (c -> c)
--- ========================================================================== --
+-- -----------------------------------------------------------------------------
 clean :: (Eq a, Num a) => ExpAr a -> OutExpAr a
-clean l = case l of
+clean q = case q of
   (Un E (N 0))          -> tag 1
   (Un Negate (N 0))     -> tag 0
-  (Bin Product (N 0) r) -> tag 0
-  (Bin Product l (N 0)) -> tag 0
-  (Bin op l r)          -> i2 $ tag (op,(l,r))
-  (Un op a)             -> i2 $ i2 $ i2 (op,a)
+  (Bin Product (N 0) _) -> tag 0
+  (Bin Product _ (N 0)) -> tag 0
   a                     -> (to :: ExpAr a -> OutExpAr a) a
   where tag = i2 . i1
--- ========================================================================== --
+-- -----------------------------------------------------------------------------
 gopt :: Floating a => a -> () ∐ a ∐ BinOp × a × a ∐ UnOp × a -> a
 gopt = undefined
--- ========================================================================== --
+-- -----------------------------------------------------------------------------
 type Dup d = d × d
 type Bin d = BinOp × d × d
 type Un d = UnOp × d
@@ -183,7 +183,7 @@ sd_gen = f ∐ g ∐ h ∐ k where
   g a = (N a, N 0)
   h = bin_aux (Bin Sum) (Bin Product)
   k = un_aux (Un Negate) (Bin Product) (Un E)
--- ========================================================================== --
+-- -----------------------------------------------------------------------------
 ad_gen :: Floating a => a -> () ∐ a ∐ (BinOp, Dup (Dup a)) ∐ (UnOp, Dup a)  -> Dup a
 ad_gen x = f ∐ g ∐ h ∐ k where
   f = const (x,1)
@@ -253,20 +253,24 @@ prop_negate_rule exp = sd (Un Negate exp) == Un Negate (sd exp)
 
 prop_congruent :: (Floating a, Real a) => a -> ExpAr a -> Bool
 prop_congruent a exp = ad a exp .=?=. eval_exp a (sd exp)
-
+-- =============================================================================
 -- | == Problema 2
 
+-- =============================================================================
 -- | === Código Fornecido
+fib' :: (Integral c, Num b) => c -> b
 fib' = p1 . for loop init
  where
   loop (fib, f) = (f, fib + f)
   init = (1, 1)
 
+f' :: (Integral c, Num b) => b -> b -> b -> c -> b
 f' a b c = p1 . for loop init
  where
   loop (f, k) = (f + k, k + 2 * a)
   init = (c, a + b)
 
+catdef :: Integer -> Integer
 catdef n = div (fac ((2 * n))) ((fac ((n + 1)) * (fac n)))
 
 oracle :: Num a => [a]
@@ -298,10 +302,10 @@ oracle =
   , 1289904147324
   , 4861946401452
   ]
-
+-- =============================================================================
 -- | === Propriedades
 prop_cat = (>= 0) .==>. (catdef .==. cat)
-
+-- =============================================================================
 -- | === Solução
 loop :: Integral c => (c, c, c) -> (c, c, c)
 loop = g where g(a,b,c) = (div (a*b) c, b+4, c+1)
@@ -314,9 +318,10 @@ prj = p where p(a,_,_) = a
 
 cat :: (Integral c1, Integral c2) => c1 -> c2
 cat = prj . for loop inic
-
+-- =============================================================================
 -- | == Problema 3
 
+-- =============================================================================
 -- | === Código Fornecido
 linear1d :: Rational -> Rational -> OverTime Rational
 linear1d a b = formula a b
@@ -326,7 +331,7 @@ linear1d a b = formula a b
 
 type NPoint = [Rational]
 type OverTime a = Float -> a
-
+-- =============================================================================
 -- | === Propriedades
 prop_calcLine_def :: NPoint -> NPoint -> Float -> Bool
 prop_calcLine_def p q d = calcLine p q d == zipWithM linear1d p q d
@@ -341,10 +346,12 @@ prop_bezier_sym l = all (< delta) . calc_difs . bezs <$> elements ps
     , deCasteljau (reverse l) (fromRational (1 - (toRational t)))
     )
   delta = 1e-2
-
+-- =============================================================================
 -- | === Solução
 type ℚ = Rational
+toℚ :: Real a => a -> Rational
 toℚ = toRational
+fromℚ :: Fractional a => Rational -> a
 fromℚ = fromRational
 
 {- | Spec
@@ -382,9 +389,10 @@ deCasteljau = hyloAlgForm alg coalg
   alg   = undefined
 
 hyloAlgForm = undefined
-
+-- =============================================================================
 -- | == Problema 4
 
+-- =============================================================================
 -- | === Propriedades
 prop_avg :: (Ord b, Fractional b) => [b] -> Property
 prop_avg = nonempty .==>. diff .<=. const 0.000001
@@ -395,7 +403,7 @@ prop_avg = nonempty .==>. diff .<=. const 0.000001
 
 avg :: Fractional b => [b] -> b
 avg = p1 . avg_aux
-
+-- =============================================================================
 -- | === Solução
 avg_aux :: Fractional b => [b] -> (b, b)
 avg_aux= cataList (either b q) where
@@ -403,7 +411,7 @@ avg_aux= cataList (either b q) where
    q (h,(a,l)) = ((a*l + h)/(l+1) ,l+1)
 
 avgLTree = p1 . cataLTree gene where gene = undefined
-
+-- =============================================================================
 -- | = Programação dinâmica por recursividade múltipla
 e' :: (Fractional c1, Integral c2) => c1 -> c2 -> c1
 e' x = prj . for loop init
@@ -411,15 +419,16 @@ e' x = prj . for loop init
   init = (1, x, 2)
   loop (e, h, s) = (h + e, x / s * h, 1 + s)
   prj (e, h, s) = e
-
+-- =============================================================================
 -- | = Código Extra para Problema 3
 
+-- =============================================================================
 -- | === 2D
 bezier2d :: [NPoint] -> OverTime (Float, Float)
 bezier2d [] = const (0, 0)
 bezier2d l  = \z ->
   (fromRational >< fromRational) . (\[x, y] -> (x, y)) $ ((deCasteljau l) z)
-
+-- =============================================================================
 -- | === Modelo
 data World = World
   { points :: [NPoint]
@@ -456,7 +465,7 @@ ps = map fromRational ps'
  where
   ps' :: [Rational]
   ps' = [0, 0.01 .. 1] -- interval
-
+-- =============================================================================
 -- | === Gloss
 picture :: World -> Picture
 picture world = Pictures
@@ -470,7 +479,7 @@ picture world = Pictures
   , Color green $ Translate cx cy thicCirc
   ]
   where (cx, cy) = bezier2dAtTime world
-
+-- =============================================================================
 -- | === Animação
 animateBezier :: Float -> [NPoint] -> Picture
 animateBezier _ []  = Blank
@@ -485,7 +494,7 @@ animateBezier t l   = Pictures
  where
   a@(ax, ay) = bezier2d (init l) t
   b@(bx, by) = bezier2d (tail l) t
-
+-- =============================================================================
 -- | === Propriedades e main
 runBezier :: IO ()
 runBezier =
@@ -494,7 +503,7 @@ runBezier =
 runBezierSym :: IO ()
 runBezierSym =
   quickCheckWith (stdArgs { maxSize = 20, maxSuccess = 200 }) prop_bezier_sym
-
+-- =============================================================================
 -- | ==== Compilação e execução dentro do interpretador
 main :: IO ()
 main = runBezier
