@@ -530,7 +530,7 @@ instance (Arbitrary a) => Arbitrary (ExpAr a) where
     frequency
       . map (id >< pure)
       $ [(20, X), (15, N a), (35, Bin binop exp1 exp2), (30, Un unop exp1)]
-
+-- =============================================================================
 -- | == Outras funções auxiliares
 infixr 5 .=?=.
 (.=?=.) :: Real a => a -> a -> Bool
