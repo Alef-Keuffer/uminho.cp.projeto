@@ -52,7 +52,7 @@ data UnOp
   deriving (Eq, Show)
 -- =============================================================================
 inExpAr :: b ∐ a ∐ BinExp a ∐ UnExp a -> ExpAr a
--- | ≡ @'inExpAr'@ ≡ @'const' X '∐' 'N' '∐' bin '∐' ('Un' '＾') where bin (op, (a, b)) = 'Bin' op a b@
+-- | @'inExpAr'@ ≡ @'const' X '∐' 'N' '∐' bin '∐' ('Un' '＾') where bin (op, (a, b)) = 'Bin' op a b@
 inExpAr = either (const X) num_ops
  where
   num_ops = either N ops
