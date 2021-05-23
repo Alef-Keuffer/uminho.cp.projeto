@@ -1,0 +1,138 @@
+\haddockmoduleheading{BTree}
+\label{module:BTree}
+\haddockbeginheader
+{\haddockverb\begin{verbatim}
+module BTree (
+    BTree(Node, Empty), inBTree, outBTree, recBTree, cataBTree,
+    anaBTree, hyloBTree, baseBTree, invBTree, countBTree, inordt,
+    inord, preordt, preord, postordt, qSort, qsep, part, traces,
+    tunion, hanoi, present, strategy, balBTree, depthBTree, baldepth,
+    tnat, monBTree, preordt', countBTree', Deriv(Dr), Zipper, plug
+  ) where\end{verbatim}}
+\haddockendheader
+
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+data BTree a
+\end{tabular}]
+{\haddockbegindoc
+\enspace \emph{Constructors}\par
+\haddockbeginconstrs
+\haddockdecltt{=} & \haddockdecltt{Empty} & \\
+\haddockdecltt{|} & \haddockdecltt{Node (a, (BTree a, BTree a))} & \\
+\end{tabulary}\par}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+instance Functor BTree\\instance Show a => Show (BTree a)
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+inBTree :: Either () (b, (BTree b, BTree b)) -> BTree b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+outBTree :: BTree a -> Either () (a, (BTree a, BTree a))
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+recBTree :: (a -> d) -> Either b1 (b2, (a, a)) -> Either b1 (b2, (d, d))
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+cataBTree :: (Either () (b, (d, d)) -> d) -> BTree b -> d
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+anaBTree :: (a -> Either () (b, (a, a))) -> a -> BTree b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+hyloBTree :: (Either () (b, (c, c)) -> c) -> (a -> Either () (b, (a, a))) -> a -> c
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+baseBTree :: (a1 -> b1) -> (a2 -> d) -> Either b2 (a1, (a2, a2)) -> Either b2 (b1, (d, d))
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+invBTree :: BTree b -> BTree b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+countBTree :: BTree a -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+inordt :: BTree a -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+inord :: Either b (a, ({\char 91}a{\char 93}, {\char 91}a{\char 93})) -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+preordt :: BTree a -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+preord :: Either b (a, ({\char 91}a{\char 93}, {\char 91}a{\char 93})) -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+postordt :: BTree a -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+qSort :: Ord a => {\char 91}a{\char 93} -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+qsep :: Ord a => {\char 91}a{\char 93} -> Either () (a, ({\char 91}a{\char 93}, {\char 91}a{\char 93}))
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+part :: (a -> Bool) -> {\char 91}a{\char 93} -> ({\char 91}a{\char 93}, {\char 91}a{\char 93})
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+traces :: Eq a => BTree a -> {\char 91}{\char 91}a{\char 93}{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+tunion :: Eq a => (a, ({\char 91}{\char 91}a{\char 93}{\char 93}, {\char 91}{\char 91}a{\char 93}{\char 93})) -> {\char 91}{\char 91}a{\char 93}{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+hanoi :: (Bool, Integer) -> {\char 91}(Integer, Bool){\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+present :: Either b (a, ({\char 91}a{\char 93}, {\char 91}a{\char 93})) -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+strategy :: Integral b => (Bool, b) -> Either () ((b, Bool), ((Bool, b), (Bool, b)))
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+balBTree :: BTree a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+depthBTree :: BTree a -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+baldepth :: BTree a -> (Bool, Integer)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+tnat :: Monoid c => (a -> c) -> Either () (a, (c, c)) -> c
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+monBTree :: Monoid d => (a -> d) -> BTree a -> d
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+preordt' :: BTree a -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+countBTree' :: BTree b -> Sum Integer
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+data Deriv a
+\end{tabular}]
+{\haddockbegindoc
+\enspace \emph{Constructors}\par
+\haddockbeginconstrs
+\haddockdecltt{=} & \haddockdecltt{Dr Bool a (BTree a)} & \\
+\end{tabulary}\par}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+type Zipper a = {\char 91}Deriv a{\char 93}
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+plug :: Zipper a -> BTree a -> BTree a
+\end{tabular}]
+\end{haddockdesc}

@@ -1,0 +1,240 @@
+\haddockmoduleheading{Cp}
+\label{module:Cp}
+\haddockbeginheader
+{\haddockverb\begin{verbatim}
+module Cp (
+    split, (><), (!), p1, p2, i1, i2, (-|-), cond, ap, expn, p2p,
+    grd, swap, assocr, assocl, undistr, undistl, flatr, flatl, br, bl,
+    coswap, coassocr, coassocl, distl, distr, BiFunctor(bmap), (.!),
+    mult, ap', singl, Strong(lstr, rstr), dstr, splitm, bang, dup,
+    zero, one, nil, cons, add, mul, conc, true, nothing, false,
+    inMaybe, Unzipable(unzp), DistL(lamb), aap, gather, cozip, tot
+  ) where\end{verbatim}}
+\haddockendheader
+
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+split :: (a -> b) -> (a -> c) -> a -> (b, c)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+(><) :: (a -> b) -> (c -> d) -> (a, c) -> (b, d)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+(!) :: a -> ()
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+p1 :: (a, b) -> a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+p2 :: (a, b) -> b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+i1 :: a -> Either a b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+i2 :: b -> Either a b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+(-|-) :: (a -> b) -> (c -> d) -> Either a c -> Either b d
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+cond :: (b -> Bool) -> (b -> c) -> (b -> c) -> b -> c
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+ap :: (a -> b, a) -> b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+expn :: (b -> c) -> (a -> b) -> a -> c
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+p2p :: (a, a) -> Bool -> a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+grd :: (a -> Bool) -> a -> Either a a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+swap :: (a, b) -> (b, a)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+assocr :: ((a, b), c) -> (a, (b, c))
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+assocl :: (a, (b, c)) -> ((a, b), c)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+undistr :: Either (a, b) (a, c) -> (a, Either b c)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+undistl :: Either (b, c) (a, c) -> (Either b a, c)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+flatr :: (a, (b, c)) -> (a, b, c)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+flatl :: ((a, b), c) -> (a, b, c)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+br :: a -> (a, ())
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+bl :: a -> ((), a)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+coswap :: Either a b -> Either b a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+coassocr :: Either (Either a b) c -> Either a (Either b c)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+coassocl :: Either b (Either a c) -> Either (Either b a) c
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+distl :: (Either c a, b) -> Either (c, b) (a, b)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+distr :: (b, Either c a) -> Either (b, c) (b, a)
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+class BiFunctor f where
+\end{tabular}]
+{\haddockbegindoc
+\haddockpremethods{}\emph{Methods}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+bmap :: (a -> b) -> (c -> d) -> f a c -> f b d
+\end{tabular}]
+\end{haddockdesc}}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+instance BiFunctor Either\\instance BiFunctor (,)
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+(.!) :: Monad a => (b -> a c) -> (d -> a b) -> d -> a c
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+mult :: Monad m => m (m b) -> m b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+ap' :: Monad m => (a -> m b, m a) -> m b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+singl :: a -> {\char 91}a{\char 93}
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+class (Functor f, Monad f) => Strong f where
+\end{tabular}]
+{\haddockbegindoc
+\haddockpremethods{}\emph{Methods}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+rstr :: (f a, b) -> f (a, b)
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+lstr :: (b, f a) -> f (b, a)
+\end{tabular}]
+\end{haddockdesc}}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+instance Strong {\char 91}{\char 93}\\instance Strong Maybe\\instance Strong IO\\instance Strong LTree
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+dstr :: Strong m => (m a, m b) -> m (a, b)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+splitm :: Strong ff => ff (a -> b) -> a -> ff b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+bang :: a -> ()
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+dup :: c -> (c, c)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+zero :: b -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+one :: b -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+nil :: b -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+cons :: (a, {\char 91}a{\char 93}) -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+add :: (Integer, Integer) -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+mul :: (Integer, Integer) -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+conc :: ({\char 91}a{\char 93}, {\char 91}a{\char 93}) -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+true :: b -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+nothing :: b -> Maybe a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+false :: b -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+inMaybe :: Either () a -> Maybe a
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+class Functor f => Unzipable f where
+\end{tabular}]
+{\haddockbegindoc
+\haddockpremethods{}\emph{Methods}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+unzp :: f (a, b) -> (f a, f b)
+\end{tabular}]
+\end{haddockdesc}}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+class Functor g => DistL g where
+\end{tabular}]
+{\haddockbegindoc
+\haddockpremethods{}\emph{Methods}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+lamb :: Monad m => g (m a) -> m (g a)
+\end{tabular}]
+\end{haddockdesc}}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+instance DistL {\char 91}{\char 93}\\instance DistL Maybe
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+aap :: Monad m => m (a -> b) -> m a -> m b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+gather :: {\char 91}a -> b{\char 93} -> a -> {\char 91}b{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+cozip :: Functor f => Either (f a) (f b) -> f (Either a b)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+tot :: (a -> b) -> (a -> Bool) -> a -> Maybe b
+\end{tabular}]
+\end{haddockdesc}

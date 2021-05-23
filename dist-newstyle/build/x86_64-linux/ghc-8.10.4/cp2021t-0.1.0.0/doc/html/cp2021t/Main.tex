@@ -1,0 +1,356 @@
+\haddockmoduleheading{Main}
+\label{module:Main}
+\haddockbeginheader
+{\haddockverb\begin{verbatim}
+module Main (
+    ExpAr(Un, N, X, Bin), BinOp(Product, Sum), UnOp(Negate, E),
+    inExpAr, baseExpAr, prop_in_out_idExpAr, prop_out_in_idExpAr,
+    prop_sum_idr, prop_sum_idl, prop_product_idr, prop_product_idl,
+    prop_e_id, prop_negate_id, prop_double_negate,
+    prop_optimize_respects_semantics, prop_const_rule, prop_var_rule,
+    prop_sum_rule, prop_product_rule, prop_e_rule, prop_negate_rule,
+    prop_congruent, fib', f', prop_cat, linear1d, NPoint, OverTime,
+    prop_calcLine_def, prop_bezier_sym, prop_avg, e', OutExpAr, expd,
+    catdef, oracle, bezier2d, World(World, points, time), initW, tick,
+    actions, scaleTime, bezier2dAtTime, bezier2dAt, thicCirc, ps,
+    picture, animateBezier, runBezier, runBezierSym, main, run,
+    (.=?=.), (.==>.), (.<==>.), (.==.), (.<=.), (.&&&.), cataExpAr,
+    anaExpAr, hyloExpAr, eval_exp, optmize_eval, sd, ad, outExpAr,
+    recExpAr, g_eval_exp, clean, gopt, sd_gen, ad_gen, loop, inic, prj,
+    cat, calcLine, deCasteljau, hyloAlgForm, avg, avg_aux, avgLTree
+  ) where\end{verbatim}}
+\haddockendheader
+
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+data ExpAr a
+\end{tabular}]
+{\haddockbegindoc
+\enspace \emph{Constructors}\par
+\haddockbeginconstrs
+\haddockdecltt{=} & \haddockdecltt{X} & \\
+\haddockdecltt{|} & \haddockdecltt{N a} & \\
+\haddockdecltt{|} & \haddockdecltt{Bin BinOp (ExpAr a) (ExpAr a)} & \\
+\haddockdecltt{|} & \haddockdecltt{Un UnOp (ExpAr a)} & \\
+\end{tabulary}\par}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+instance Eq a => Eq (ExpAr a)\\instance Show a => Show (ExpAr a)\\instance Arbitrary a => Arbitrary (ExpAr a)
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+data BinOp
+\end{tabular}]
+{\haddockbegindoc
+\enspace \emph{Constructors}\par
+\haddockbeginconstrs
+\haddockdecltt{=} & \haddockdecltt{Sum} & \\
+\haddockdecltt{|} & \haddockdecltt{Product} & \\
+\end{tabulary}\par}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+instance Eq BinOp\\instance Show BinOp\\instance Arbitrary BinOp
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+data UnOp
+\end{tabular}]
+{\haddockbegindoc
+\enspace \emph{Constructors}\par
+\haddockbeginconstrs
+\haddockdecltt{=} & \haddockdecltt{Negate} & \\
+\haddockdecltt{|} & \haddockdecltt{E} & \\
+\end{tabulary}\par}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+instance Eq UnOp\\instance Show UnOp\\instance Arbitrary UnOp
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+inExpAr :: Either b (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a)))\\\ \ \ \ \ \ \ \ \ \ \ -> ExpAr a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+baseExpAr :: (a1 -> b1)\\\ \ \ \ \ \ \ \ \ \ \ \ \ -> (a2 -> b2)\\\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -> (a3 -> b3)\\\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -> (a4 -> b4)\\\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -> (c1 -> d1)\\\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -> (a5 -> b5)\\\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -> (c2 -> d2)\\\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -> Either a1 (Either a2 (Either (a3, (a4, c1)) (a5, c2)))\\\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -> Either b1 (Either b2 (Either (b3, (b4, d1)) (b5, d2)))
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}in{\char '137}out{\char '137}idExpAr :: Eq a => ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}out{\char '137}in{\char '137}idExpAr :: Eq a => OutExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}sum{\char '137}idr :: (Floating a, Real a) => a -> ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}sum{\char '137}idl :: (Floating a, Real a) => a -> ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}product{\char '137}idr :: (Floating a, Real a) => a -> ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}product{\char '137}idl :: (Floating a, Real a) => a -> ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}e{\char '137}id :: (Floating a, Real a) => a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}negate{\char '137}id :: (Floating a, Real a) => a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}double{\char '137}negate :: (Floating a, Real a) => a -> ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}optimize{\char '137}respects{\char '137}semantics :: (Floating a, Real a) => a -> ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}const{\char '137}rule :: (Real a, Floating a) => a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}var{\char '137}rule :: Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}sum{\char '137}rule :: (Real a, Floating a) => ExpAr a -> ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}product{\char '137}rule :: (Real a, Floating a) => ExpAr a -> ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}e{\char '137}rule :: (Real a, Floating a) => ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}negate{\char '137}rule :: (Real a, Floating a) => ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}congruent :: (Floating a, Real a) => a -> ExpAr a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+fib' :: Integer -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+f' :: (Integral c, Num b) => b -> b -> b -> c -> b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}cat :: Integer -> Property
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+linear1d :: Rational -> Rational -> OverTime Rational
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+type NPoint = {\char 91}Rational{\char 93}
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+type OverTime a = Float -> a
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+prop{\char '137}calcLine{\char '137}def :: NPoint -> NPoint -> Float -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}bezier{\char '137}sym :: {\char 91}{\char 91}Rational{\char 93}{\char 93} -> Gen Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prop{\char '137}avg :: {\char 91}Double{\char 93} -> Property
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+e' :: (Fractional c1, Integral c2) => c1 -> c2 -> c1
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+type OutExpAr a = Either () (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a)))
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+expd :: Floating a => a -> a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+catdef :: Integer -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+oracle :: {\char 91}Integer{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+bezier2d :: {\char 91}NPoint{\char 93} -> OverTime (Float, Float)
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+data World
+\end{tabular}]
+{\haddockbegindoc
+\enspace \emph{Constructors}\par
+\haddockbeginconstrs
+\haddockdecltt{=} & \haddockdecltt{World} & \\
+                                            & \haddocktt{\qquad \{} \haddockdecltt{points :: {\char 91}NPoint{\char 93}} & \\
+                                            & \haddocktt{\qquad ,} \haddockdecltt{time :: Float} & \\ & \haddocktt{\qquad \}} \\
+\end{tabulary}\par}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+initW :: World
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+tick :: Float -> World -> World
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+actions :: Event -> World -> World
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+scaleTime :: World -> Float
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+bezier2dAtTime :: World -> (Float, Float)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+bezier2dAt :: World -> OverTime (Float, Float)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+thicCirc :: Picture
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+ps :: {\char 91}Float{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+picture :: World -> Picture
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+animateBezier :: Float -> {\char 91}NPoint{\char 93} -> Picture
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+runBezier :: IO ()
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+runBezierSym :: IO ()
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+main :: IO ()
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+run :: IO ExitCode
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+(.=?=.) :: Real a => a -> a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+(.==>.) :: Testable prop => (a -> Bool) -> (a -> prop) -> a -> Property
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+(.<==>.) :: (a -> Bool) -> (a -> Bool) -> a -> Property
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+(.==.) :: Eq b => (a -> b) -> (a -> b) -> a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+(.<=.) :: Ord b => (a -> b) -> (a -> b) -> a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+(.{\char '46}{\char '46}{\char '46}.) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+cataExpAr :: (b -> c) -> a -> c
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+anaExpAr :: (a1 -> b) -> a1 -> ExpAr a2
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+hyloExpAr :: (b1 -> c) -> (a -> b2) -> a -> c
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+eval{\char '137}exp :: Floating a => a -> ExpAr a -> a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+optmize{\char '137}eval :: (Floating a, Eq a) => a -> ExpAr a -> a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+sd :: Floating a => ExpAr a -> ExpAr a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+ad :: Floating a => a -> ExpAr a -> a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+outExpAr :: a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+recExpAr :: a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+g{\char '137}eval{\char '137}exp :: a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+clean :: a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+gopt :: a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+sd{\char '137}gen :: Floating a =>\\\ \ \ \ \ \ \ \ \ \ Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a))))\\\ \ \ \ \ \ \ \ \ \ -> (ExpAr a, ExpAr a)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+ad{\char '137}gen :: a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+loop :: a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+inic :: a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+prj :: a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+cat :: Integer -> c
+\end{tabular}]
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+calcLine :: NPoint -> NPoint -> OverTime NPoint
+\end{tabular}]
+{\haddockbegindoc
+Spec\par
+\begin{quote}
+{\haddockverb\begin{verbatim}
+calcLine :: NPoint -> (NPoint -> OverTime NPoint)
+calcLine [] = const nil
+calcLine (p : x) = curry g p (calcLine x)
+ where
+  g :: (ℚ, NPoint -> OverTime NPoint) -> (NPoint -> OverTime NPoint)
+  g (d, f) l = case l of
+    [] -> nil
+    (x : xs) -> concat . sequenceA [singl . linear1d d x, f xs]
+\end{verbatim}}
+\end{quote}}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+deCasteljau :: {\char 91}NPoint{\char 93} -> OverTime NPoint
+\end{tabular}]
+{\haddockbegindoc
+Spec\par
+\haddocktt{code\\ deCasteljau :: {\char 91}NPoint{\char 93} -> OverTime NPoint\\ deCasteljau {\char 91}{\char 93} = nil\\ deCasteljau {\char 91}p{\char 93} = const p\\ deCasteljau l = pt -> (calcLine (p pt) (q pt)) pt where\\\ \ \ p = deCasteljau (init l)\\\ \ \ q = deCasteljau (tail l)\\ }code\par}
+\end{haddockdesc}
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+hyloAlgForm :: a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+avg :: a -> c
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+avg{\char '137}aux :: a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+avgLTree :: LTree b -> c
+\end{tabular}]
+\end{haddockdesc}

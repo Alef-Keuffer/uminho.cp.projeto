@@ -1,0 +1,73 @@
+\haddockmoduleheading{Nat}
+\label{module:Nat}
+\haddockbeginheader
+{\haddockverb\begin{verbatim}
+module Nat (
+    inNat, outNat, cataNat, recNat, anaNat, hyloNat, for, somar,
+    multip, exp, sq, sq', sq'', fac, facfor, idiv, aux, bSort, while,
+    mfor
+  ) where\end{verbatim}}
+\haddockendheader
+
+\begin{haddockdesc}
+\item[\begin{tabular}{@{}l}
+inNat :: Either b Integer -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+outNat :: Integral b => b -> Either () b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+cataNat :: Integral c => (Either () d -> d) -> c -> d
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+recNat :: (c -> d) -> Either b c -> Either b d
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+anaNat :: (c -> Either b c) -> c -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+hyloNat :: (Either () c1 -> c1) -> (c2 -> Either b c2) -> c2 -> c1
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+for :: Integral c => (b -> b) -> b -> c -> b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+somar :: (Integral c, Enum d) => d -> c -> d
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+multip :: (Integral c, Num d) => d -> c -> d
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+exp :: (Integral c, Num d) => d -> c -> d
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+sq :: Integral p => p -> p
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+sq' :: Integer -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+sq'' :: (Integral c, Num b) => c -> b
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+fac :: Integer -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+facfor :: Integer -> (Integer, Integer)
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+idiv :: Integer -> Integer -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+aux :: (Ord c, Num c) => c -> c -> Integer
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+bSort :: Ord a => {\char 91}a{\char 93} -> {\char 91}a{\char 93}
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+while :: (a -> Bool) -> (a -> a) -> a -> a
+\end{tabular}]
+\item[\begin{tabular}{@{}l}
+mfor :: forall t1 m t2. (Monad m, Integral t1) => (t2 -> m t2) -> t2 -> t1 -> m t2
+\end{tabular}]
+\end{haddockdesc}

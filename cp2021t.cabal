@@ -1,0 +1,47 @@
+cabal-version:      3.0
+name:               cp2021t
+version:            0.1.0.0
+synopsis:
+  Trabalho para Calculo Proposicional da Universidade do Minho
+
+description:
+homepage:
+license:
+author:
+  Alef Keuffer<alefkeuffer@gmail.com>, Fernando Bicalho<a93546@alunos.uminho.pt>, Pedro Pereira<pedropaulo_pereira@outlook.com>, Tiago Coelho<a91693@alunos.uminho.pt>
+
+maintainer:
+  alefkeuffer@gmail.com, pedropaulo_pereira@outlook.com, a93546@alunos.uminho.pt, a91693@alunos.uminho.pt
+
+extra-source-files: CHANGELOG.md
+
+executable cp2021t
+  main-is:          cp2021t.lhs
+  exposed-modules:
+    BTree
+    Cp
+    List
+    LTree
+    Main
+    Nat
+
+  other-modules:    Solucoes
+  other-extensions:
+  build-depends:
+    , base        ^>=4.14.1.0
+    , gloss
+    , process
+    , QuickCheck
+
+  ghc-options:
+  hs-source-dirs:   lib
+  default-language: Haskell2010
+
+test-suite cp2021t-test
+  default-language: Haskell2010
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   test
+  main-is:          MyLibTest.hs
+  build-depends:
+    , base        ^>=4.14.1.0
+    , QuickCheck
