@@ -370,6 +370,32 @@ fromℚ = fromRational
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
 calcLine = cataList h where h = undefined
 
+calc_line' :: [ℚ] -> [ℚ] -> Float -> [ℚ]
+calc_line' = myZipWithM linear1d
+
+myZipWithM :: (a1 -> b -> p -> a2) -> [a1] -> [b] -> p -> [a2]
+myZipWithM f xs ys  =  mySequenceA (myZipWith f xs ys)
+
+mySequenceA :: [p -> a] -> p -> [a]
+mySequenceA = flip mySequenceA'
+
+myZipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+myZipWith f a b  = uncurry f <$> myZip (a, b)
+
+myZip :: ([a], [b]) -> [(a, b)]
+myZip = anaList outZip
+
+outZip :: ([a], [b]) -> () ∐ ((a, b), ([a], [b]))
+outZip l = case l of
+  ([], _)          -> Left ()
+  (_, [])          -> Left ()
+  (a : as, b : bs) -> Right ((a, b), (as, bs))
+
+mySequenceA' :: p -> [p -> a] -> [a]
+mySequenceA' a = cataList (either nil g2)
+ where
+  g2 (f, fs) = f a : fs
+
 {- | Spec
 
  @
