@@ -41,6 +41,7 @@ library
     LTree
     Nat
     Solucoes
+    HaddockTeste
 
   other-extensions:
   build-depends:

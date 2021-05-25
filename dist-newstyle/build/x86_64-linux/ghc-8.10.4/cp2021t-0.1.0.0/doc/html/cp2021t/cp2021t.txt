@@ -321,14 +321,14 @@ fromℚ :: Fractional a => Rational -> a
 -- | Spec
 --   
 --   <pre>
---   <a>calcLine</a> :: <a>NPoint</a> -&gt; (<a>NPoint</a> -&gt; <a>OverTime</a> <a>NPoint</a>)
+--   <a>calcLine</a> :: <a>NPoint</a> → (<a>NPoint</a> → <a>OverTime</a> <a>NPoint</a>)
 --   <a>calcLine</a> [] = <a>const</a> <a>nil</a>
 --   <a>calcLine</a> (p : x) = <a>curry</a> g p (<a>calcLine</a> x)
 --    where
---     g :: (ℚ, <a>NPoint</a> -&gt; <a>OverTime</a> <a>NPoint</a>) -&gt; (<a>NPoint</a> -&gt; <a>OverTime</a> <a>NPoint</a>)
+--     g :: (ℚ, <a>NPoint</a> → <a>OverTime</a> <a>NPoint</a>) → (<a>NPoint</a> → <a>OverTime</a> <a>NPoint</a>)
 --     g (d, f) l = case l of
---       [] -&gt; <a>nil</a>
---       (x : xs) -&gt; <a>concat</a> . <a>sequenceA</a> [<a>singl</a> . <a>linear1d</a> d x, f xs]
+--       [] → <a>nil</a>
+--       (x : xs) → <a>concat</a> . <a>sequenceA</a> [<a>singl</a> . <a>linear1d</a> d x, f xs]
 --   </pre>
 calcLine :: NPoint -> NPoint -> OverTime NPoint
 calc_line' :: [ℚ] -> [ℚ] -> Float -> [ℚ]
@@ -342,10 +342,10 @@ mySequenceA' :: p -> [p -> a] -> [a]
 -- | Spec
 --   
 --   <pre>
---   <a>deCasteljau</a> :: [<a>NPoint</a>] -&gt; <a>OverTime</a> <a>NPoint</a>
+--   <a>deCasteljau</a> :: [<a>NPoint</a>] → <a>OverTime</a> <a>NPoint</a>
 --   <a>deCasteljau</a> [] = <a>nil</a>
 --   <a>deCasteljau</a> [p] = <a>const</a> p
---   <a>deCasteljau</a> l = pt -&gt; <a>calcLine</a> (p pt) (q pt) pt
+--   <a>deCasteljau</a> l = pt → <a>calcLine</a> (p pt) (q pt) pt
 --    where
 --     p = <a>deCasteljau</a> (<a>init</a> l)
 --     q = <a>deCasteljau</a> (<a>tail</a> l)
@@ -401,3 +401,5 @@ instance GHC.Float.Floating c => Solucoes.Injective Solucoes.UnOp (c -> c)
 instance Test.QuickCheck.Arbitrary.Arbitrary a => Test.QuickCheck.Arbitrary.Arbitrary (Solucoes.ExpAr a)
 instance Test.QuickCheck.Arbitrary.Arbitrary Solucoes.UnOp
 instance Test.QuickCheck.Arbitrary.Arbitrary Solucoes.BinOp
+
+module HaddockTeste

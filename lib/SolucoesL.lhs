@@ -1,255 +1,105 @@
-\documentclass[a4paper]{article}
-\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
-\usepackage{palatino}
-\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
-\usepackage{graphicx}
-\usepackage{minted}
-\usepackage{cp2021t}
-\usepackage{subcaption}
-\usepackage{adjustbox}
-\usepackage{color}
-\definecolor{red}{RGB}{255,  0,  0}
-\definecolor{blue}{RGB}{0,0,255}
-\def\red{\color{red}}
-\def\blue{\color{blue}}
-%================= lhs2tex=====================================================%
-%include polycode.fmt
 
 \begin{document}
 
-%\begin{code}
-\begin{minted}{haskell}
-{-# LANGUAGE DeriveDataTypeable         #-}
-{-# LANGUAGE FlexibleInstances          #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE NPlusKPatterns             #-}
+\maketitle
+\section{Preâmbulo}
+
+
+\noindent
+
+
+\Problema
 
 
 
-{-# LANGUAGE MultiParamTypeClasses      #-}
-{-# LANGUAGE NoMonomorphismRestriction  #-}
-{-# LANGUAGE RankNTypes                 #-}
-{-# LANGUAGE TypeFamilies               #-}
-{-# LANGUAGE TypeOperators              #-}
-{-# OPTIONS_HADDOCK show-extensions     #-}
 
 
-module SolucoesL where
+  \item Dada uma expressão aritmética e um escalar para substituir o |X|,
+	a função
 
-import           Control.Applicative     hiding ( (<|>) )
-import           Control.Monad
-import           Cp
-import           Data.List               hiding ( find )
-import           Graphics.Gloss
-import           Graphics.Gloss.Interface.Pure.Game
-import           LTree
-import           List                    hiding ( fac )
-import           Nat
-import           System.Process
-import           Test.QuickCheck         hiding ( (><)
-                                                , choose
-                                                , collect
-                                                )
-import qualified Test.QuickCheck               as QuickCheck
+\begin{quote}
+      |eval_exp :: Floating a => a -> (ExpAr a) -> a|
+\end{quote}
 
-data ExpAr a
-  = X
-  | N a
-  | Bin BinOp (ExpAr a) (ExpAr a)
-  | Un UnOp (ExpAr a)
-  deriving (Eq, Show)
-
-data BinOp
-  = Sum
-  | Product
-  deriving (Eq, Show)
-
-data UnOp
-  = Negate
-  | E
-  deriving (Eq, Show)
-
-inExpAr :: b ∐ a ∐ BinExp a ∐ UnExp a -> ExpAr a
-
-inExpAr = either (const X) num_ops
- where
-  num_ops = either N ops
-  ops     = either bin (uncurry Un)
-  bin (op, (a, b)) = Bin op a b
-
-
-baseExpAr ::
-  (a -> b) ->
-  (c -> d) ->
-  (e -> f) ->
-  (g -> h) ->
-  (i -> j) ->
-  (k -> l) ->
-  (m -> n) ->
-  a ∐ c ∐ e × g × i ∐ k × m ->
-  b ∐ d ∐ f × h × j ∐ l × n
-baseExpAr f g h j k l z = f -|- (g -|- (h >< (j >< k) -|- l >< z))
-
-cataExpAr :: (() ∐ c ∐ BinOp × e × e ∐ UnOp × e -> e) -> ExpAr c -> e
-cataExpAr g = g . recExpAr (cataExpAr g) . outExpAr
-
-anaExpAr :: (a -> b ∐ c ∐ BinOp × a × a ∐ UnOp × a) -> a -> ExpAr c
-anaExpAr g = inExpAr . recExpAr (anaExpAr g) . g
-
-hyloExpAr
-  :: (() ∐ c ∐ BinOp × d × d ∐ UnOp × d -> d)
-  -> (a -> b ∐ c ∐ BinOp × a × a ∐ UnOp × a)
-  -> a
-  -> d
-hyloExpAr h g = cataExpAr h . anaExpAr g
-
-expd :: Floating a => a -> a
-expd = Prelude.exp
-
-eval_exp :: Floating a => a -> (ExpAr a) -> a
-eval_exp a = cataExpAr (g_eval_exp a)
-
-optmize_eval :: (Floating a, Eq a) => a -> (ExpAr a) -> a
-optmize_eval a = hyloExpAr (gopt a) clean
-
-sd :: Floating a => ExpAr a -> ExpAr a
-sd = p2 . cataExpAr sd_gen
-
-ad :: Floating a => a -> ExpAr a -> a
-ad v = p2 . cataExpAr (ad_gen v)
-
-infixr 6 ×
-type a × b = (a, b)
-
-(×) :: (a -> b) -> (c -> d) -> (a, c) -> (b, d)
-(×) = (><)
-
-infixr 4 ⊕
-
-(⊕) :: (a -> b) -> (c -> d) -> a ∐ c -> b ∐ d
-(⊕) = (-|-)
-
-infixr 4 ∐
-type (∐) = Either
-(∐) :: (a -> c) -> (b -> c) -> a ∐ b -> c
-(∐) = either
-
-type BinExp d = BinOp × ExpAr d × ExpAr d
-type UnExp d = UnOp × ExpAr d
-type OutExpAr a = () ∐ a ∐ BinExp a ∐ UnExp a
-
-class Injective a b where
-    to :: forall b1 a1. (b1 ~ b, a1 ~ a) => a -> b
-
-instance Injective (ExpAr a) (OutExpAr a) where
-  to X            = Left ()
-  to (N a       ) = Right $ Left a
-  to (Bin op l r) = Right $ Right $ Left (op, (l, r))
-  to (Un op a   ) = Right $ Right $ Right (op, a)
-
-outExpAr :: ExpAr a -> OutExpAr a
-outExpAr = to :: ExpAr a -> OutExpAr a
-
-recExpAr :: (a -> e) -> b ∐ c ∐ d × a × a ∐ g × a -> b ∐ c ∐ d × e × e ∐ g × e
-recExpAr f = baseExpAr id id id f f id f
-
-
-instance (Num c) => Injective BinOp ((c, c) -> c) where
-  to Sum     = add
-  to Product = mul
-
-instance (Floating c) => Injective UnOp (c -> c) where
-  to Negate = negate
-  to E      = Prelude.exp
-
-g_eval_exp :: Floating c => c -> b ∐ c ∐ BinOp × c × c ∐ UnOp × c -> c
-g_eval_exp a = const a ∐ id ∐ Cp.ap . (toBin × id) ∐ Cp.ap . (toUn × id)
- where
-  toBin = to :: (Num c) => BinOp -> (c × c -> c)
-  toUn  = to :: (Floating c) => UnOp -> (c -> c)
-
-clean :: (Eq a, Num a) => ExpAr a -> OutExpAr a
-clean q = case q of
-  (Un E      (N 0)        ) -> tag 1
-  (Un Negate (N 0)        ) -> tag 0
-  (Bin Product (N 0) _    ) -> tag 0
-  (Bin Product _     (N 0)) -> tag 0
-  a                         -> (to :: ExpAr a -> OutExpAr a) a
-  where tag = i2 . i1
-
-gopt :: Floating a => a -> () ∐ a ∐ BinOp × a × a ∐ UnOp × a -> a
-gopt = undefined
-
-type Dup d = d × d
-type Bin d = BinOp × d × d
-type Un d = UnOp × d
-
-bin_aux :: (t -> t -> t) -> (t -> t -> t) -> (BinOp, Dup (Dup t)) -> Dup t
-bin_aux f g (op, ((e1, d1), (e2, d2))) = case op of
-  Sum     -> (e1 `f` e2, d1 `f` d2)
-  Product -> (e1 `g` e2, f (g e1 d2) (g d1 e2))
-
-un_aux
-  :: (t1 -> t2) -> (t2 -> t1 -> t2) -> (t1 -> t2) -> (UnOp, Dup t1) -> Dup t2
-un_aux f g h (op, (e, d)) = case op of
-  Negate -> (f e, f d)
-  E      -> (h e, g (h e) d)
-
-sd_gen
-  :: Floating a
-  => () ∐ a ∐ Bin (Dup (ExpAr a)) ∐ Un (Dup (ExpAr a))
-  -> Dup (ExpAr a)
-sd_gen = f ∐ g ∐ h ∐ k where
-  f = const (X, N 1)
-  g a = (N a, N 0)
-  h = bin_aux (Bin Sum) (Bin Product)
-  k = un_aux (Un Negate) (Bin Product) (Un E)
-
-ad_gen
-  :: Floating a => a -> () ∐ a ∐ (BinOp, Dup (Dup a)) ∐ (UnOp, Dup a) -> Dup a
-ad_gen x = f ∐ g ∐ h ∐ k where
-  f = const (x, 1)
-  g a = (a, 0)
-  h = bin_aux (+) (*)
-  k = un_aux negate (*) expd
-
-prop_in_out_idExpAr :: (Eq a) => ExpAr a -> Bool
-prop_in_out_idExpAr = inExpAr . outExpAr .==. id
-
-prop_out_in_idExpAr :: (Eq a) => OutExpAr a -> Bool
-prop_out_in_idExpAr = outExpAr . inExpAr .==. id
-
+\noindent calcula o resultado da expressão. Na página \pageref{pg:P1}
+    esta função está expressa como um catamorfismo. Defina o respectivo gene
+    e, de seguida, teste as propriedades:
+    \begin{propriedade}
+       A função |eval_exp| respeita os elementos neutros das operações.
+\begin{code}
 prop_sum_idr :: (Floating a, Real a) => a -> ExpAr a -> Bool
-prop_sum_idr a exp = eval_exp a exp .=?=. sum_idr
-  where sum_idr = eval_exp a (Bin Sum exp (N 0))
+prop_sum_idr a exp = eval_exp a exp .=?=. sum_idr where
+  sum_idr = eval_exp a (Bin Sum exp (N 0))
 
 prop_sum_idl :: (Floating a, Real a) => a -> ExpAr a -> Bool
-prop_sum_idl a exp = eval_exp a exp .=?=. sum_idl
-  where sum_idl = eval_exp a (Bin Sum (N 0) exp)
+prop_sum_idl a exp = eval_exp a exp .=?=. sum_idl where
+  sum_idl = eval_exp a (Bin Sum (N 0) exp)
 
 prop_product_idr :: (Floating a, Real a) => a -> ExpAr a -> Bool
-prop_product_idr a exp = eval_exp a exp .=?=. prod_idr
-  where prod_idr = eval_exp a (Bin Product exp (N 1))
+prop_product_idr a exp = eval_exp a exp .=?=. prod_idr where
+  prod_idr = eval_exp a (Bin Product exp (N 1))
 
 prop_product_idl :: (Floating a, Real a) => a -> ExpAr a -> Bool
-prop_product_idl a exp = eval_exp a exp .=?=. prod_idl
-  where prod_idl = eval_exp a (Bin Product (N 1) exp)
+prop_product_idl a exp = eval_exp a exp .=?=. prod_idl where
+  prod_idl = eval_exp a (Bin Product (N 1) exp)
 
 prop_e_id :: (Floating a, Real a) => a -> Bool
 prop_e_id a = eval_exp a (Un E (N 1)) == expd 1
 
 prop_negate_id :: (Floating a, Real a) => a -> Bool
 prop_negate_id a = eval_exp a (Un Negate (N 0)) == 0
-
+\end{code}
+    \end{propriedade}
+    \begin{propriedade}
+      Negar duas vezes uma expressão tem o mesmo valor que não fazer nada.
+\begin{code}
 prop_double_negate :: (Floating a, Real a) => a -> ExpAr a -> Bool
-prop_double_negate a exp =
-  eval_exp a exp .=?=. eval_exp a (Un Negate (Un Negate exp))
+prop_double_negate a exp = eval_exp a exp .=?=. eval_exp a (Un Negate (Un Negate exp))
+\end{code}
+    \end{propriedade}
 
-prop_optimize_respects_semantics
-  :: (Floating a, Real a) => a -> ExpAr a -> Bool
-prop_optimize_respects_semantics a exp =
-  eval_exp a exp .=?=. optmize_eval a exp
+  \item É possível otimizar o cálculo do valor de uma expressão aritmética tirando proveito
+  dos elementos absorventes de cada operação. Implemente os genes da função
+\begin{spec}
+      optmize_eval :: (Floating a, Eq a) => a -> (ExpAr a) -> a
+\end{spec}
+  que se encontra na página \pageref{pg:P1} expressa como um hilomorfismo\footnote{Qual é a vantagem de implementar a função |optimize_eval| utilizando um hilomorfismo em vez de utilizar um catamorfismo com um gene "inteligente"?}
+  e teste as propriedades:
 
+    \begin{propriedade}
+      A função |optimize_eval| respeita a semântica da função |eval|.
+\begin{code}
+prop_optimize_respects_semantics :: (Floating a, Real a) => a -> ExpAr a -> Bool
+prop_optimize_respects_semantics a exp = eval_exp a exp .=?=. optmize_eval a exp
+\end{code}
+    \end{propriedade}
+
+
+\item Para calcular a derivada de uma expressão, é necessário aplicar transformações
+à expressão original que respeitem as regras das derivadas:\footnote{%
+	Apesar da adição e multiplicação gozarem da propriedade comutativa,
+	há que ter em atenção a ordem das operações por causa dos testes.}
+
+\begin{itemize}
+  \item Regra da soma:
+\begin{eqnarray*}
+	\frac{d}{dx}(f(x)+g(x))=\frac{d}{dx}(f(x))+\frac{d}{dx}(g(x))
+\end{eqnarray*}
+  \item Regra do produto:
+\begin{eqnarray*}
+	\frac{d}{dx}(f(x)g(x))=f(x)\cdot \frac{d}{dx}(g(x))+\frac{d}{dx}(f(x))\cdot g(x)
+\end{eqnarray*}
+\end{itemize}
+
+  Defina o gene do catamorfismo que ocorre na função
+    \begin{quote}
+      |sd :: Floating a => ExpAr a -> ExpAr a|
+    \end{quote}
+  que, dada uma expressão aritmética, calcula a sua derivada.
+  Testes a fazer, de seguida:
+    \begin{propriedade}
+       A função |sd| respeita as regras de derivação.
+\begin{code}
 prop_const_rule :: (Real a, Floating a) => a -> Bool
 prop_const_rule a = sd (N a) == N 0
 
@@ -257,196 +107,411 @@ prop_var_rule :: Bool
 prop_var_rule = sd X == N 1
 
 prop_sum_rule :: (Real a, Floating a) => ExpAr a -> ExpAr a -> Bool
-prop_sum_rule exp1 exp2 = sd (Bin Sum exp1 exp2) == sum_rule
-  where sum_rule = Bin Sum (sd exp1) (sd exp2)
+prop_sum_rule exp1 exp2 = sd (Bin Sum exp1 exp2) == sum_rule where
+  sum_rule = Bin Sum (sd exp1) (sd exp2)
 
 prop_product_rule :: (Real a, Floating a) => ExpAr a -> ExpAr a -> Bool
-prop_product_rule exp1 exp2 = sd (Bin Product exp1 exp2) == prod_rule
- where
-  prod_rule = Bin Sum (Bin Product exp1 (sd exp2)) (Bin Product (sd exp1) exp2)
+prop_product_rule exp1 exp2 = sd (Bin Product exp1 exp2) == prod_rule where
+  prod_rule =Bin Sum (Bin Product exp1 (sd exp2)) (Bin Product (sd exp1) exp2)
 
 prop_e_rule :: (Real a, Floating a) => ExpAr a -> Bool
 prop_e_rule exp = sd (Un E exp) == Bin Product (Un E exp) (sd exp)
 
 prop_negate_rule :: (Real a, Floating a) => ExpAr a -> Bool
 prop_negate_rule exp = sd (Un Negate exp) == Un Negate (sd exp)
+\end{code}
+    \end{propriedade}
 
+\item Como foi visto, \emph{Symbolic differentiation} não é a técnica
+mais eficaz para o cálculo do valor da derivada de uma expressão.
+\emph{Automatic differentiation} resolve este problema cálculando o valor
+da derivada em vez de manipular a expressão original.
+
+  Defina o gene do catamorfismo que ocorre na função
+    \begin{spec}
+    ad :: Floating a => a -> ExpAr a -> a
+    \end{spec}
+  que, dada uma expressão aritmética e um ponto,
+  calcula o valor da sua derivada nesse ponto,
+  sem transformar manipular a expressão original.
+  Testes a fazer, de seguida:
+
+    \begin{propriedade}
+       Calcular o valor da derivada num ponto |r| via |ad| é equivalente a calcular a derivada da expressão e avalia-la no ponto |r|.
+\begin{code}
 prop_congruent :: (Floating a, Real a) => a -> ExpAr a -> Bool
 prop_congruent a exp = ad a exp .=?=. eval_exp a (sd exp)
+\end{code}
+    \end{propriedade}
+\end{enumerate}
 
-fib' :: (Integral c, Num b) => c -> b
-fib' = p1 . for loop init
- where
-  loop (fib, f) = (f, fib + f)
-  init = (1, 1)
+\Problema
 
-f' :: (Integral c, Num b) => b -> b -> b -> c -> b
-f' a b c = p1 . for loop init
- where
-  loop (f, k) = (f + k, k + 2 * a)
-  init = (c, a + b)
+Nesta disciplina estudou-se como fazer \pd{programação dinâmica} por cálculo,
+recorrendo à lei de recursividade mútua.\footnote{Lei (\ref{eq:fokkinga})
+em \cite{Ol18}, página \pageref{eq:fokkinga}.}
 
-catdef :: Integer -> Integer
-catdef n = div (fac ((2 * n))) ((fac ((n + 1)) * (fac n)))
+Para o caso de funções sobre os números naturais (|Nat0|, com functor |fF
+X = 1 + X|) é fácil derivar-se da lei que foi estudada uma
+	\emph{regra de algibeira}
+	\label{pg:regra}
+que se pode ensinar a programadores que não tenham estudado
+\cp{Cálculo de Programas}. Apresenta-se de seguida essa regra, tomando como exemplo o
+cálculo do ciclo-\textsf{for} que implementa a função de Fibonacci, recordar
+o sistema
+\begin{spec}
+fib 0 = 1
+fib(n+1) = f n
 
-oracle :: Num a => [a]
-oracle =
-  [ 1
-  , 1
-  , 2
-  , 5
-  , 14
-  , 42
-  , 132
-  , 429
-  , 1430
-  , 4862
-  , 16796
-  , 58786
-  , 208012
-  , 742900
-  , 2674440
-  , 9694845
-  , 35357670
-  , 129644790
-  , 477638700
-  , 1767263190
-  , 6564120420
-  , 24466267020
-  , 91482563640
-  , 343059613650
-  , 1289904147324
-  , 4861946401452
-  ]
+f 0 = 1
+f (n+1) = fib n + f n
+\end{spec}
+Obter-se-á de imediato
+\begin{code}
+fib' = p1 ⋅ for loop init where
+   loop(fib,f)=(f,fib+f)
+   init = (1,1)
+\end{code}
+usando as regras seguintes:
+\begin{itemize}
+\item	O corpo do ciclo |loop| terá tantos argumentos quanto o número de funções mutuamente recursivas.
+\item	Para as variáveis escolhem-se os próprios nomes das funções, pela ordem
+que se achar conveniente.\footnote{Podem obviamente usar-se outros símbolos, mas numa primeira leitura
+dá jeito usarem-se tais nomes.}
+\item	Para os resultados vão-se buscar as expressões respectivas, retirando a variável |n|.
+\item	Em |init| coleccionam-se os resultados dos casos de base das funções, pela mesma ordem.
+\end{itemize}
+Mais um exemplo, envolvendo polinómios do segundo grau $ax^2 + b x + c$ em |Nat0|.
+Seguindo o método estudado nas aulas\footnote{Secção 3.17 de \cite{Ol18} e tópico
+\href{https://www4.di.uminho.pt/~jno/media/cp/}{Recursividade mútua} nos vídeos das aulas teóricas.},
+de $f\ x = a x^2 + b x + c$ derivam-se duas funções mutuamente recursivas:
+\begin{spec}
+f 0 = c
+f (n+1) = f n + k n
 
-prop_cat = (>= 0) .==>. (catdef .==. cat)
+k 0 = a + b
+k(n+1) = k n + 2 a
+\end{spec}
+Seguindo a regra acima, calcula-se de imediato a seguinte implementação, em Haskell:
+\begin{code}
+f' a b c = p1 ⋅ for loop init where
+  loop(f,k) = (f+k,k+2*a)
+  init = (c,a+b)
+\end{code}
+O que se pede então, nesta pergunta?
+Dada a fórmula que dá o |n|-ésimo \catalan{número de Catalan},
+\begin{eqnarray}
+	C_n = \frac{(2n)!}{(n+1)! (n!) }
+	\label{eq:cat}
+\end{eqnarray}
+derivar uma implementação de $C_n$ que não calcule factoriais nenhuns.
+Isto é, derivar um ciclo-\textsf{for}
+\begin{spec}
+cat = cdots ⋅ for loop init where cdots
+\end{spec}
+que implemente esta função.
 
-loop :: Integral c => (c, c, c) -> (c, c, c)
-loop = g where g (a, b, c) = (div (a * b) c, b + 4, c + 1)
+\begin{propriedade}
+A função proposta coincidem com a definição dada:
+\begin{code}
+prop_cat = (>=0) .==>. (catdef  .==. cat)
+\end{code}
+\end{propriedade}
+%
+\textbf{Sugestão}: Começar por estudar muito bem o processo de cálculo dado
+no anexo \ref{sec:recmul} para o problema (semelhante) da função exponencial.
 
-inic :: (Num a, Num b, Num c) => (a, b, c)
-inic = (1, 2, 2)
 
-prj :: (a, b, c) -> a
-prj = p where p (a, _, _) = a
+\Problema
 
-cat :: (Integral c1, Integral c2) => c1 -> c2
-cat = prj . for loop inic
+As \bezier{curvas de Bézier}, designação dada em honra ao engenheiro
+\href{https://en.wikipedia.org/wiki/Pierre_B%C3%A9zier}{Pierre Bézier},
+são curvas ubíquas na área de computação gráfica, animação e modelação.
+Uma curva de Bézier é uma curva paramétrica, definida por um conjunto
+$\{P_0,...,P_N\}$ de pontos de controlo, onde $N$ é a ordem da curva.
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{cp2021t_media/Bezier_curves.png}
+  \caption{Exemplos de curvas de Bézier retirados da \bezier{ Wikipedia}.}
+\end{figure}
+
+O algoritmo de \emph{De Casteljau} é um método recursivo capaz de calcular
+curvas de Bézier num ponto. Apesar de ser mais lento do que outras abordagens,
+este algoritmo é numericamente mais estável, trocando velocidade por correção.
+
+De forma sucinta, o valor de uma curva de Bézier de um só ponto $\{P_0\}$
+(ordem $0$) é o próprio ponto $P_0$. O valor de uma curva de Bézier de ordem
+$N$ é calculado através da interpolação linear da curva de Bézier dos primeiros
+$N-1$ pontos e da curva de Bézier dos últimos $N-1$ pontos.
+
+A interpolação linear entre 2 números, no intervalo $[0, 1]$, é dada pela
+seguinte função:
+
+\begin{code}
 linear1d :: Rational -> Rational -> OverTime Rational
-linear1d a b = formula a b
- where
+linear1d a b = formula a b where
   formula :: Rational -> Rational -> Float -> Rational
   formula x y t = ((1.0 :: Rational) - (toRational t)) * x + (toRational t) * y
+\end{code}
+%
+A interpolação linear entre 2 pontos de dimensão $N$ é calculada através
+da interpolação linear de cada dimensão.
 
+O tipo de dados |NPoint| representa um ponto com $N$ dimensões.
+\begin{code}
 type NPoint = [Rational]
+\end{code}
+Por exemplo, um ponto de 2 dimensões e um ponto de 3 dimensões podem ser
+representados, respetivamente, por:
+\begin{spec}
+p2d = [1.2, 3.4]
+p3d = [0.2, 10.3, 2.4]
+\end{spec}
+%
+O tipo de dados |OverTime a| representa um termo do tipo |a| num dado instante
+(dado por um |Float|).
+\begin{code}
 type OverTime a = Float -> a
+\end{code}
+%
+O anexo \ref{sec:codigo} tem definida a função
+    \begin{spec}
+    calcLine :: NPoint -> (NPoint -> OverTime NPoint)
+    \end{spec}
+que calcula a interpolação linear entre 2 pontos, e a função
+    \begin{spec}
+    deCasteljau :: [NPoint] -> OverTime NPoint
+    \end{spec}
+que implementa o algoritmo respectivo.
 
+\begin{enumerate}
 
+\item Implemente |calcLine| como um catamorfismo de listas,
+testando a sua definição com a propriedade:
+    \begin{propriedade} Definição alternativa.
+\begin{code}
 prop_calcLine_def :: NPoint -> NPoint -> Float -> Bool
-prop_calcLine_def p q d = calcLine p q d == zipWithM linear1d p q d
+prop_calcLine_def p q d = calcLine p q d ==  zipWithM linear1d p q d
+\end{code}
+    \end{propriedade}
 
+\item Implemente a função |deCasteljau| como um hilomorfismo, testando agora a propriedade:
+    \begin{propriedade}
+      Curvas de Bézier são simétricas.
+\begin{code}
 prop_bezier_sym :: [[Rational]] -> Gen Bool
-prop_bezier_sym l = all (< delta) . calc_difs . bezs <$> elements ps
- where
-  calc_difs =
-    (\(x, y) -> zipWith (\w v -> if w >= v then w - v else v - w) x y)
-  bezs t =
-    ( deCasteljau l           t
-    , deCasteljau (reverse l) (fromRational (1 - (toRational t)))
-    )
+prop_bezier_sym l = all (< delta) ⋅ calc_difs ⋅ bezs <$> elements ps  where
+  calc_difs = (\(x, y) -> zipWith (\w v -> if w >= v then w - v else v - w) x y)
+  bezs t    = (deCasteljau l t, deCasteljau (reverse l) (fromRational (1 - (toRational t))))
   delta = 1e-2
+\end{code}
+    \end{propriedade}
 
+  \item Corra a função |runBezier| e aprecie o seu trabalho\footnote{%
+        A representação em Gloss é uma adaptação de um
+        \href{https://github.com/hrldcpr/Bezier.hs}{projeto}
+        de Harold Cooper.} clicando na janela que é aberta (que contém, a verde, um ponto
+        inicila) com o botão esquerdo do rato para adicionar mais pontos.
+        A tecla |Delete| apaga o ponto mais recente.
 
-type ℚ = Rational
-toℚ :: Real a => a -> Rational
-toℚ = toRational
-fromℚ :: Fractional a => Rational -> a
-fromℚ = fromRational
+\end{enumerate}
 
-calcLine :: NPoint -> (NPoint -> OverTime NPoint)
-calcLine = cataList h where h = undefined
+\Problema
 
-calc_line' :: [ℚ] -> [ℚ] -> Float -> [ℚ]
-calc_line' = myZipWithM linear1d
+Seja dada a fórmula que calcula a média de uma lista não vazia $x$,
+\begin{equation}
+avg\ x = \frac 1 k\sum_{i=1}^{k} x_i
+\end{equation}
+onde $k=length\ x$. Isto é, para sabermos a média de uma lista precisamos de dois catamorfismos: o que faz o somatório e o que calcula o comprimento a lista.
+Contudo, é facil de ver que
+\begin{quote}
+	$avg\ [a]=a$
+\\
+	$avg (a:x) = \frac 1 {k+1}(a+\sum_{i=1}^{k} x_i) = \frac{a+k(avg\ x)}{k+1}$ para $k=length\ x$
+\end{quote}
+Logo $avg$ está em recursividade mútua com $length$ e o par de funções pode ser expresso por um único catamorfismo, significando que a lista apenas é percorrida uma vez.
 
-myZipWithM :: (a1 -> b -> p -> a2) -> [a1] -> [b] -> p -> [a2]
-myZipWithM f xs ys = mySequenceA (myZipWith f xs ys)
+\begin{enumerate}
 
-mySequenceA :: [p -> a] -> p -> [a]
-mySequenceA = flip mySequenceA'
+\item	Recorra à lei de recursividade mútua para derivar a função
+|avg_aux = cata (either b q)| tal que
+|avg_aux = split avg length| em listas não vazias.
 
-myZipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
-myZipWith f a b = uncurry f <$> myZip (a, b)
+\item	Generalize o raciocínio anterior para o cálculo da média de todos os elementos de uma \LTree\ recorrendo a uma única travessia da árvore (i.e.\ catamorfismo).
 
-myZip :: ([a], [b]) -> [(a, b)]
-myZip = anaList outZip
+\end{enumerate}
+Verifique as suas funções testando a propriedade seguinte:
+\begin{propriedade}
+A média de uma lista não vazia e de uma \LTree\ com os mesmos elementos coincide,
+a menos de um erro de 0.1 milésimas:
+\begin{code}
+prop_avg = nonempty .==>. diff .<=. const 0.000001 where
+   diff l = avg l - (avgLTree ⋅ genLTree) l
+   genLTree = anaLTree lsplit
+   nonempty = (>[])
+\end{code}
+\end{propriedade}
 
-outZip :: ([a], [b]) -> () ∐ ((a, b), ([a], [b]))
-outZip l = case l of
-  ([]    , _     ) -> Left ()
-  (_     , []    ) -> Left ()
-  (a : as, b : bs) -> Right ((a, b), (as, bs))
+\Problema	(\textbf{NB}: Esta questão é \textbf{opcional} e funciona como \textbf{valorização} apenas para os alunos que desejarem fazê-la.)
 
-mySequenceA' :: p -> [p -> a] -> [a]
-mySequenceA' a = cataList (either nil g2) where g2 (f, fs) = f a : fs
+\vskip 1em \noindent
+Existem muitas linguagens funcionais para além do \Haskell, que é a linguagem usada neste trabalho prático. Uma delas é o \Fsharp\ da Microsoft. Na directoria \verb!fsharp! encontram-se os módulos \Cp, \Nat\ e \LTree\ codificados em \Fsharp. O que se pede é a biblioteca \BTree\ escrita na mesma linguagem.
 
+Modo de execução: o código que tiverem produzido nesta pergunta deve ser colocado entre o \verb!\begin{verbatim}! e o \verb!\end{verbatim}! da correspondente parte do anexo \ref{sec:resolucao}. Para além disso, os grupos podem demonstrar o código na oral.
+
+\newpage
+
+\part*{Anexos}
+
+\appendix
+
+\section{Como exprimir cálculos e diagramas em LaTeX/lhs2tex}
+Como primeiro exemplo, estudar o texto fonte deste trabalho para obter o
+efeito:\footnote{Exemplos tirados de \cite{Ol18}.}
+\begin{eqnarray*}
+\start
+	|id = split f g|
+%
+\just\equiv{ universal property }
+%
+        |lcbr(
+		p1 ⋅ id = f
+	)(
+		p2 ⋅ id = g
+	)|
+%
+\just\equiv{ identity }
+%
+        |lcbr(
+		p1 = f
+	)(
+		p2 = g
+	)|
+\qed
+\end{eqnarray*}
+
+Os diagramas podem ser produzidos recorrendo à \emph{package} \LaTeX\
+\href{https://ctan.org/pkg/xymatrix}{xymatrix}, por exemplo:
+\begin{eqnarray*}
+\xymatrix@@C=2cm{
+    |Nat0|
+           \ar[d]_-{|cataNat g|}
+&
+    |1 + Nat0|
+           \ar[d]^{|id + (cataNat g)|}
+           \ar[l]_-{|inNat|}
+\\
+     |B|
+&
+     |1 + B|
+           \ar[l]^-{|g|}
+}
+\end{eqnarray*}
+
+\section{Programação dinâmica por recursividade múltipla}\label{sec:recmul}
+Neste anexo dão-se os detalhes da resolução do Exercício \ref{ex:exp} dos apontamentos da
+disciplina\footnote{Cf.\ \cite{Ol18}, página \pageref{ex:exp}.},
+onde se pretende implementar um ciclo que implemente
+o cálculo da aproximação até |i=n| da função exponencial $exp\ x = e^x$,
+via série de Taylor:
+\begin{eqnarray}
+	exp\ x
+& = &
+	\sum_{i=0}^{\infty} \frac {x^i} {i!}
+\end{eqnarray}
+Seja $e\ x\ n = \sum_{i=0}^{n} \frac {x^i} {i!}$ a função que dá essa aproximação.
+É fácil de ver que |e x 0 = 1| e que $|e x (n+1)| = |e x n| + \frac {x^{n+1}} {(n+1)!}$.
+Se definirmos $|h x n| = \frac {x^{n+1}} {(n+1)!}$ teremos |e x| e |h x| em recursividade
+mútua. Se repetirmos o processo para |h x n| etc obteremos no total três funções nessa mesma
+situação:
+\begin{spec}
+e x 0 = 1
+e x (n+1) = h x n + e x n
+
+h x 0 = x
+h x (n+1) = x/(s n) * h x n
+
+s 0 = 2
+s (n+1) = 1 + s n
+\end{spec}
+Segundo a \emph{regra de algibeira} descrita na página \ref{pg:regra} deste enunciado,
+ter-se-á, de imediato:
+\begin{code}
+e' x = prj ⋅ for loop init where
+     init = (1,x,2)
+     loop(e,h,s)=(h+e,x/s*h,1+s)
+     prj(e,h,s) = e
+\end{code}
+
+\section{Código fornecido}\label{sec:codigo}
+
+\subsection*{Problema 1}
+
+\begin{code}
+expd :: Floating a => a -> a
+expd = Prelude.exp
+
+type OutExpAr a = Either () (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a)))
+\end{code}
+
+\subsection*{Problema 2}
+Definição da série de Catalan usando factoriais (\ref{eq:cat}):
+\begin{code}
+catdef n = div (fac((2*n))) ((fac((n+1))*(fac n)))
+\end{code}
+Oráculo para inspecção dos primeiros 26 números de Catalan\footnote{Fonte:
+\catalan{Wikipedia}.}:
+\begin{code}
+oracle = [
+    1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, 208012, 742900, 2674440, 9694845,
+    35357670, 129644790, 477638700, 1767263190, 6564120420, 24466267020,
+    91482563640, 343059613650, 1289904147324, 4861946401452
+    ]
+\end{code}
+
+\subsection*{Problema 3}
+Algoritmo:
+\begin{spec}
 deCasteljau :: [NPoint] -> OverTime NPoint
-deCasteljau = hyloAlgForm alg coalg
- where
-  coalg = undefined
-  alg   = undefined
-
-hyloAlgForm = undefined
-
-prop_avg :: (Ord b, Fractional b) => [b] -> Property
-prop_avg = nonempty .==>. diff .<=. const 0.000001
- where
-  diff l = avg l - (avgLTree . genLTree) l
-  genLTree = anaLTree lsplit
-  nonempty = (> [])
-
-avg :: Fractional b => [b] -> b
-avg = p1 . avg_aux
-
-
-avg_aux :: Fractional b => [b] -> (b, b)
-avg_aux = cataList (either b q) where
-  b () = (0, 0)
-  q (h, (a, l)) = ((a * l + h) / (l + 1), l + 1)
-
-avgLTree = p1 . cataLTree gene where gene = undefined
-
-
-e' :: (Fractional c1, Integral c2) => c1 -> c2 -> c1
-e' x = prj . for loop init
- where
-  init = (1, x, 2)
-  loop (e, h, s) = (h + e, x / s * h, 1 + s)
-  prj (e, h, s) = e
-
+deCasteljau [] = nil
+deCasteljau [p] = const p
+deCasteljau l = \pt -> (calcLine (p pt) (q pt)) pt where
+  p = deCasteljau (init l)
+  q = deCasteljau (tail l)
+\end{spec}
+Função auxiliar:
+\begin{spec}
+calcLine :: NPoint -> (NPoint -> OverTime NPoint)
+calcLine [] = const nil
+calcLine(p:x) = curry g p (calcLine x) where
+   g :: (Rational, NPoint -> OverTime NPoint) -> (NPoint -> OverTime NPoint)
+   g (d,f) l = case l of
+       []     -> nil
+       (x:xs) -> \z -> concat $ (sequenceA [singl ⋅ linear1d d x, f xs]) z
+\end{spec}
+2D:
+\begin{code}
 bezier2d :: [NPoint] -> OverTime (Float, Float)
 bezier2d [] = const (0, 0)
-bezier2d l  = \z ->
-  (fromRational >< fromRational) . (\[x, y] -> (x, y)) $ ((deCasteljau l) z)
-
-
-data World = World
-  { points :: [NPoint]
-  , time   :: Float
-  }
-
+bezier2d l = \z -> (fromRational >< fromRational) ⋅ (\[x, y] -> (x, y)) $ ((deCasteljau l) z)
+\end{code}
+Modelo:
+\begin{code}
+data World = World { points :: [NPoint]
+                   , time :: Float
+                   }
 initW :: World
 initW = World [] 0
 
 tick :: Float -> World -> World
-tick dt world = world { time = (time world) + dt }
+tick dt world = world { time=(time world) + dt }
 
 actions :: Event -> World -> World
 actions (EventKey (MouseButton LeftButton) Down _ p) world =
-  world { points = (points world) ++ [(\(x, y) -> map toRational [x, y]) p] }
+  world {points=(points world) ++ [(\(x, y) -> map toRational [x, y]) p]}
 actions (EventKey (SpecialKey KeyDelete) Down _ _) world =
-  world { points = cond (== []) id init (points world) }
+    world {points = cond (== []) id init (points world)}
 actions _ world = world
 
 scaleTime :: World -> Float
@@ -462,59 +527,58 @@ thicCirc :: Picture
 thicCirc = ThickCircle 4 10
 
 ps :: [Float]
-ps = map fromRational ps'
- where
+ps = map fromRational ps' where
   ps' :: [Rational]
-  ps' = [0, 0.01 .. 1]
-
-
+  ps' = [0, 0.01..1] -- interval
+\end{code}
+Gloss:
+\begin{code}
 picture :: World -> Picture
 picture world = Pictures
   [ animateBezier (scaleTime world) (points world)
-  , Color white . Line . map (bezier2dAt world) $ ps
-  , Color blue
-  . Pictures
-  $ [ Translate (fromRational x) (fromRational y) thicCirc
-    | [x, y] <- points world
-    ]
+  , Color white ⋅ Line ⋅ map (bezier2dAt world) $ ps
+  , Color blue ⋅ Pictures $ [Translate (fromRational x) (fromRational y) thicCirc | [x, y] <- points world]
   , Color green $ Translate cx cy thicCirc
-  ]
-  where (cx, cy) = bezier2dAtTime world
-
-
+  ] where
+  (cx, cy) = bezier2dAtTime world
+\end{code}
+Animação:
+\begin{code}
 animateBezier :: Float -> [NPoint] -> Picture
-animateBezier _ []  = Blank
+animateBezier _ [] = Blank
 animateBezier _ [_] = Blank
-animateBezier t l   = Pictures
+animateBezier t l = Pictures
   [ animateBezier t (init l)
   , animateBezier t (tail l)
-  , Color red . Line $ [a, b]
+  , Color red ⋅ Line $ [a, b]
   , Color orange $ Translate ax ay thicCirc
   , Color orange $ Translate bx by thicCirc
-  ]
- where
+  ] where
   a@(ax, ay) = bezier2d (init l) t
   b@(bx, by) = bezier2d (tail l) t
-
-
+\end{code}
+Propriedades e \emph{main}:
+\begin{code}
 runBezier :: IO ()
-runBezier =
-  play (InWindow "Bézier" (600, 600) (0, 0)) black 50 initW picture actions tick
+runBezier = play (InWindow "Bézier" (600, 600) (0,  0))
+  black 50 initW picture actions tick
 
 runBezierSym :: IO ()
-runBezierSym =
-  quickCheckWith (stdArgs { maxSize = 20, maxSuccess = 200 }) prop_bezier_sym
+runBezierSym = quickCheckWith (stdArgs {maxSize = 20, maxSuccess = 200} ) prop_bezier_sym
+\end{code}
 
-
-main :: IO ()
+Compilação e execução dentro do interpretador:\footnote{Pode ser útil em testes
+envolvendo \gloss{Gloss}. Nesse caso, o teste em causa deve fazer parte de uma função
+|main|.}
+\begin{code}
 main = runBezier
 
-run = do
-  system "ghc cp2021t"
-  system "./cp2021t"
+run = do { system "ghc cp2021t" ; system "./cp2021t" }
+\end{code}
 
-
-
+\subsection*{QuickCheck}
+Código para geração de testes:
+\begin{code}
 instance Arbitrary UnOp where
   arbitrary = elements [Negate, E]
 
@@ -529,15 +593,20 @@ instance (Arbitrary a) => Arbitrary (ExpAr a) where
     exp2  <- arbitrary
     a     <- arbitrary
 
-    frequency
-      . map (id >< pure)
-      $ [(20, X), (15, N a), (35, Bin binop exp1 exp2), (30, Un unop exp1)]
+    frequency ⋅ map (id >< pure) $ [(20, X), (15, N a), (35, Bin binop exp1 exp2), (30, Un unop exp1)]
 
 
 infixr 5 .=?=.
 (.=?=.) :: Real a => a -> a -> Bool
 (.=?=.) x y = (toRational x) == (toRational y)
 
+
+\end{code}
+
+\subsection*{Outras funções auxiliares}
+%----------------- Outras definições auxiliares -------------------------------------------%
+Lógicas:
+\begin{code}
 infixr 0 .==>.
 (.==>.) :: (Testable prop) => (a -> Bool) -> (a -> prop) -> a -> Property
 p .==>. f = \a -> p a ==> f a
@@ -557,6 +626,159 @@ f .<=. g = \a -> f a <= g a
 infixr 4 .&&&.
 (.&&&.) :: (a -> Bool) -> (a -> Bool) -> (a -> Bool)
 f .&&&. g = \a -> ((f a) && (g a))
-\end{minted}
-%\end{code}
+\end{code}
+
+%----------------- Soluções dos alunos -----------------------------------------%
+
+\section{Soluções dos alunos}\label{sec:resolucao}
+Os alunos devem colocar neste anexo as suas soluções para os exercícios
+propostos, de acordo com o "layout" que se fornece. Não podem ser
+alterados os nomes ou tipos das funções dadas, mas pode ser adicionado
+texto, disgramas e/ou outras funções auxiliares que sejam necessárias.
+
+Valoriza-se a escrita de \emph{pouco} código que corresponda a soluções
+simples e elegantes.
+
+\subsection*{Problema 1} \label{pg:P1}
+São dadas:
+\begin{code}
+cataExpAr g = g ⋅ recExpAr (cataExpAr g) ⋅ outExpAr
+anaExpAr g = inExpAr ⋅ recExpAr (anaExpAr g) ⋅ g
+hyloExpAr h g = cataExpAr h ⋅ anaExpAr g
+
+eval_exp :: Floating a => a -> (ExpAr a) -> a
+eval_exp a = cataExpAr (g_eval_exp a)
+
+optmize_eval :: (Floating a, Eq a) => a -> (ExpAr a) -> a
+optmize_eval a = hyloExpAr (gopt a) clean
+
+sd :: Floating a => ExpAr a -> ExpAr a
+sd = p2 ⋅ cataExpAr sd_gen
+
+ad :: Floating a => a -> ExpAr a -> a
+ad v = p2 ⋅ cataExpAr (ad_gen v)
+\end{code}
+Definir:
+
+\begin{code}
+outExpAr X = i1 ()
+outExpAr (N a) = i2 $ i1 a
+outExpAr (Bin op l r) = i2 $ i2 $ i1 (op,(l,r))
+outExpAr (Un op a) = i2 $ i2 $ i2 (op,a)
+---
+recExpAr f  = baseExpAr id id id f f id f
+
+---
+
+g_eval_exp x (Left ()) = x
+g_eval_exp x (Right (Left a)) = a
+g_eval_exp x (Right (Right (Left (Sum,(e,d))))) = e+d
+g_eval_exp x (Right (Right (Left (Product,(e,d))))) = e*d
+g_eval_exp x (Right (Right (Right (Negate,a)))) = negate a
+g_eval_exp x (Right (Right (Right (E,a)))) = expd a
+
+---
+clean X = i1 ()
+clean (N a) = i2 $ i1 a
+clean (Bin Product (N 0) r) = i2 $ i1 0
+clean (Bin Product l (N 0)) = i2 $ i1 0
+clean (Bin op l r) = i2 $ i2 $ i1 (op,(l,r))
+clean (Un E (N 0)) = i2 $ i1 1
+clean (Un Negate (N 0)) = i2 $ i1 0
+clean (Un op a) = i2 $ i2 $ i2 (op,a)
+---
+gopt :: Floating a => a -> Either () (Either a (Either (BinOp, (a, a)) (UnOp, a))) -> a
+gopt = g_eval_exp
+\end{code}
+
+\begin{code}
+sd_gen :: Floating a =>
+    Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) -> (ExpAr a, ExpAr a)
+sd_gen (Left ()) = (X, N 1)
+sd_gen (Right (Left a)) = (N a, N 0)
+sd_gen (Right (Right (Left (Sum,((e1,d1),(e2,d2)))))) = (Bin Sum e1 e2, Bin Sum d1 d2)
+
+
+sd_gen (Right (Right (Left (Product,((e1,d1),(e2,d2)))))) = (Bin Product e1 e2, Bin Sum (Bin Product e1 d2) (Bin Product d1 e2 ))
+sd_gen (Right (Right (Right (Negate,(e,d))))) = (Un Negate e , Un Negate d)
+sd_gen (Right (Right (Right (E,(e,d))))) = (Un E e , Bin Product (Un E e) d)
+\end{code}
+
+\begin{code}
+ad_gen x (Left ()) = (x, 1)
+ad_gen x (Right (Left a)) = (a, 0)
+ad_gen x (Right (Right (Left (Sum,((e1,d1),(e2,d2)))))) = (e1+e2, d1+d2)
+ad_gen x (Right (Right (Left (Product,((e1,d1),(e2,d2)))))) = (e1*e2, e1*d2 + e2*d1)
+ad_gen x (Right (Right (Right (Negate,(e,d))))) = (negate e, negate d)
+ad_gen x (Right (Right (Right (E,(e,d))))) = (expd e, d * (expd e))
+\end{code}
+
+\subsection*{Problema 2}
+Definir
+\begin{code}
+loop = g where g(a,b,c) = (div (a*b) c, b+4, c+1)
+inic = (1,2,2)
+prj = p where p(a,_,_) = a
+\end{code}
+por forma a que
+\begin{code}
+cat = prj ⋅ (for loop inic)
+\end{code}
+seja a função pretendida.
+\textbf{NB}: usar divisão inteira.
+Apresentar de seguida a justificação da solução encontrada.
+
+\subsection*{Problema 3}
+
+\begin{code}
+calcLine :: NPoint -> (NPoint -> OverTime NPoint)
+calcLine = cataList h where
+   h = undefined
+
+deCasteljau :: [NPoint] -> OverTime NPoint
+deCasteljau = hyloAlgForm alg coalg where
+   coalg = undefined
+   alg = undefined
+
+hyloAlgForm = undefined
+\end{code}
+
+\subsection*{Problema 4}
+
+Solução para listas não vazias:
+\begin{code}
+avg = p1.avg_aux
+\end{code}
+
+\begin{code}
+avg_aux = cataList (either b q) where
+   b () = (0,0)
+   q (h,(a,l)) = ((h + (a*l)) / (l+1) ,l+1)
+\end{code}
+Solução para árvores de tipo \LTree:
+\begin{code}
+avgLTree = p1.cataLTree gene where
+   gene = either g q where
+      g a = (a,1)
+      q((a1,l1),(a2,l2)) = (((a1*l1)+(a2*l2))/(l1+l2),l1+l2)
+\end{code}
+
+\subsection*{Problema 5}
+Inserir em baixo o código \Fsharp\ desenvolvido, entre \verb!\begin{verbatim}! e \verb!\end{verbatim}!:
+
+\begin{verbatim}
+\end{verbatim}
+
+%----------------- Fim do anexo com soluções dos alunos ------------------------%
+
+%----------------- Índice remissivo (exige makeindex) -------------------------%
+
+\printindex
+
+%----------------- Bibliografia (exige bibtex) --------------------------------%
+
+\bibliographystyle{plain}
+\bibliography{cp2021t}
+
+%----------------- Fim do documento -------------------------------------------%
 \end{document}
