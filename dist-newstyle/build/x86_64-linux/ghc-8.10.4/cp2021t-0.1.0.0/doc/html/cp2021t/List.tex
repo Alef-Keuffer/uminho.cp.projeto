@@ -33,7 +33,7 @@ hyloList :: (Either () (b1, c1) -> c1) -> (c2 -> Either b2 (b1, c2)) -> c2 -> c1
 baseList :: (a -> b1) -> (c -> d) -> Either b2 (a, c) -> Either b2 (b1, d)
 \end{tabular}]
 \item[\begin{tabular}{@{}l}
-eval :: Integer -> {\char 91}Integer{\char 93} -> Integer
+eval :: Num d => d -> {\char 91}d{\char 93} -> d
 \end{tabular}]
 \item[\begin{tabular}{@{}l}
 invl :: {\char 91}a{\char 93} -> {\char 91}a{\char 93}

@@ -17,15 +17,25 @@ extra-source-files: CHANGELOG.md
 
 executable cp2021t
   main-is:          cp2021t.lhs
-  exposed-modules:
+  other-modules:
     BTree
     Cp
     List
     LTree
-    Main
     Nat
 
-  other-modules:
+  build-depends:
+    , base        ^>=4.14.1.0
+    , gloss
+    , process
+    , QuickCheck
+
+  hs-source-dirs:   lib
+  default-language: Haskell2010
+
+library
+  exposed-modules:
+    BTree
     Cp
     List
     LTree

@@ -162,10 +162,10 @@ bang :: a -> ()
 dup :: c -> (c, c)
 \end{tabular}]
 \item[\begin{tabular}{@{}l}
-zero :: b -> Integer
+zero :: Num a => b -> a
 \end{tabular}]
 \item[\begin{tabular}{@{}l}
-one :: b -> Integer
+one :: Num a => b -> a
 \end{tabular}]
 \item[\begin{tabular}{@{}l}
 nil :: b -> {\char 91}a{\char 93}
@@ -174,10 +174,10 @@ nil :: b -> {\char 91}a{\char 93}
 cons :: (a, {\char 91}a{\char 93}) -> {\char 91}a{\char 93}
 \end{tabular}]
 \item[\begin{tabular}{@{}l}
-add :: (Integer, Integer) -> Integer
+add :: Num c => (c, c) -> c
 \end{tabular}]
 \item[\begin{tabular}{@{}l}
-mul :: (Integer, Integer) -> Integer
+mul :: Num c => (c, c) -> c
 \end{tabular}]
 \item[\begin{tabular}{@{}l}
 conc :: ({\char 91}a{\char 93}, {\char 91}a{\char 93}) -> {\char 91}a{\char 93}

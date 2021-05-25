@@ -52,12 +52,12 @@ dstr :: Strong m => (m a, m b) -> m (a, b)
 splitm :: Strong ff => ff (a -> b) -> a -> ff b
 bang :: a -> ()
 dup :: c -> (c, c)
-zero :: b -> Integer
-one :: b -> Integer
+zero :: Num a => b -> a
+one :: Num a => b -> a
 nil :: b -> [a]
 cons :: (a, [a]) -> [a]
-add :: (Integer, Integer) -> Integer
-mul :: (Integer, Integer) -> Integer
+add :: Num c => (c, c) -> c
+mul :: Num c => (c, c) -> c
 conc :: ([a], [a]) -> [a]
 true :: b -> Bool
 nothing :: b -> Maybe a
@@ -149,7 +149,7 @@ recList :: (c -> d) -> Either b1 (b2, c) -> Either b1 (b2, d)
 anaList :: (c -> Either b (a, c)) -> c -> [a]
 hyloList :: (Either () (b1, c1) -> c1) -> (c2 -> Either b2 (b1, c2)) -> c2 -> c1
 baseList :: (a -> b1) -> (c -> d) -> Either b2 (a, c) -> Either b2 (b1, d)
-eval :: Integer -> [Integer] -> Integer
+eval :: Num d => d -> [d] -> d
 invl :: [a] -> [a]
 look :: Eq a => a -> [(a, b)] -> Maybe b
 iSort :: Ord a => [a] -> [a]
@@ -194,8 +194,8 @@ countLTree :: LTree b -> Integer
 tips :: LTree a -> [a]
 dfac :: Integral p => p -> p
 dfacd :: Integral b => (b, b) -> Either b ((b, b), (b, b))
-dsq' :: Integer -> Integer
-dsq :: Integer -> Integer
+dsq' :: Integral p => p -> p
+dsq :: Integral p => p -> p
 fib :: Integer -> Integer
 fibd :: (Ord b, Num b) => b -> Either () (b, b)
 mSort :: Ord a => [a] -> [a]
@@ -220,9 +220,7 @@ instance GHC.Base.Monad LTree.LTree
 instance Cp.Strong LTree.LTree
 instance GHC.Base.Applicative LTree.LTree
 
-module Main
-
--- | <h2>Problema 1</h2>
+module Solucoes
 data ExpAr a
 X :: ExpAr a
 N :: a -> ExpAr a
@@ -234,8 +232,57 @@ Product :: BinOp
 data UnOp
 Negate :: UnOp
 E :: UnOp
-inExpAr :: Either b (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a))) -> ExpAr a
-baseExpAr :: (a1 -> b1) -> (a2 -> b2) -> (a3 -> b3) -> (a4 -> b4) -> (c1 -> d1) -> (a5 -> b5) -> (c2 -> d2) -> Either a1 (Either a2 (Either (a3, (a4, c1)) (a5, c2))) -> Either b1 (Either b2 (Either (b3, (b4, d1)) (b5, d2)))
+
+-- | <tt><a>inExpAr</a></tt> ≡ <tt><a>const</a> X <a>∐</a> <a>N</a>
+--   <a>∐</a> bin <a>∐</a> (<a>Un</a> <tt>＾</tt>) where bin (op, (a, b)) =
+--   <a>Bin</a> op a b</tt>
+inExpAr :: (b ∐ (a ∐ (BinExp a ∐ UnExp a))) -> ExpAr a
+
+-- | <tt><a>baseExpAr</a></tt> ≡ <tt>f g h j k l z = f <a>⊕</a> g <a>⊕</a>
+--   h <a>×</a> j <a>×</a> k <a>⊕</a> l × z</tt>
+baseExpAr :: (a -> b) -> (c -> d) -> (e -> f) -> (g -> h) -> (i -> j) -> (k -> l) -> (m -> n) -> (a ∐ (c ∐ ((e × (g × i)) ∐ (k × m)))) -> b ∐ (d ∐ ((f × (h × j)) ∐ (l × n)))
+cataExpAr :: ((() ∐ (c ∐ ((BinOp × (e × e)) ∐ (UnOp × e)))) -> e) -> ExpAr c -> e
+anaExpAr :: (a -> b ∐ (c ∐ ((BinOp × (a × a)) ∐ (UnOp × a)))) -> a -> ExpAr c
+hyloExpAr :: ((() ∐ (c ∐ ((BinOp × (d × d)) ∐ (UnOp × d)))) -> d) -> (a -> b ∐ (c ∐ ((BinOp × (a × a)) ∐ (UnOp × a)))) -> a -> d
+expd :: Floating a => a -> a
+eval_exp :: Floating a => a -> ExpAr a -> a
+optmize_eval :: (Floating a, Eq a) => a -> ExpAr a -> a
+sd :: Floating a => ExpAr a -> ExpAr a
+ad :: Floating a => a -> ExpAr a -> a
+type a × b = (a, b)
+infixr 6 ×
+
+-- | bimap for tuple
+(×) :: (a -> b) -> (c -> d) -> (a, c) -> (b, d)
+infixr 6 ×
+
+-- | bimap for either
+(⊕) :: (a -> b) -> (c -> d) -> (a ∐ c) -> b ∐ d
+infixr 4 ⊕
+type (∐) = Either
+infixr 4 ∐
+(∐) :: (a -> c) -> (b -> c) -> (a ∐ b) -> c
+infixr 4 ∐
+
+-- | ≡ <tt><a>BinOp</a> <a>×</a> (<a>ExpAr</a> d <a>×</a> <a>ExpAr</a>
+--   d)</tt>
+type BinExp d = BinOp × ExpAr d × ExpAr d
+type UnExp d = UnOp × ExpAr d
+type OutExpAr a = () ∐ a ∐ BinExp a ∐ UnExp a
+class Injective a b
+to :: forall b1 a1. (Injective a b, b1 ~ b, a1 ~ a) => a -> b
+outExpAr :: ExpAr a -> OutExpAr a
+recExpAr :: (a -> e) -> (b ∐ (c ∐ ((d × (a × a)) ∐ (g × a)))) -> b ∐ (c ∐ ((d × (e × e)) ∐ (g × e)))
+g_eval_exp :: Floating c => c -> (b ∐ (c ∐ ((BinOp × (c × c)) ∐ (UnOp × c)))) -> c
+clean :: (Eq a, Num a) => ExpAr a -> OutExpAr a
+gopt :: Floating a => a -> (() ∐ (a ∐ ((BinOp × (a × a)) ∐ (UnOp × a)))) -> a
+type Dup d = d × d
+type Bin d = BinOp × d × d
+type Un d = UnOp × d
+bin_aux :: (t -> t -> t) -> (t -> t -> t) -> (BinOp, Dup (Dup t)) -> Dup t
+un_aux :: (t1 -> t2) -> (t2 -> t1 -> t2) -> (t1 -> t2) -> (UnOp, Dup t1) -> Dup t2
+sd_gen :: Floating a => (() ∐ (a ∐ (Bin (Dup (ExpAr a)) ∐ Un (Dup (ExpAr a))))) -> Dup (ExpAr a)
+ad_gen :: Floating a => a -> (() ∐ (a ∐ ((BinOp, Dup (Dup a)) ∐ (UnOp, Dup a)))) -> Dup a
 prop_in_out_idExpAr :: Eq a => ExpAr a -> Bool
 prop_out_in_idExpAr :: Eq a => OutExpAr a -> Bool
 prop_sum_idr :: (Floating a, Real a) => a -> ExpAr a -> Bool
@@ -253,113 +300,25 @@ prop_product_rule :: (Real a, Floating a) => ExpAr a -> ExpAr a -> Bool
 prop_e_rule :: (Real a, Floating a) => ExpAr a -> Bool
 prop_negate_rule :: (Real a, Floating a) => ExpAr a -> Bool
 prop_congruent :: (Floating a, Real a) => a -> ExpAr a -> Bool
-
--- | <h2>Problema 2</h2>
-fib' :: Integer -> Integer
+fib' :: (Integral c, Num b) => c -> b
 f' :: (Integral c, Num b) => b -> b -> b -> c -> b
+catdef :: Integer -> Integer
+oracle :: Num a => [a]
 prop_cat :: Integer -> Property
-
--- | <h2>Problema 3</h2>
+loop :: Integral c => (c, c, c) -> (c, c, c)
+inic :: (Num a, Num b, Num c) => (a, b, c)
+prj :: (a, b, c) -> a
+cat :: (Integral c1, Integral c2) => c1 -> c2
 linear1d :: Rational -> Rational -> OverTime Rational
 type NPoint = [Rational]
 type OverTime a = Float -> a
 prop_calcLine_def :: NPoint -> NPoint -> Float -> Bool
 prop_bezier_sym :: [[Rational]] -> Gen Bool
+type ℚ = Rational
+toℚ :: Real a => a -> Rational
+fromℚ :: Fractional a => Rational -> a
 
--- | <h2>Problema 4</h2>
-prop_avg :: [Double] -> Property
-
--- | <h1>Programação dinâmica por recursividade múltipla</h1>
-e' :: (Integral c1, Fractional c2) => c2 -> c1 -> c2
-
--- | <h1>Código Fornecido</h1>
---   
---   <h2>Problema 1</h2>
-type OutExpAr a = Either () (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a)))
-expd :: Floating a => a -> a
-
--- | <h2>Problema 2</h2>
-catdef :: Integer -> Integer
-oracle :: [Integer]
-
--- | <h2>Problema 3</h2>
---   
---   <h3>2D</h3>
-bezier2d :: [NPoint] -> OverTime (Float, Float)
-
--- | <h3>Modelo</h3>
-data World
-World :: [NPoint] -> Float -> World
-[points] :: World -> [NPoint]
-[time] :: World -> Float
-initW :: World
-tick :: Float -> World -> World
-actions :: Event -> World -> World
-scaleTime :: World -> Float
-bezier2dAtTime :: World -> (Float, Float)
-bezier2dAt :: World -> OverTime (Float, Float)
-thicCirc :: Picture
-ps :: [Float]
-
--- | <h3>Gloss</h3>
-picture :: World -> Picture
-
--- | <h3>Animação</h3>
-animateBezier :: Float -> [NPoint] -> Picture
-
--- | <h3>Propriedades e main</h3>
-runBezier :: IO ()
-runBezierSym :: IO ()
-
--- | <h4>Compilação e execução dentro do interpretador</h4>
-main :: IO ()
-run :: IO ExitCode
-
--- | <h2>Outras funções auxiliares</h2>
-(.=?=.) :: Real a => a -> a -> Bool
-infixr 5 .=?=.
-(.==>.) :: Testable prop => (a -> Bool) -> (a -> prop) -> a -> Property
-infixr 0 .==>.
-(.<==>.) :: (a -> Bool) -> (a -> Bool) -> a -> Property
-infixr 0 .<==>.
-(.==.) :: Eq b => (a -> b) -> (a -> b) -> a -> Bool
-infixr 4 .==.
-(.<=.) :: Ord b => (a -> b) -> (a -> b) -> a -> Bool
-infixr 4 .<=.
-(.&&&.) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
-infixr 4 .&&&.
-
--- | <h1>Solução dos Alunos</h1>
---   
---   <h2>Problema 1</h2>
---   
---   <h3>Dados</h3>
-cataExpAr :: (b -> c) -> a -> c
-anaExpAr :: (a1 -> b) -> a1 -> ExpAr a2
-hyloExpAr :: (b1 -> c) -> (a -> b2) -> a -> c
-eval_exp :: Floating a => a -> ExpAr a -> a
-optmize_eval :: (Floating a, Eq a) => a -> ExpAr a -> a
-sd :: Floating a => ExpAr a -> ExpAr a
-ad :: Floating a => a -> ExpAr a -> a
-
--- | <h3>Definir</h3>
-outExpAr :: a
-recExpAr :: a
-g_eval_exp :: a
-clean :: a
-gopt :: a
-sd_gen :: Floating a => Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) -> (ExpAr a, ExpAr a)
-ad_gen :: a
-
--- | <h2>Problema 2</h2>
-loop :: a
-inic :: a
-prj :: a
-cat :: Integer -> c
-
--- | <h2>Problema 3</h2>
---   
---   Spec
+-- | Spec
 --   
 --   <pre>
 --   <a>calcLine</a> :: <a>NPoint</a> -&gt; (<a>NPoint</a> -&gt; <a>OverTime</a> <a>NPoint</a>)
@@ -372,6 +331,13 @@ cat :: Integer -> c
 --       (x : xs) -&gt; <a>concat</a> . <a>sequenceA</a> [<a>singl</a> . <a>linear1d</a> d x, f xs]
 --   </pre>
 calcLine :: NPoint -> NPoint -> OverTime NPoint
+calc_line' :: [ℚ] -> [ℚ] -> Float -> [ℚ]
+myZipWithM :: (a1 -> b -> p -> a2) -> [a1] -> [b] -> p -> [a2]
+mySequenceA :: [p -> a] -> p -> [a]
+myZipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+myZip :: ([a], [b]) -> [(a, b)]
+outZip :: ([a], [b]) -> () ∐ ((a, b), ([a], [b]))
+mySequenceA' :: p -> [p -> a] -> [a]
 
 -- | Spec
 --   
@@ -387,17 +353,51 @@ calcLine :: NPoint -> NPoint -> OverTime NPoint
 --   </pre>
 deCasteljau :: [NPoint] -> OverTime NPoint
 hyloAlgForm :: a
-
--- | <h2>Problema 4</h2>
-avg :: a -> c
-avg_aux :: a
+prop_avg :: (Ord b, Fractional b) => [b] -> Property
+avg :: Fractional b => [b] -> b
+avg_aux :: Fractional b => [b] -> (b, b)
 avgLTree :: LTree b -> c
-instance GHC.Show.Show Main.BinOp
-instance GHC.Classes.Eq Main.BinOp
-instance GHC.Show.Show Main.UnOp
-instance GHC.Classes.Eq Main.UnOp
-instance GHC.Show.Show a => GHC.Show.Show (Main.ExpAr a)
-instance GHC.Classes.Eq a => GHC.Classes.Eq (Main.ExpAr a)
-instance Test.QuickCheck.Arbitrary.Arbitrary a => Test.QuickCheck.Arbitrary.Arbitrary (Main.ExpAr a)
-instance Test.QuickCheck.Arbitrary.Arbitrary Main.UnOp
-instance Test.QuickCheck.Arbitrary.Arbitrary Main.BinOp
+e' :: (Fractional c1, Integral c2) => c1 -> c2 -> c1
+bezier2d :: [NPoint] -> OverTime (Float, Float)
+data World
+World :: [NPoint] -> Float -> World
+[points] :: World -> [NPoint]
+[time] :: World -> Float
+initW :: World
+tick :: Float -> World -> World
+actions :: Event -> World -> World
+scaleTime :: World -> Float
+bezier2dAtTime :: World -> (Float, Float)
+bezier2dAt :: World -> OverTime (Float, Float)
+thicCirc :: Picture
+ps :: [Float]
+picture :: World -> Picture
+animateBezier :: Float -> [NPoint] -> Picture
+runBezier :: IO ()
+runBezierSym :: IO ()
+main :: IO ()
+run :: IO ExitCode
+(.=?=.) :: Real a => a -> a -> Bool
+infixr 5 .=?=.
+(.==>.) :: Testable prop => (a -> Bool) -> (a -> prop) -> a -> Property
+infixr 0 .==>.
+(.<==>.) :: (a -> Bool) -> (a -> Bool) -> a -> Property
+infixr 0 .<==>.
+(.==.) :: Eq b => (a -> b) -> (a -> b) -> a -> Bool
+infixr 4 .==.
+(.<=.) :: Ord b => (a -> b) -> (a -> b) -> a -> Bool
+infixr 4 .<=.
+(.&&&.) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
+infixr 4 .&&&.
+instance GHC.Show.Show Solucoes.BinOp
+instance GHC.Classes.Eq Solucoes.BinOp
+instance GHC.Show.Show Solucoes.UnOp
+instance GHC.Classes.Eq Solucoes.UnOp
+instance GHC.Show.Show a => GHC.Show.Show (Solucoes.ExpAr a)
+instance GHC.Classes.Eq a => GHC.Classes.Eq (Solucoes.ExpAr a)
+instance Solucoes.Injective (Solucoes.ExpAr a) (Solucoes.OutExpAr a)
+instance GHC.Num.Num c => Solucoes.Injective Solucoes.BinOp ((c, c) -> c)
+instance GHC.Float.Floating c => Solucoes.Injective Solucoes.UnOp (c -> c)
+instance Test.QuickCheck.Arbitrary.Arbitrary a => Test.QuickCheck.Arbitrary.Arbitrary (Solucoes.ExpAr a)
+instance Test.QuickCheck.Arbitrary.Arbitrary Solucoes.UnOp
+instance Test.QuickCheck.Arbitrary.Arbitrary Solucoes.BinOp
