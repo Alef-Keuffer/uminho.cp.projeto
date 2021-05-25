@@ -128,7 +128,7 @@ type UnExp d = UnOp × ExpAr d
 type OutExpAr a = () ∐ a ∐ BinExp a ∐ UnExp a
 -- -----------------------------------------------------------------------------
 class Injective a b where
-    to :: forall b1 a1. (b1 ~ b, a1 ~ a) ⇒ a → b
+    to :: ∀ b1 a1. (b1 ~ b, a1 ~ a) ⇒ a → b
 -- -----------------------------------------------------------------------------
 instance Injective (ExpAr a) (OutExpAr a) where
   to X            = Left ()
