@@ -1,0 +1,768 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# OPTIONS_GHC -XNPlusKPatterns #-}</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-comment">-- (c) MP-I (1998/9-2006/7) and CP (2005/6-2016/7)</span><span>
+</span><span id="line-4"></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">BTree</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-6"></span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Cp.html"><span class="hs-identifier">Cp</span></a></span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier">Data.List</span></a></span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier">Data.Monoid</span></a></span><span>
+</span><span id="line-10"></span><span>
+</span><span id="line-11"></span><span class="hs-comment">-- (1) Datatype definition -----------------------------------------------------</span><span>
+</span><span id="line-12"></span><span>
+</span><span id="line-13"></span><span class="hs-keyword">data</span><span> </span><span id="BTree"><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-var">BTree</span></a></span></span><span> </span><span id="local-6989586621679067266"><span class="annot"><a href="#local-6989586621679067266"><span class="hs-identifier hs-type">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Empty"><span class="annot"><a href="BTree.html#Empty"><span class="hs-identifier hs-var">Empty</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span id="Node"><span class="annot"><a href="BTree.html#Node"><span class="hs-identifier hs-var">Node</span></a></span></span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679067266"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">,</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067266"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067266"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span id="local-6989586621679067149"><span id="local-6989586621679067151"><span id="local-6989586621679067153"><span class="annot"><span class="annottext">Int -&gt; BTree a -&gt; ShowS
+[BTree a] -&gt; ShowS
+BTree a -&gt; String
+(Int -&gt; BTree a -&gt; ShowS)
+-&gt; (BTree a -&gt; String) -&gt; ([BTree a] -&gt; ShowS) -&gt; Show (BTree a)
+forall a. Show a =&gt; Int -&gt; BTree a -&gt; ShowS
+forall a. Show a =&gt; [BTree a] -&gt; ShowS
+forall a. Show a =&gt; BTree a -&gt; String
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [BTree a] -&gt; ShowS
+$cshowList :: forall a. Show a =&gt; [BTree a] -&gt; ShowS
+show :: BTree a -&gt; String
+$cshow :: forall a. Show a =&gt; BTree a -&gt; String
+showsPrec :: Int -&gt; BTree a -&gt; ShowS
+$cshowsPrec :: forall a. Show a =&gt; Int -&gt; BTree a -&gt; ShowS
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></a></span></span></span></span><span>
+</span><span id="line-14"></span><span>
+</span><span id="line-15"></span><span id="local-6989586621679067244"><span class="annot"><a href="BTree.html#inBTree"><span class="hs-identifier hs-type">inBTree</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-type">Either</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679067244"><span class="hs-identifier hs-type">b</span></a></span><span class="hs-special">,</span><span class="hs-special">(</span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067244"><span class="hs-identifier hs-type">b</span></a></span><span class="hs-special">,</span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067244"><span class="hs-identifier hs-type">b</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067244"><span class="hs-identifier hs-type">b</span></a></span></span><span>
+</span><span id="line-16"></span><span id="inBTree"><span class="annot"><span class="annottext">inBTree :: Either () (b, (BTree b, BTree b)) -&gt; BTree b
+</span><a href="BTree.html#inBTree"><span class="hs-identifier hs-var hs-var">inBTree</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(() -&gt; BTree b)
+-&gt; ((b, (BTree b, BTree b)) -&gt; BTree b)
+-&gt; Either () (b, (BTree b, BTree b))
+-&gt; BTree b
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">BTree b -&gt; () -&gt; BTree b
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="annot"><span class="annottext">BTree b
+forall a. BTree a
+</span><a href="BTree.html#Empty"><span class="hs-identifier hs-var">Empty</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(b, (BTree b, BTree b)) -&gt; BTree b
+forall a. (a, (BTree a, BTree a)) -&gt; BTree a
+</span><a href="BTree.html#Node"><span class="hs-identifier hs-var">Node</span></a></span><span>
+</span><span id="line-17"></span><span>
+</span><span id="line-18"></span><span id="local-6989586621679067247"><span class="annot"><a href="BTree.html#outBTree"><span class="hs-identifier hs-type">outBTree</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067247"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-type">Either</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679067247"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">,</span><span class="hs-special">(</span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067247"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">,</span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067247"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span></span><span>
+</span><span id="line-19"></span><span id="outBTree"><span class="annot"><span class="annottext">outBTree :: BTree a -&gt; Either () (a, (BTree a, BTree a))
+</span><a href="BTree.html#outBTree"><span class="hs-identifier hs-var hs-var">outBTree</span></a></span></span><span> </span><span class="annot"><span class="annottext">BTree a
+</span><a href="BTree.html#Empty"><span class="hs-identifier hs-var">Empty</span></a></span><span>              </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">() -&gt; Either () (a, (BTree a, BTree a))
+forall a b. a -&gt; Either a b
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">Left</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-20"></span><span class="annot"><a href="BTree.html#outBTree"><span class="hs-identifier hs-var">outBTree</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="BTree.html#Node"><span class="hs-identifier hs-type">Node</span></a></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679067143"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067143"><span class="hs-identifier hs-var">a</span></a></span></span><span class="hs-special">,</span><span class="hs-special">(</span><span id="local-6989586621679067142"><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067142"><span class="hs-identifier hs-var">t1</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067141"><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067141"><span class="hs-identifier hs-var">t2</span></a></span></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a, (BTree a, BTree a)) -&gt; Either () (a, (BTree a, BTree a))
+forall a b. b -&gt; Either a b
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">Right</span></a></span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067143"><span class="hs-identifier hs-var">a</span></a></span><span class="hs-special">,</span><span class="hs-special">(</span><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067142"><span class="hs-identifier hs-var">t1</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067141"><span class="hs-identifier hs-var">t2</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-21"></span><span>
+</span><span id="line-22"></span><span class="hs-comment">-- (2) Ana + cata + hylo -------------------------------------------------------</span><span>
+</span><span id="line-23"></span><span>
+</span><span id="line-24"></span><span class="hs-comment">-- recBTree g = id -|- (id &gt;&lt; (g &gt;&lt; g))</span><span>
+</span><span id="line-25"></span><span>
+</span><span id="line-26"></span><span id="recBTree"><span class="annot"><span class="annottext">recBTree :: (a -&gt; d) -&gt; Either b (b, (a, a)) -&gt; Either b (b, (d, d))
+</span><a href="BTree.html#recBTree"><span class="hs-identifier hs-var hs-var">recBTree</span></a></span></span><span> </span><span id="local-6989586621679067139"><span class="annot"><span class="annottext">a -&gt; d
+</span><a href="#local-6989586621679067139"><span class="hs-identifier hs-var">g</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(b -&gt; b)
+-&gt; (a -&gt; d) -&gt; Either b (b, (a, a)) -&gt; Either b (b, (d, d))
+forall a b a d b.
+(a -&gt; b)
+-&gt; (a -&gt; d) -&gt; Either b (a, (a, a)) -&gt; Either b (b, (d, d))
+</span><a href="BTree.html#baseBTree"><span class="hs-identifier hs-var">baseBTree</span></a></span><span> </span><span class="annot"><span class="annottext">b -&gt; b
+forall a. a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">id</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; d
+</span><a href="#local-6989586621679067139"><span class="hs-identifier hs-var">g</span></a></span><span>
+</span><span id="line-27"></span><span>
+</span><span id="line-28"></span><span id="cataBTree"><span class="annot"><span class="annottext">cataBTree :: (Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var hs-var">cataBTree</span></a></span></span><span> </span><span id="local-6989586621679067135"><span class="annot"><span class="annottext">Either () (b, (d, d)) -&gt; d
+</span><a href="#local-6989586621679067135"><span class="hs-identifier hs-var">g</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Either () (b, (d, d)) -&gt; d
+</span><a href="#local-6989586621679067135"><span class="hs-identifier hs-var">g</span></a></span><span> </span><span class="annot"><span class="annottext">(Either () (b, (d, d)) -&gt; d)
+-&gt; (BTree b -&gt; Either () (b, (d, d))) -&gt; BTree b -&gt; d
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(BTree b -&gt; d)
+-&gt; Either () (b, (BTree b, BTree b)) -&gt; Either () (b, (d, d))
+forall a d b b.
+(a -&gt; d) -&gt; Either b (b, (a, a)) -&gt; Either b (b, (d, d))
+</span><a href="BTree.html#recBTree"><span class="hs-identifier hs-var">recBTree</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var">cataBTree</span></a></span><span> </span><span class="annot"><span class="annottext">Either () (b, (d, d)) -&gt; d
+</span><a href="#local-6989586621679067135"><span class="hs-identifier hs-var">g</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Either () (b, (BTree b, BTree b)) -&gt; Either () (b, (d, d)))
+-&gt; (BTree b -&gt; Either () (b, (BTree b, BTree b)))
+-&gt; BTree b
+-&gt; Either () (b, (d, d))
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="annot"><span class="annottext">BTree b -&gt; Either () (b, (BTree b, BTree b))
+forall a. BTree a -&gt; Either () (a, (BTree a, BTree a))
+</span><a href="BTree.html#outBTree"><span class="hs-identifier hs-var">outBTree</span></a></span><span>
+</span><span id="line-29"></span><span>
+</span><span id="line-30"></span><span id="anaBTree"><span class="annot"><span class="annottext">anaBTree :: (a -&gt; Either () (b, (a, a))) -&gt; a -&gt; BTree b
+</span><a href="BTree.html#anaBTree"><span class="hs-identifier hs-var hs-var">anaBTree</span></a></span></span><span> </span><span id="local-6989586621679067132"><span class="annot"><span class="annottext">a -&gt; Either () (b, (a, a))
+</span><a href="#local-6989586621679067132"><span class="hs-identifier hs-var">g</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Either () (b, (BTree b, BTree b)) -&gt; BTree b
+forall b. Either () (b, (BTree b, BTree b)) -&gt; BTree b
+</span><a href="BTree.html#inBTree"><span class="hs-identifier hs-var">inBTree</span></a></span><span> </span><span class="annot"><span class="annottext">(Either () (b, (BTree b, BTree b)) -&gt; BTree b)
+-&gt; (a -&gt; Either () (b, (BTree b, BTree b))) -&gt; a -&gt; BTree b
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(a -&gt; BTree b)
+-&gt; Either () (b, (a, a)) -&gt; Either () (b, (BTree b, BTree b))
+forall a d b b.
+(a -&gt; d) -&gt; Either b (b, (a, a)) -&gt; Either b (b, (d, d))
+</span><a href="BTree.html#recBTree"><span class="hs-identifier hs-var">recBTree</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(a -&gt; Either () (b, (a, a))) -&gt; a -&gt; BTree b
+</span><a href="BTree.html#anaBTree"><span class="hs-identifier hs-var">anaBTree</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; Either () (b, (a, a))
+</span><a href="#local-6989586621679067132"><span class="hs-identifier hs-var">g</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Either () (b, (a, a)) -&gt; Either () (b, (BTree b, BTree b)))
+-&gt; (a -&gt; Either () (b, (a, a)))
+-&gt; a
+-&gt; Either () (b, (BTree b, BTree b))
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; Either () (b, (a, a))
+</span><a href="#local-6989586621679067132"><span class="hs-identifier hs-var">g</span></a></span><span>
+</span><span id="line-31"></span><span>
+</span><span id="line-32"></span><span id="hyloBTree"><span class="annot"><span class="annottext">hyloBTree :: (Either () (b, (c, c)) -&gt; c)
+-&gt; (a -&gt; Either () (b, (a, a))) -&gt; a -&gt; c
+</span><a href="BTree.html#hyloBTree"><span class="hs-identifier hs-var hs-var">hyloBTree</span></a></span></span><span> </span><span id="local-6989586621679067130"><span class="annot"><span class="annottext">Either () (b, (c, c)) -&gt; c
+</span><a href="#local-6989586621679067130"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span id="local-6989586621679067129"><span class="annot"><span class="annottext">a -&gt; Either () (b, (a, a))
+</span><a href="#local-6989586621679067129"><span class="hs-identifier hs-var">g</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (b, (c, c)) -&gt; c) -&gt; BTree b -&gt; c
+forall b d. (Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var">cataBTree</span></a></span><span> </span><span class="annot"><span class="annottext">Either () (b, (c, c)) -&gt; c
+</span><a href="#local-6989586621679067130"><span class="hs-identifier hs-var">h</span></a></span><span> </span><span class="annot"><span class="annottext">(BTree b -&gt; c) -&gt; (a -&gt; BTree b) -&gt; a -&gt; c
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="annot"><span class="annottext">(a -&gt; Either () (b, (a, a))) -&gt; a -&gt; BTree b
+forall a b. (a -&gt; Either () (b, (a, a))) -&gt; a -&gt; BTree b
+</span><a href="BTree.html#anaBTree"><span class="hs-identifier hs-var">anaBTree</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; Either () (b, (a, a))
+</span><a href="#local-6989586621679067129"><span class="hs-identifier hs-var">g</span></a></span><span>
+</span><span id="line-33"></span><span>
+</span><span id="line-34"></span><span id="baseBTree"><span class="annot"><span class="annottext">baseBTree :: (a -&gt; b)
+-&gt; (a -&gt; d) -&gt; Either b (a, (a, a)) -&gt; Either b (b, (d, d))
+</span><a href="BTree.html#baseBTree"><span class="hs-identifier hs-var hs-var">baseBTree</span></a></span></span><span> </span><span id="local-6989586621679067128"><span class="annot"><span class="annottext">a -&gt; b
+</span><a href="#local-6989586621679067128"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span id="local-6989586621679067127"><span class="annot"><span class="annottext">a -&gt; d
+</span><a href="#local-6989586621679067127"><span class="hs-identifier hs-var">g</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">b -&gt; b
+forall a. a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">id</span></a></span><span> </span><span class="annot"><span class="annottext">(b -&gt; b)
+-&gt; ((a, (a, a)) -&gt; (b, (d, d)))
+-&gt; Either b (a, (a, a))
+-&gt; Either b (b, (d, d))
+forall a b c d. (a -&gt; b) -&gt; (c -&gt; d) -&gt; Either a c -&gt; Either b d
+</span><a href="Cp.html#-%7C-"><span class="hs-operator hs-var">-|-</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a -&gt; b
+</span><a href="#local-6989586621679067128"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">(a -&gt; b) -&gt; ((a, a) -&gt; (d, d)) -&gt; (a, (a, a)) -&gt; (b, (d, d))
+forall a b c d. (a -&gt; b) -&gt; (c -&gt; d) -&gt; (a, c) -&gt; (b, d)
+</span><a href="Cp.html#%3E%3C"><span class="hs-operator hs-var">&gt;&lt;</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a -&gt; d
+</span><a href="#local-6989586621679067127"><span class="hs-identifier hs-var">g</span></a></span><span> </span><span class="annot"><span class="annottext">(a -&gt; d) -&gt; (a -&gt; d) -&gt; (a, a) -&gt; (d, d)
+forall a b c d. (a -&gt; b) -&gt; (c -&gt; d) -&gt; (a, c) -&gt; (b, d)
+</span><a href="Cp.html#%3E%3C"><span class="hs-operator hs-var">&gt;&lt;</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; d
+</span><a href="#local-6989586621679067127"><span class="hs-identifier hs-var">g</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-35"></span><span>
+</span><span id="line-36"></span><span class="hs-comment">-- (3) Map ---------------------------------------------------------------------</span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679067122"><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-type">Functor</span></a></span><span> </span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span></span><span>
+</span><span id="line-39"></span><span>         </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679067120"><span class="annot"><span class="annottext">fmap :: (a -&gt; b) -&gt; BTree a -&gt; BTree b
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var hs-var hs-var hs-var">fmap</span></a></span></span><span> </span><span id="local-6989586621679067119"><span class="annot"><span class="annottext">a -&gt; b
+</span><a href="#local-6989586621679067119"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (a, (BTree b, BTree b)) -&gt; BTree b)
+-&gt; BTree a -&gt; BTree b
+forall b d. (Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var">cataBTree</span></a></span><span> </span><span class="hs-special">(</span><span> </span><span class="annot"><span class="annottext">Either () (b, (BTree b, BTree b)) -&gt; BTree b
+forall b. Either () (b, (BTree b, BTree b)) -&gt; BTree b
+</span><a href="BTree.html#inBTree"><span class="hs-identifier hs-var">inBTree</span></a></span><span> </span><span class="annot"><span class="annottext">(Either () (b, (BTree b, BTree b)) -&gt; BTree b)
+-&gt; (Either () (a, (BTree b, BTree b))
+    -&gt; Either () (b, (BTree b, BTree b)))
+-&gt; Either () (a, (BTree b, BTree b))
+-&gt; BTree b
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="annot"><span class="annottext">(a -&gt; b)
+-&gt; (BTree b -&gt; BTree b)
+-&gt; Either () (a, (BTree b, BTree b))
+-&gt; Either () (b, (BTree b, BTree b))
+forall a b a d b.
+(a -&gt; b)
+-&gt; (a -&gt; d) -&gt; Either b (a, (a, a)) -&gt; Either b (b, (d, d))
+</span><a href="BTree.html#baseBTree"><span class="hs-identifier hs-var">baseBTree</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; b
+</span><a href="#local-6989586621679067119"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">BTree b -&gt; BTree b
+forall a. a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">id</span></a></span><span> </span><span class="hs-special">)</span><span>
+</span><span id="line-40"></span><span>
+</span><span id="line-41"></span><span class="hs-comment">-- equivalent to:</span><span>
+</span><span id="line-42"></span><span class="hs-comment">--       where fmap f = anaBTree ( baseBTree f id . outBTree )</span><span>
+</span><span id="line-43"></span><span>
+</span><span id="line-44"></span><span class="hs-comment">-- (4) Examples ----------------------------------------------------------------</span><span>
+</span><span id="line-45"></span><span>
+</span><span id="line-46"></span><span class="hs-comment">-- (4.1) Inversion (mirror) ----------------------------------------------------</span><span>
+</span><span id="line-47"></span><span>
+</span><span id="line-48"></span><span id="invBTree"><span class="annot"><span class="annottext">invBTree :: BTree b -&gt; BTree b
+</span><a href="BTree.html#invBTree"><span class="hs-identifier hs-var hs-var">invBTree</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (b, (BTree b, BTree b)) -&gt; BTree b)
+-&gt; BTree b -&gt; BTree b
+forall b d. (Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var">cataBTree</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Either () (b, (BTree b, BTree b)) -&gt; BTree b
+forall b. Either () (b, (BTree b, BTree b)) -&gt; BTree b
+</span><a href="BTree.html#inBTree"><span class="hs-identifier hs-var">inBTree</span></a></span><span> </span><span class="annot"><span class="annottext">(Either () (b, (BTree b, BTree b)) -&gt; BTree b)
+-&gt; (Either () (b, (BTree b, BTree b))
+    -&gt; Either () (b, (BTree b, BTree b)))
+-&gt; Either () (b, (BTree b, BTree b))
+-&gt; BTree b
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">() -&gt; ()
+forall a. a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">id</span></a></span><span> </span><span class="annot"><span class="annottext">(() -&gt; ())
+-&gt; ((b, (BTree b, BTree b)) -&gt; (b, (BTree b, BTree b)))
+-&gt; Either () (b, (BTree b, BTree b))
+-&gt; Either () (b, (BTree b, BTree b))
+forall a b c d. (a -&gt; b) -&gt; (c -&gt; d) -&gt; Either a c -&gt; Either b d
+</span><a href="Cp.html#-%7C-"><span class="hs-operator hs-var">-|-</span></a></span><span> </span><span class="annot"><span class="annottext">b -&gt; b
+forall a. a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">id</span></a></span><span> </span><span class="annot"><span class="annottext">(b -&gt; b)
+-&gt; ((BTree b, BTree b) -&gt; (BTree b, BTree b))
+-&gt; (b, (BTree b, BTree b))
+-&gt; (b, (BTree b, BTree b))
+forall a b c d. (a -&gt; b) -&gt; (c -&gt; d) -&gt; (a, c) -&gt; (b, d)
+</span><a href="Cp.html#%3E%3C"><span class="hs-operator hs-var">&gt;&lt;</span></a></span><span> </span><span class="annot"><span class="annottext">(BTree b, BTree b) -&gt; (BTree b, BTree b)
+forall a b. (a, b) -&gt; (b, a)
+</span><a href="Cp.html#swap"><span class="hs-identifier hs-var">swap</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-49"></span><span>
+</span><span id="line-50"></span><span class="hs-comment">-- (4.2) Counting --------------------------------------------------------------</span><span>
+</span><span id="line-51"></span><span>
+</span><span id="line-52"></span><span id="countBTree"><span class="annot"><span class="annottext">countBTree :: BTree a -&gt; Integer
+</span><a href="BTree.html#countBTree"><span class="hs-identifier hs-var hs-var">countBTree</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (a, (Integer, Integer)) -&gt; Integer)
+-&gt; BTree a -&gt; Integer
+forall b d. (Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var">cataBTree</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(() -&gt; Integer)
+-&gt; ((a, (Integer, Integer)) -&gt; Integer)
+-&gt; Either () (a, (Integer, Integer))
+-&gt; Integer
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; () -&gt; Integer
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">0</span></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Integer
+forall a. Enum a =&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">succ</span></a></span><span> </span><span class="annot"><span class="annottext">(Integer -&gt; Integer)
+-&gt; ((a, (Integer, Integer)) -&gt; Integer)
+-&gt; (a, (Integer, Integer))
+-&gt; Integer
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Integer -&gt; Integer -&gt; Integer) -&gt; (Integer, Integer) -&gt; Integer
+forall a b c. (a -&gt; b -&gt; c) -&gt; (a, b) -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">uncurry</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Integer -&gt; Integer
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">(+)</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">((Integer, Integer) -&gt; Integer)
+-&gt; ((a, (Integer, Integer)) -&gt; (Integer, Integer))
+-&gt; (a, (Integer, Integer))
+-&gt; Integer
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="annot"><span class="annottext">(a, (Integer, Integer)) -&gt; (Integer, Integer)
+forall a b. (a, b) -&gt; b
+</span><a href="Cp.html#p2"><span class="hs-identifier hs-var">p2</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-53"></span><span>
+</span><span id="line-54"></span><span class="hs-comment">-- (4.3) Serialization ---------------------------------------------------------</span><span>
+</span><span id="line-55"></span><span>
+</span><span id="line-56"></span><span id="inordt"><span class="annot"><span class="annottext">inordt :: BTree a -&gt; [a]
+</span><a href="BTree.html#inordt"><span class="hs-identifier hs-var hs-var">inordt</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (a, ([a], [a])) -&gt; [a]) -&gt; BTree a -&gt; [a]
+forall b d. (Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var">cataBTree</span></a></span><span> </span><span class="annot"><span class="annottext">Either () (a, ([a], [a])) -&gt; [a]
+forall b a. Either b (a, ([a], [a])) -&gt; [a]
+</span><a href="BTree.html#inord"><span class="hs-identifier hs-var">inord</span></a></span><span>                   </span><span class="hs-comment">-- in-order traversal</span><span>
+</span><span id="line-57"></span><span>
+</span><span id="line-58"></span><span class="hs-comment">-- where</span><span>
+</span><span id="line-59"></span><span>
+</span><span id="line-60"></span><span id="inord"><span class="annot"><span class="annottext">inord :: Either b (a, ([a], [a])) -&gt; [a]
+</span><a href="BTree.html#inord"><span class="hs-identifier hs-var hs-var">inord</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(b -&gt; [a])
+-&gt; ((a, ([a], [a])) -&gt; [a]) -&gt; Either b (a, ([a], [a])) -&gt; [a]
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="annot"><span class="annottext">b -&gt; [a]
+forall b a. b -&gt; [a]
+</span><a href="Cp.html#nil"><span class="hs-identifier hs-var">nil</span></a></span><span> </span><span class="annot"><span class="annottext">(a, ([a], [a])) -&gt; [a]
+forall a. (a, ([a], [a])) -&gt; [a]
+</span><a href="#local-6989586621679067108"><span class="hs-identifier hs-var">join</span></a></span><span>
+</span><span id="line-61"></span><span>        </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679067108"><span class="annot"><span class="annottext">join :: (a, ([a], [a])) -&gt; [a]
+</span><a href="#local-6989586621679067108"><span class="hs-identifier hs-var hs-var">join</span></a></span></span><span class="hs-special">(</span><span id="local-6989586621679067107"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067107"><span class="hs-identifier hs-var">x</span></a></span></span><span class="hs-special">,</span><span class="hs-special">(</span><span id="local-6989586621679067106"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067106"><span class="hs-identifier hs-var">l</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067105"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067105"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-glyph">=</span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067106"><span class="hs-identifier hs-var">l</span></a></span><span class="annot"><span class="annottext">[a] -&gt; [a] -&gt; [a]
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">++</span></a></span><span class="hs-special">[</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067107"><span class="hs-identifier hs-var">x</span></a></span><span class="hs-special">]</span><span class="annot"><span class="annottext">[a] -&gt; [a] -&gt; [a]
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">++</span></a></span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067105"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><span id="line-62"></span><span>
+</span><span id="line-63"></span><span id="preordt"><span class="annot"><span class="annottext">preordt :: BTree a -&gt; [a]
+</span><a href="BTree.html#preordt"><span class="hs-identifier hs-var hs-var">preordt</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (a, ([a], [a])) -&gt; [a]) -&gt; BTree a -&gt; [a]
+forall b d. (Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var">cataBTree</span></a></span><span> </span><span class="annot"><span class="annottext">Either () (a, ([a], [a])) -&gt; [a]
+forall b a. Either b (a, ([a], [a])) -&gt; [a]
+</span><a href="BTree.html#preord"><span class="hs-identifier hs-var">preord</span></a></span><span> </span><span class="hs-comment">-- pre-order traversal</span><span>
+</span><span id="line-64"></span><span>
+</span><span id="line-65"></span><span id="preord"><span class="annot"><span class="annottext">preord :: Either b (a, ([a], [a])) -&gt; [a]
+</span><a href="BTree.html#preord"><span class="hs-identifier hs-var hs-var">preord</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(b -&gt; [a])
+-&gt; ((a, ([a], [a])) -&gt; [a]) -&gt; Either b (a, ([a], [a])) -&gt; [a]
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="annot"><span class="annottext">b -&gt; [a]
+forall b a. b -&gt; [a]
+</span><a href="Cp.html#nil"><span class="hs-identifier hs-var">nil</span></a></span><span> </span><span class="annot"><span class="annottext">(a, ([a], [a])) -&gt; [a]
+forall a. (a, ([a], [a])) -&gt; [a]
+</span><a href="#local-6989586621679067102"><span class="hs-identifier hs-var">f</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>  </span><span id="local-6989586621679067102"><span class="annot"><span class="annottext">f :: (a, ([a], [a])) -&gt; [a]
+</span><a href="#local-6989586621679067102"><span class="hs-identifier hs-var hs-var">f</span></a></span></span><span class="hs-special">(</span><span id="local-6989586621679067101"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067101"><span class="hs-identifier hs-var">x</span></a></span></span><span class="hs-special">,</span><span class="hs-special">(</span><span id="local-6989586621679067100"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067100"><span class="hs-identifier hs-var">l</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067099"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067099"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-glyph">=</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067101"><span class="hs-identifier hs-var">x</span></a></span><span class="annot"><span class="annottext">a -&gt; [a] -&gt; [a]
+forall a. a -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-var">:</span></a></span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067100"><span class="hs-identifier hs-var">l</span></a></span><span class="annot"><span class="annottext">[a] -&gt; [a] -&gt; [a]
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">++</span></a></span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067099"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><span id="line-66"></span><span>
+</span><span id="line-67"></span><span id="postordt"><span class="annot"><span class="annottext">postordt :: BTree a -&gt; [a]
+</span><a href="BTree.html#postordt"><span class="hs-identifier hs-var hs-var">postordt</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (a, ([a], [a])) -&gt; [a]) -&gt; BTree a -&gt; [a]
+forall b d. (Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var">cataBTree</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(() -&gt; [a])
+-&gt; ((a, ([a], [a])) -&gt; [a]) -&gt; Either () (a, ([a], [a])) -&gt; [a]
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="annot"><span class="annottext">() -&gt; [a]
+forall b a. b -&gt; [a]
+</span><a href="Cp.html#nil"><span class="hs-identifier hs-var">nil</span></a></span><span> </span><span class="annot"><span class="annottext">(a, ([a], [a])) -&gt; [a]
+forall a. (a, ([a], [a])) -&gt; [a]
+</span><a href="#local-6989586621679067097"><span class="hs-identifier hs-var">f</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-comment">-- post-order traversal</span><span>
+</span><span id="line-68"></span><span>           </span><span class="hs-keyword">where</span><span>  </span><span id="local-6989586621679067097"><span class="annot"><span class="annottext">f :: (a, ([a], [a])) -&gt; [a]
+</span><a href="#local-6989586621679067097"><span class="hs-identifier hs-var hs-var">f</span></a></span></span><span class="hs-special">(</span><span id="local-6989586621679067096"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067096"><span class="hs-identifier hs-var">x</span></a></span></span><span class="hs-special">,</span><span class="hs-special">(</span><span id="local-6989586621679067095"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067095"><span class="hs-identifier hs-var">l</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067094"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067094"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-glyph">=</span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067095"><span class="hs-identifier hs-var">l</span></a></span><span class="annot"><span class="annottext">[a] -&gt; [a] -&gt; [a]
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">++</span></a></span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067094"><span class="hs-identifier hs-var">r</span></a></span><span class="annot"><span class="annottext">[a] -&gt; [a] -&gt; [a]
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">++</span></a></span><span class="hs-special">[</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067096"><span class="hs-identifier hs-var">x</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-69"></span><span>
+</span><span id="line-70"></span><span class="hs-comment">-- (4.4) Quicksort -------------------------------------------------------------</span><span>
+</span><span id="line-71"></span><span>
+</span><span id="line-72"></span><span id="local-6989586621679067093"><span class="annot"><a href="BTree.html#qSort"><span class="hs-identifier hs-type">qSort</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-identifier hs-type">Ord</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067093"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="#local-6989586621679067093"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="#local-6989586621679067093"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span></span><span>
+</span><span id="line-73"></span><span id="qSort"><span class="annot"><span class="annottext">qSort :: [a] -&gt; [a]
+</span><a href="BTree.html#qSort"><span class="hs-identifier hs-var hs-var">qSort</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (a, ([a], [a])) -&gt; [a])
+-&gt; ([a] -&gt; Either () (a, ([a], [a]))) -&gt; [a] -&gt; [a]
+forall b c a.
+(Either () (b, (c, c)) -&gt; c)
+-&gt; (a -&gt; Either () (b, (a, a))) -&gt; a -&gt; c
+</span><a href="BTree.html#hyloBTree"><span class="hs-identifier hs-var">hyloBTree</span></a></span><span> </span><span class="annot"><span class="annottext">Either () (a, ([a], [a])) -&gt; [a]
+forall b a. Either b (a, ([a], [a])) -&gt; [a]
+</span><a href="BTree.html#inord"><span class="hs-identifier hs-var">inord</span></a></span><span> </span><span class="annot"><span class="annottext">[a] -&gt; Either () (a, ([a], [a]))
+forall a. Ord a =&gt; [a] -&gt; Either () (a, ([a], [a]))
+</span><a href="BTree.html#qsep"><span class="hs-identifier hs-var">qsep</span></a></span><span> </span><span class="hs-comment">-- the same as (cataBTree inord) . (anaBTree qsep)</span><span>
+</span><span id="line-74"></span><span>
+</span><span id="line-75"></span><span class="hs-comment">-- where</span><span>
+</span><span id="line-76"></span><span>
+</span><span id="line-77"></span><span id="qsep"><span class="annot"><span class="annottext">qsep :: [a] -&gt; Either () (a, ([a], [a]))
+</span><a href="BTree.html#qsep"><span class="hs-identifier hs-var hs-var">qsep</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span>    </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">() -&gt; Either () (a, ([a], [a]))
+forall a b. a -&gt; Either a b
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">Left</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-78"></span><span class="annot"><a href="BTree.html#qsep"><span class="hs-identifier hs-var">qsep</span></a></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679067090"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067090"><span class="hs-identifier hs-var">h</span></a></span></span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-type">:</span></a></span><span id="local-6989586621679067089"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067089"><span class="hs-identifier hs-var">t</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a, ([a], [a])) -&gt; Either () (a, ([a], [a]))
+forall a b. b -&gt; Either a b
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">Right</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067090"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">,</span><span class="hs-special">(</span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067088"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067087"><span class="hs-identifier hs-var">l</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679067088"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067088"><span class="hs-identifier hs-var">s</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067087"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067087"><span class="hs-identifier hs-var">l</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+forall a. (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+</span><a href="BTree.html#part"><span class="hs-identifier hs-var">part</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a -&gt; a -&gt; Bool
+forall a. Ord a =&gt; a -&gt; a -&gt; Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-operator hs-var">&lt;</span></a></span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067090"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067089"><span class="hs-identifier hs-var">t</span></a></span><span>
+</span><span id="line-79"></span><span>
+</span><span id="line-80"></span><span id="local-6989586621679067196"><span class="annot"><a href="BTree.html#part"><span class="hs-identifier hs-type">part</span></a></span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679067196"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-identifier hs-type">Bool</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="#local-6989586621679067196"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="hs-special">[</span><span class="annot"><a href="#local-6989586621679067196"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span class="hs-special">,</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="#local-6989586621679067196"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span class="hs-special">)</span></span><span>
+</span><span id="line-81"></span><span id="part"><span class="annot"><span class="annottext">part :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+</span><a href="BTree.html#part"><span class="hs-identifier hs-var hs-var">part</span></a></span></span><span> </span><span id="local-6989586621679067084"><span class="annot"><span class="annottext">a -&gt; Bool
+</span><a href="#local-6989586621679067084"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span>                </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="hs-special">[</span><span class="hs-special">]</span><span class="hs-special">,</span><span class="hs-special">[</span><span class="hs-special">]</span><span class="hs-special">)</span><span>
+</span><span id="line-82"></span><span class="annot"><a href="BTree.html#part"><span class="hs-identifier hs-var">part</span></a></span><span> </span><span id="local-6989586621679067083"><span class="annot"><span class="annottext">a -&gt; Bool
+</span><a href="#local-6989586621679067083"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679067082"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067082"><span class="hs-identifier hs-var">h</span></a></span></span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-type">:</span></a></span><span id="local-6989586621679067081"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067081"><span class="hs-identifier hs-var">t</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">a -&gt; Bool
+</span><a href="#local-6989586621679067083"><span class="hs-identifier hs-var">p</span></a></span><span> </span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067082"><span class="hs-identifier hs-var">h</span></a></span><span>       </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">let</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679067080"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067080"><span class="hs-identifier hs-var">s</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067079"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067079"><span class="hs-identifier hs-var">l</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+forall a. (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+</span><a href="BTree.html#part"><span class="hs-identifier hs-var">part</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; Bool
+</span><a href="#local-6989586621679067083"><span class="hs-identifier hs-var">p</span></a></span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067081"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="hs-keyword">in</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067082"><span class="hs-identifier hs-var">h</span></a></span><span class="annot"><span class="annottext">a -&gt; [a] -&gt; [a]
+forall a. a -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-var">:</span></a></span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067080"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067079"><span class="hs-identifier hs-var">l</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-83"></span><span>             </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">otherwise</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">let</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679067078"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067078"><span class="hs-identifier hs-var">s</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067077"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067077"><span class="hs-identifier hs-var">l</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+forall a. (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+</span><a href="BTree.html#part"><span class="hs-identifier hs-var">part</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; Bool
+</span><a href="#local-6989586621679067083"><span class="hs-identifier hs-var">p</span></a></span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067081"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="hs-keyword">in</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067078"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067082"><span class="hs-identifier hs-var">h</span></a></span><span class="annot"><span class="annottext">a -&gt; [a] -&gt; [a]
+forall a. a -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-var">:</span></a></span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067077"><span class="hs-identifier hs-var">l</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-84"></span><span>
+</span><span id="line-85"></span><span class="hs-comment">{-- pointwise versions:
+qSort [] = []
+qSort (h:t) = let (t1,t2) = part (&lt;h) t
+              in  qSort t1 ++ [h] ++ qSort t2
+
+or, using list comprehensions:
+
+qSort [] = []
+qSort (h:t) = qSort [ a | a &lt;- t , a &lt; h ] ++ [h] ++ 
+              qSort [ a | a &lt;- t , a &gt;= h ]
+
+--}</span><span>
+</span><span id="line-97"></span><span>
+</span><span id="line-98"></span><span class="hs-comment">-- (4.5) Traces ----------------------------------------------------------------</span><span>
+</span><span id="line-99"></span><span>
+</span><span id="line-100"></span><span id="local-6989586621679067076"><span class="annot"><a href="BTree.html#traces"><span class="hs-identifier hs-type">traces</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-identifier hs-type">Eq</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067076"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067076"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="hs-special">[</span><span class="annot"><a href="#local-6989586621679067076"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span class="hs-special">]</span></span><span>
+</span><span id="line-101"></span><span id="traces"><span class="annot"><span class="annottext">traces :: BTree a -&gt; [[a]]
+</span><a href="BTree.html#traces"><span class="hs-identifier hs-var hs-var">traces</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (a, ([[a]], [[a]])) -&gt; [[a]]) -&gt; BTree a -&gt; [[a]]
+forall b d. (Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var">cataBTree</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(() -&gt; [[a]])
+-&gt; ((a, ([[a]], [[a]])) -&gt; [[a]])
+-&gt; Either () (a, ([[a]], [[a]]))
+-&gt; [[a]]
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[[a]] -&gt; () -&gt; [[a]]
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="hs-special">[</span><span class="hs-special">[</span><span class="hs-special">]</span><span class="hs-special">]</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(a, ([[a]], [[a]])) -&gt; [[a]]
+forall a. Eq a =&gt; (a, ([[a]], [[a]])) -&gt; [[a]]
+</span><a href="BTree.html#tunion"><span class="hs-identifier hs-var">tunion</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-102"></span><span>
+</span><span id="line-103"></span><span class="hs-comment">-- where</span><span>
+</span><span id="line-104"></span><span>
+</span><span id="line-105"></span><span id="tunion"><span class="annot"><span class="annottext">tunion :: (a, ([[a]], [[a]])) -&gt; [[a]]
+</span><a href="BTree.html#tunion"><span class="hs-identifier hs-var hs-var">tunion</span></a></span></span><span class="hs-special">(</span><span id="local-6989586621679067073"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067073"><span class="hs-identifier hs-var">a</span></a></span></span><span class="hs-special">,</span><span class="hs-special">(</span><span id="local-6989586621679067072"><span class="annot"><span class="annottext">[[a]]
+</span><a href="#local-6989586621679067072"><span class="hs-identifier hs-var">l</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067071"><span class="annot"><span class="annottext">[[a]]
+</span><a href="#local-6989586621679067071"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[[a]] -&gt; [[a]] -&gt; [[a]]
+forall a. Eq a =&gt; [a] -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">union</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">([a] -&gt; [a]) -&gt; [[a]] -&gt; [[a]]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">map</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067073"><span class="hs-identifier hs-var">a</span></a></span><span class="annot"><span class="annottext">a -&gt; [a] -&gt; [a]
+forall a. a -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-var">:</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[[a]]
+</span><a href="#local-6989586621679067072"><span class="hs-identifier hs-var">l</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">([a] -&gt; [a]) -&gt; [[a]] -&gt; [[a]]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">map</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067073"><span class="hs-identifier hs-var">a</span></a></span><span class="annot"><span class="annottext">a -&gt; [a] -&gt; [a]
+forall a. a -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-var">:</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[[a]]
+</span><a href="#local-6989586621679067071"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span> </span><span>
+</span><span id="line-106"></span><span>
+</span><span id="line-107"></span><span class="hs-comment">-- (4.6) Towers of Hanoi -------------------------------------------------------</span><span>
+</span><span id="line-108"></span><span>
+</span><span id="line-109"></span><span class="hs-comment">-- pointwise:</span><span>
+</span><span id="line-110"></span><span class="hs-comment">-- hanoi(d,0) = []</span><span>
+</span><span id="line-111"></span><span class="hs-comment">-- hanoi(d,n+1) = (hanoi (not d,n)) ++ [(n,d)] ++ (hanoi (not d, n))</span><span>
+</span><span id="line-112"></span><span>
+</span><span id="line-113"></span><span id="hanoi"><span class="annot"><span class="annottext">hanoi :: (Bool, Integer) -&gt; [(Integer, Bool)]
+</span><a href="BTree.html#hanoi"><span class="hs-identifier hs-var hs-var">hanoi</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either
+   () ((Integer, Bool), ([(Integer, Bool)], [(Integer, Bool)]))
+ -&gt; [(Integer, Bool)])
+-&gt; ((Bool, Integer)
+    -&gt; Either () ((Integer, Bool), ((Bool, Integer), (Bool, Integer))))
+-&gt; (Bool, Integer)
+-&gt; [(Integer, Bool)]
+forall b c a.
+(Either () (b, (c, c)) -&gt; c)
+-&gt; (a -&gt; Either () (b, (a, a))) -&gt; a -&gt; c
+</span><a href="BTree.html#hyloBTree"><span class="hs-identifier hs-var">hyloBTree</span></a></span><span> </span><span class="annot"><span class="annottext">Either () ((Integer, Bool), ([(Integer, Bool)], [(Integer, Bool)]))
+-&gt; [(Integer, Bool)]
+forall b a. Either b (a, ([a], [a])) -&gt; [a]
+</span><a href="BTree.html#present"><span class="hs-identifier hs-var">present</span></a></span><span> </span><span class="annot"><span class="annottext">(Bool, Integer)
+-&gt; Either () ((Integer, Bool), ((Bool, Integer), (Bool, Integer)))
+forall b.
+Integral b =&gt;
+(Bool, b) -&gt; Either () ((b, Bool), ((Bool, b), (Bool, b)))
+</span><a href="BTree.html#strategy"><span class="hs-identifier hs-var">strategy</span></a></span><span>
+</span><span id="line-114"></span><span>
+</span><span id="line-115"></span><span class="hs-comment">--- where</span><span>
+</span><span id="line-116"></span><span>
+</span><span id="line-117"></span><span id="present"><span class="annot"><span class="annottext">present :: Either b (a, ([a], [a])) -&gt; [a]
+</span><a href="BTree.html#present"><span class="hs-identifier hs-var hs-var">present</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Either b (a, ([a], [a])) -&gt; [a]
+forall b a. Either b (a, ([a], [a])) -&gt; [a]
+</span><a href="BTree.html#inord"><span class="hs-identifier hs-var">inord</span></a></span><span> </span><span class="hs-comment">-- same as in qSort</span><span>
+</span><span id="line-118"></span><span>
+</span><span id="line-119"></span><span id="strategy"><span class="annot"><span class="annottext">strategy :: (Bool, b) -&gt; Either () ((b, Bool), ((Bool, b), (Bool, b)))
+</span><a href="BTree.html#strategy"><span class="hs-identifier hs-var hs-var">strategy</span></a></span></span><span class="hs-special">(</span><span id="local-6989586621679067066"><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679067066"><span class="hs-identifier hs-var">d</span></a></span></span><span class="hs-special">,</span><span class="annot"><span class="annottext">b
+</span><span class="hs-number">0</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">() -&gt; Either () ((b, Bool), ((Bool, b), (Bool, b)))
+forall a b. a -&gt; Either a b
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">Left</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-120"></span><span class="annot"><a href="BTree.html#strategy"><span class="hs-identifier hs-var">strategy</span></a></span><span class="hs-special">(</span><span id="local-6989586621679067065"><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679067065"><span class="hs-identifier hs-var">d</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067064"><span class="annot"><span class="annottext">n :: b
+</span><a href="#local-6989586621679067064"><span class="hs-identifier hs-var">n</span></a></span></span><span class="hs-operator">+</span><span class="hs-number">1</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">((b, Bool), ((Bool, b), (Bool, b)))
+-&gt; Either () ((b, Bool), ((Bool, b), (Bool, b)))
+forall a b. b -&gt; Either a b
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">Right</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067064"><span class="hs-identifier hs-var">n</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679067065"><span class="hs-identifier hs-var">d</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">Bool -&gt; Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-identifier hs-var">not</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679067065"><span class="hs-identifier hs-var">d</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067064"><span class="hs-identifier hs-var">n</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span class="hs-special">(</span><span class="annot"><span class="annottext">Bool -&gt; Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-identifier hs-var">not</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679067065"><span class="hs-identifier hs-var">d</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067064"><span class="hs-identifier hs-var">n</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-121"></span><span>
+</span><span id="line-122"></span><span class="hs-comment">{--
+    The Towers of Hanoi problem comes from a puzzle marketed in 1883
+    by the French mathematician  douard Lucas, under the pseudonym
+    Claus. The puzzle is based on a legend according to which
+    there is a temple, apparently in Bramah rather than in Hanoi as
+    one might expect, where there are three giant poles fixed in the
+    ground. On the first of these poles, at the time of the world's
+    creation, God placed sixty four golden disks, each of different
+    size, in decreasing order of size. The Bramin monks were given
+    the task of moving the disks, one per day, from one pole to another
+    subject to the rule that no disk may ever be above a smaller disk.
+    The monks' task would be complete when they had succeeded in moving
+    all the disks from the first of the poles to the second and, on
+    the day that they completed their task the world would come to
+    an end!
+    
+    There is a well known inductive solution to the problem given
+    by the pseudocode below. In this solution we make use of the fact
+    that the given problem is symmetrical with respect to all three
+    poles. Thus it is undesirable to name the individual poles. Instead
+    we visualize the poles as being arranged in a circle; the problem
+    is to move the tower of disks from one pole to the next pole in
+    a specified direction around the circle. The code defines H n d
+    to be a sequence of pairs (k,d') where n is the number of disks,
+    k is a disk number and d and d' are directions. Disks are numbered
+    from 0 onwards, disk 0 being the smallest. (Assigning number 0
+    to the smallest rather than the largest disk has the advantage
+    that the number of the disk that is moved on any day is independent
+    of the total number of disks to be moved.) Directions are boolean
+    values, true representing a clockwise movement and false an anti clockwise
+    movement. The pair (k,d') means move the disk numbered k from
+    its current position in the direction d'. The semicolon operator
+    concatenates sequences together, [] denotes an empty sequence
+    and [x] is a sequence with exactly one element x. Taking the pairs
+    in order from left to right, the complete sequence H n d prescribes
+    how to move the n smallest disks one by one from one pole to the
+    next pole in the direction d following the rule of never placing
+    a larger disk on top of a smaller disk.
+    
+    H 0     d = [],
+    H (n+1) d = H n  d ; [ (n, d) ] ; H n  d.
+    
+    (excerpt from R. Backhouse, M. Fokkinga / Information Processing
+    Letters 77 (2001) 71--76)
+    
+--}</span><span>
+</span><span id="line-168"></span><span>
+</span><span id="line-169"></span><span class="hs-comment">-- (5) Depth and balancing (using mutual recursion) --------------------------</span><span>
+</span><span id="line-170"></span><span>
+</span><span id="line-171"></span><span id="balBTree"><span class="annot"><span class="annottext">balBTree :: BTree a -&gt; Bool
+</span><a href="BTree.html#balBTree"><span class="hs-identifier hs-var hs-var">balBTree</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Bool, Integer) -&gt; Bool
+forall a b. (a, b) -&gt; a
+</span><a href="Cp.html#p1"><span class="hs-identifier hs-var">p1</span></a></span><span class="annot"><span class="annottext">((Bool, Integer) -&gt; Bool)
+-&gt; (BTree a -&gt; (Bool, Integer)) -&gt; BTree a -&gt; Bool
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span class="annot"><span class="annottext">BTree a -&gt; (Bool, Integer)
+forall a. BTree a -&gt; (Bool, Integer)
+</span><a href="BTree.html#baldepth"><span class="hs-identifier hs-var">baldepth</span></a></span><span>
+</span><span id="line-172"></span><span>
+</span><span id="line-173"></span><span id="depthBTree"><span class="annot"><span class="annottext">depthBTree :: BTree a -&gt; Integer
+</span><a href="BTree.html#depthBTree"><span class="hs-identifier hs-var hs-var">depthBTree</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Bool, Integer) -&gt; Integer
+forall a b. (a, b) -&gt; b
+</span><a href="Cp.html#p2"><span class="hs-identifier hs-var">p2</span></a></span><span class="annot"><span class="annottext">((Bool, Integer) -&gt; Integer)
+-&gt; (BTree a -&gt; (Bool, Integer)) -&gt; BTree a -&gt; Integer
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span class="annot"><span class="annottext">BTree a -&gt; (Bool, Integer)
+forall a. BTree a -&gt; (Bool, Integer)
+</span><a href="BTree.html#baldepth"><span class="hs-identifier hs-var">baldepth</span></a></span><span>
+</span><span id="line-174"></span><span>
+</span><span id="line-175"></span><span id="baldepth"><span class="annot"><span class="annottext">baldepth :: BTree a -&gt; (Bool, Integer)
+</span><a href="BTree.html#baldepth"><span class="hs-identifier hs-var hs-var">baldepth</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (a, ((Bool, Integer), (Bool, Integer)))
+ -&gt; (Bool, Integer))
+-&gt; BTree a -&gt; (Bool, Integer)
+forall b d. (Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var">cataBTree</span></a></span><span> </span><span class="annot"><span class="annottext">Either () (a, ((Bool, Integer), (Bool, Integer)))
+-&gt; (Bool, Integer)
+forall b a.
+Either b (a, ((Bool, Integer), (Bool, Integer))) -&gt; (Bool, Integer)
+</span><a href="#local-6989586621679067058"><span class="hs-identifier hs-var">g</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-176"></span><span>     </span><span id="local-6989586621679067058"><span class="annot"><span class="annottext">g :: Either b (a, ((Bool, Integer), (Bool, Integer))) -&gt; (Bool, Integer)
+</span><a href="#local-6989586621679067058"><span class="hs-identifier hs-var hs-var">g</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(b -&gt; (Bool, Integer))
+-&gt; ((a, ((Bool, Integer), (Bool, Integer))) -&gt; (Bool, Integer))
+-&gt; Either b (a, ((Bool, Integer), (Bool, Integer)))
+-&gt; (Bool, Integer)
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Bool, Integer) -&gt; b -&gt; (Bool, Integer)
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span class="hs-special">(</span><span class="annot"><span class="annottext">Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-identifier hs-var">True</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(a, ((Bool, Bool), (Integer, Integer))) -&gt; (Bool, Integer)
+forall b a.
+(Ord b, Num b) =&gt;
+(a, ((Bool, Bool), (b, b))) -&gt; (Bool, b)
+</span><a href="#local-6989586621679067057"><span class="hs-identifier hs-var">h</span></a></span><span class="annot"><span class="annottext">((a, ((Bool, Bool), (Integer, Integer))) -&gt; (Bool, Integer))
+-&gt; ((a, ((Bool, Integer), (Bool, Integer)))
+    -&gt; (a, ((Bool, Bool), (Integer, Integer))))
+-&gt; (a, ((Bool, Integer), (Bool, Integer)))
+-&gt; (Bool, Integer)
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span class="hs-special">(</span><span class="annot"><span class="annottext">a -&gt; a
+forall a. a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">id</span></a></span><span class="annot"><span class="annottext">(a -&gt; a)
+-&gt; (((Bool, Integer), (Bool, Integer))
+    -&gt; ((Bool, Bool), (Integer, Integer)))
+-&gt; (a, ((Bool, Integer), (Bool, Integer)))
+-&gt; (a, ((Bool, Bool), (Integer, Integer)))
+forall a b c d. (a -&gt; b) -&gt; (c -&gt; d) -&gt; (a, c) -&gt; (b, d)
+</span><a href="Cp.html#%3E%3C"><span class="hs-operator hs-var">&gt;&lt;</span></a></span><span class="annot"><span class="annottext">((Bool, Integer), (Bool, Integer))
+-&gt; ((Bool, Bool), (Integer, Integer))
+forall a a b b. ((a, a), (b, b)) -&gt; ((a, b), (a, b))
+</span><a href="#local-6989586621679067056"><span class="hs-identifier hs-var">f</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-177"></span><span>     </span><span id="local-6989586621679067057"><span class="annot"><span class="annottext">h :: (a, ((Bool, Bool), (b, b))) -&gt; (Bool, b)
+</span><a href="#local-6989586621679067057"><span class="hs-identifier hs-var hs-var">h</span></a></span></span><span class="hs-special">(</span><span id="local-6989586621679067055"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067055"><span class="hs-identifier hs-var">a</span></a></span></span><span class="hs-special">,</span><span class="hs-special">(</span><span class="hs-special">(</span><span id="local-6989586621679067054"><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679067054"><span class="hs-identifier hs-var">b1</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067053"><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679067053"><span class="hs-identifier hs-var">b2</span></a></span></span><span class="hs-special">)</span><span class="hs-special">,</span><span class="hs-special">(</span><span id="local-6989586621679067052"><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067052"><span class="hs-identifier hs-var">d1</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067051"><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067051"><span class="hs-identifier hs-var">d2</span></a></span></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679067054"><span class="hs-identifier hs-var">b1</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-operator hs-var">&amp;&amp;</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679067053"><span class="hs-identifier hs-var">b2</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-operator hs-var">&amp;&amp;</span></a></span><span> </span><span class="annot"><span class="annottext">b -&gt; b
+forall a. Num a =&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">abs</span></a></span><span class="hs-special">(</span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067052"><span class="hs-identifier hs-var">d1</span></a></span><span class="annot"><span class="annottext">b -&gt; b -&gt; b
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-glyph hs-var">-</span></a></span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067051"><span class="hs-identifier hs-var">d2</span></a></span><span class="hs-special">)</span><span class="annot"><span class="annottext">b -&gt; b -&gt; Bool
+forall a. Ord a =&gt; a -&gt; a -&gt; Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-operator hs-var">&lt;=</span></a></span><span class="annot"><span class="annottext">b
+</span><span class="hs-number">1</span></span><span class="hs-special">,</span><span class="annot"><span class="annottext">b
+</span><span class="hs-number">1</span></span><span class="annot"><span class="annottext">b -&gt; b -&gt; b
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">+</span></a></span><span class="annot"><span class="annottext">b -&gt; b -&gt; b
+forall a. Ord a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-identifier hs-var">max</span></a></span><span> </span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067052"><span class="hs-identifier hs-var">d1</span></a></span><span> </span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067051"><span class="hs-identifier hs-var">d2</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-178"></span><span>     </span><span id="local-6989586621679067056"><span class="annot"><span class="annottext">f :: ((a, a), (b, b)) -&gt; ((a, b), (a, b))
+</span><a href="#local-6989586621679067056"><span class="hs-identifier hs-var hs-var">f</span></a></span></span><span class="hs-special">(</span><span class="hs-special">(</span><span id="local-6989586621679067046"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067046"><span class="hs-identifier hs-var">b1</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067045"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067045"><span class="hs-identifier hs-var">d1</span></a></span></span><span class="hs-special">)</span><span class="hs-special">,</span><span class="hs-special">(</span><span id="local-6989586621679067044"><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067044"><span class="hs-identifier hs-var">b2</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067043"><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067043"><span class="hs-identifier hs-var">d2</span></a></span></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067046"><span class="hs-identifier hs-var">b1</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067044"><span class="hs-identifier hs-var">b2</span></a></span><span class="hs-special">)</span><span class="hs-special">,</span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067045"><span class="hs-identifier hs-var">d1</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067043"><span class="hs-identifier hs-var">d2</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-179"></span><span>
+</span><span id="line-180"></span><span class="hs-comment">-- (6) Going polytipic -------------------------------------------------------</span><span>
+</span><span id="line-181"></span><span>
+</span><span id="line-182"></span><span class="hs-comment">-- natural transformation from base functor to monoid</span><span>
+</span><span id="line-183"></span><span id="local-6989586621679067166"><span id="local-6989586621679067167"><span class="annot"><a href="BTree.html#tnat"><span class="hs-identifier hs-type">tnat</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-type">Monoid</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067167"><span class="hs-identifier hs-type">c</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679067166"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679067167"><span class="hs-identifier hs-type">c</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-type">Either</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679067166"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">,</span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679067167"><span class="hs-identifier hs-type">c</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="#local-6989586621679067167"><span class="hs-identifier hs-type">c</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679067167"><span class="hs-identifier hs-type">c</span></a></span></span></span><span>
+</span><span id="line-184"></span><span id="tnat"><span class="annot"><span class="annottext">tnat :: (a -&gt; c) -&gt; Either () (a, (c, c)) -&gt; c
+</span><a href="BTree.html#tnat"><span class="hs-identifier hs-var hs-var">tnat</span></a></span></span><span> </span><span id="local-6989586621679067041"><span class="annot"><span class="annottext">a -&gt; c
+</span><a href="#local-6989586621679067041"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(() -&gt; c) -&gt; ((a, (c, c)) -&gt; c) -&gt; Either () (a, (c, c)) -&gt; c
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">c -&gt; () -&gt; c
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="annot"><span class="annottext">c
+forall a. Monoid a =&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">mempty</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(c, c) -&gt; c
+</span><a href="#local-6989586621679067040"><span class="hs-identifier hs-var">theta</span></a></span><span> </span><span class="annot"><span class="annottext">((c, c) -&gt; c) -&gt; ((a, (c, c)) -&gt; (c, c)) -&gt; (a, (c, c)) -&gt; c
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a -&gt; c
+</span><a href="#local-6989586621679067041"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">(a -&gt; c) -&gt; ((c, c) -&gt; c) -&gt; (a, (c, c)) -&gt; (c, c)
+forall a b c d. (a -&gt; b) -&gt; (c -&gt; d) -&gt; (a, c) -&gt; (b, d)
+</span><a href="Cp.html#%3E%3C"><span class="hs-operator hs-var">&gt;&lt;</span></a></span><span> </span><span class="annot"><span class="annottext">(c, c) -&gt; c
+</span><a href="#local-6989586621679067040"><span class="hs-identifier hs-var">theta</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-185"></span><span>         </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679067040"><span class="annot"><span class="annottext">theta :: (c, c) -&gt; c
+</span><a href="#local-6989586621679067040"><span class="hs-identifier hs-var hs-var">theta</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(c -&gt; c -&gt; c) -&gt; (c, c) -&gt; c
+forall a b c. (a -&gt; b -&gt; c) -&gt; (a, b) -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">uncurry</span></a></span><span> </span><span class="annot"><span class="annottext">c -&gt; c -&gt; c
+forall a. Monoid a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">mappend</span></a></span><span>
+</span><span id="line-186"></span><span>
+</span><span id="line-187"></span><span class="hs-comment">-- monoid reduction </span><span>
+</span><span id="line-188"></span><span>
+</span><span id="line-189"></span><span id="monBTree"><span class="annot"><span class="annottext">monBTree :: (a -&gt; d) -&gt; BTree a -&gt; d
+</span><a href="BTree.html#monBTree"><span class="hs-identifier hs-var hs-var">monBTree</span></a></span></span><span> </span><span id="local-6989586621679067038"><span class="annot"><span class="annottext">a -&gt; d
+</span><a href="#local-6989586621679067038"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (a, (d, d)) -&gt; d) -&gt; BTree a -&gt; d
+forall b d. (Either () (b, (d, d)) -&gt; d) -&gt; BTree b -&gt; d
+</span><a href="BTree.html#cataBTree"><span class="hs-identifier hs-var">cataBTree</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(a -&gt; d) -&gt; Either () (a, (d, d)) -&gt; d
+forall c a. Monoid c =&gt; (a -&gt; c) -&gt; Either () (a, (c, c)) -&gt; c
+</span><a href="BTree.html#tnat"><span class="hs-identifier hs-var">tnat</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; d
+</span><a href="#local-6989586621679067038"><span class="hs-identifier hs-var">f</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-190"></span><span>
+</span><span id="line-191"></span><span class="hs-comment">-- alternative to (4.2) serialization ----------------------------------------</span><span>
+</span><span id="line-192"></span><span>
+</span><span id="line-193"></span><span id="preordt%27"><span class="annot"><span class="annottext">preordt' :: BTree a -&gt; [a]
+</span><a href="BTree.html#preordt%27"><span class="hs-identifier hs-var hs-var">preordt'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a -&gt; [a]) -&gt; BTree a -&gt; [a]
+forall d a. Monoid d =&gt; (a -&gt; d) -&gt; BTree a -&gt; d
+</span><a href="BTree.html#monBTree"><span class="hs-identifier hs-var">monBTree</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; [a]
+forall a. a -&gt; [a]
+</span><a href="Cp.html#singl"><span class="hs-identifier hs-var">singl</span></a></span><span>
+</span><span id="line-194"></span><span>
+</span><span id="line-195"></span><span class="hs-comment">-- alternative to (4.1) counting ---------------------------------------------</span><span>
+</span><span id="line-196"></span><span>
+</span><span id="line-197"></span><span id="countBTree%27"><span class="annot"><span class="annottext">countBTree' :: BTree b -&gt; Sum Integer
+</span><a href="BTree.html#countBTree%27"><span class="hs-identifier hs-var hs-var">countBTree'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(b -&gt; Sum Integer) -&gt; BTree b -&gt; Sum Integer
+forall d a. Monoid d =&gt; (a -&gt; d) -&gt; BTree a -&gt; d
+</span><a href="BTree.html#monBTree"><span class="hs-identifier hs-var">monBTree</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Sum Integer -&gt; b -&gt; Sum Integer
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Sum Integer
+forall a. a -&gt; Sum a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">Sum</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-198"></span><span>
+</span><span id="line-199"></span><span class="hs-comment">-- (7) Zipper ----------------------------------------------------------------</span><span>
+</span><span id="line-200"></span><span>
+</span><span id="line-201"></span><span class="hs-keyword">data</span><span> </span><span id="Deriv"><span class="annot"><a href="BTree.html#Deriv"><span class="hs-identifier hs-var">Deriv</span></a></span></span><span> </span><span id="local-6989586621679067033"><span class="annot"><a href="#local-6989586621679067033"><span class="hs-identifier hs-type">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Dr"><span class="annot"><a href="BTree.html#Dr"><span class="hs-identifier hs-var">Dr</span></a></span></span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-identifier hs-type">Bool</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067033"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067033"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-202"></span><span>
+</span><span id="line-203"></span><span class="hs-keyword">type</span><span> </span><span id="Zipper"><span class="annot"><a href="BTree.html#Zipper"><span class="hs-identifier hs-var">Zipper</span></a></span></span><span> </span><span id="local-6989586621679067031"><span class="annot"><a href="#local-6989586621679067031"><span class="hs-identifier hs-type">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span> </span><span class="annot"><a href="BTree.html#Deriv"><span class="hs-identifier hs-type">Deriv</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067031"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-special">]</span><span>
+</span><span id="line-204"></span><span>
+</span><span id="line-205"></span><span id="local-6989586621679067157"><span class="annot"><a href="BTree.html#plug"><span class="hs-identifier hs-type">plug</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="BTree.html#Zipper"><span class="hs-identifier hs-type">Zipper</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067157"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067157"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="BTree.html#BTree"><span class="hs-identifier hs-type">BTree</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679067157"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-206"></span><span id="plug"><span class="annot"><span class="annottext">plug :: Zipper a -&gt; BTree a -&gt; BTree a
+</span><a href="BTree.html#plug"><span class="hs-identifier hs-var hs-var">plug</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span id="local-6989586621679067029"><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067029"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067029"><span class="hs-identifier hs-var">t</span></a></span><span>
+</span><span id="line-207"></span><span class="annot"><a href="BTree.html#plug"><span class="hs-identifier hs-var">plug</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><a href="BTree.html#Dr"><span class="hs-identifier hs-type">Dr</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-identifier hs-var">False</span></a></span><span> </span><span id="local-6989586621679067028"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067028"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span id="local-6989586621679067027"><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067027"><span class="hs-identifier hs-var">l</span></a></span></span><span class="hs-special">)</span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-type">:</span></a></span><span id="local-6989586621679067026"><span class="annot"><span class="annottext">Zipper a
+</span><a href="#local-6989586621679067026"><span class="hs-identifier hs-var">z</span></a></span></span><span class="hs-special">)</span><span> </span><span id="local-6989586621679067025"><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067025"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a, (BTree a, BTree a)) -&gt; BTree a
+forall a. (a, (BTree a, BTree a)) -&gt; BTree a
+</span><a href="BTree.html#Node"><span class="hs-identifier hs-var">Node</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067028"><span class="hs-identifier hs-var">a</span></a></span><span class="hs-special">,</span><span class="hs-special">(</span><span class="annot"><span class="annottext">Zipper a -&gt; BTree a -&gt; BTree a
+forall a. Zipper a -&gt; BTree a -&gt; BTree a
+</span><a href="BTree.html#plug"><span class="hs-identifier hs-var">plug</span></a></span><span> </span><span class="annot"><span class="annottext">Zipper a
+</span><a href="#local-6989586621679067026"><span class="hs-identifier hs-var">z</span></a></span><span> </span><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067025"><span class="hs-identifier hs-var">t</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067027"><span class="hs-identifier hs-var">l</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-208"></span><span class="annot"><a href="BTree.html#plug"><span class="hs-identifier hs-var">plug</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><a href="BTree.html#Dr"><span class="hs-identifier hs-type">Dr</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-identifier hs-var">True</span></a></span><span>  </span><span id="local-6989586621679067024"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067024"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span id="local-6989586621679067023"><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067023"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-type">:</span></a></span><span id="local-6989586621679067022"><span class="annot"><span class="annottext">Zipper a
+</span><a href="#local-6989586621679067022"><span class="hs-identifier hs-var">z</span></a></span></span><span class="hs-special">)</span><span> </span><span id="local-6989586621679067021"><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067021"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(a, (BTree a, BTree a)) -&gt; BTree a
+forall a. (a, (BTree a, BTree a)) -&gt; BTree a
+</span><a href="BTree.html#Node"><span class="hs-identifier hs-var">Node</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067024"><span class="hs-identifier hs-var">a</span></a></span><span class="hs-special">,</span><span class="hs-special">(</span><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067023"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">Zipper a -&gt; BTree a -&gt; BTree a
+forall a. Zipper a -&gt; BTree a -&gt; BTree a
+</span><a href="BTree.html#plug"><span class="hs-identifier hs-var">plug</span></a></span><span> </span><span class="annot"><span class="annottext">Zipper a
+</span><a href="#local-6989586621679067022"><span class="hs-identifier hs-var">z</span></a></span><span> </span><span class="annot"><span class="annottext">BTree a
+</span><a href="#local-6989586621679067021"><span class="hs-identifier hs-var">t</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-209"></span><span>
+</span><span id="line-210"></span><span class="hs-comment">---------------------------- end of library ----------------------------------</span><span>
+</span><span id="line-211"></span><span>
+</span><span id="line-212"></span></pre></body></html>

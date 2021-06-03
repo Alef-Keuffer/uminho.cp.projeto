@@ -5,37 +5,39 @@
 
 -- =============================================================================
 -- ADDED BY ALEF
-{-# LANGUAGE MultiParamTypeClasses      #-}
-{-# LANGUAGE NoMonomorphismRestriction  #-}
-{-# LANGUAGE RankNTypes                 #-}
-{-# LANGUAGE TypeFamilies               #-}
-{-# LANGUAGE TypeOperators              #-}
-{-# OPTIONS_HADDOCK show-extensions #-}
+{-# LANGUAGE MultiParamTypeClasses      #-} -- Para criar a classe 'Interpretation'
+{-# LANGUAGE NoMonomorphismRestriction  #-} -- Temporário. Assume a assinatura mais geral.
+{-# LANGUAGE RankNTypes                 #-} -- Para quantificar na tipagem. Usado em 'to' de 'Interpretation'
+{-# LANGUAGE GADTs                      #-} -- Usado em 'to' de 'Interpretation' ('TypeFamilies' também funciona, investigar isso)
+{-# LANGUAGE TypeOperators              #-} -- Para '∐' e '×' nos tipos
+{-# LANGUAGE UnicodeSyntax              #-} -- Para que 'forall' = '∀', -> = →, :: = ∷, etc.
+{-# OPTIONS_HADDOCK show-extensions     #-} -- Estou gerado documentação Haddock, é necessário só para isso.
 -- =============================================================================
 
-{-# LANGUAGE FlexibleContexts           #-}
 module Solucoes where
 
-import           Control.Applicative                hiding ((<|>))
+import           Control.Applicative     hiding ( (<|>) )
 import           Control.Monad
 import           Cp
-import           Data.List                          hiding (find)
+import           Data.List               hiding ( find )
 import           Graphics.Gloss
 import           Graphics.Gloss.Interface.Pure.Game
 import           LTree
-import           List                               hiding (fac)
+import           List                    hiding ( fac )
 import           Nat
 import           System.Process
-import           Test.QuickCheck                    hiding (choose, collect,
-                                                     (><))
-import qualified Test.QuickCheck                    as QuickCheck
+import           Test.QuickCheck         hiding ( (><)
+                                                , choose
+                                                , collect
+                                                )
+import qualified Test.QuickCheck               as QuickCheck
 
--- | = Problemas
+-- * Problemas
 
--- | == Problema 1
+-- ** Problema 1
 
 -- =============================================================================
--- | === Código Fornecido
+-- *** Código Fornecido
 data ExpAr a
   = X
   | N a
@@ -53,227 +55,266 @@ data UnOp
   | E
   deriving (Eq, Show)
 -- -----------------------------------------------------------------------------
-inExpAr :: b ∐ a ∐ BinExp a ∐ UnExp a -> ExpAr a
--- | @'inExpAr'@ ≡ @'const' X '∐' 'N' '∐' bin '∐' ('Un' '＾') where bin (op, (a, b)) = 'Bin' op a b@
+inExpAr ∷ b ∐ a ∐ BinExp a ∐ UnExp a → ExpAr a
+-- | @'inExpAr'@ ≡ @'const' 'X' '∐' 'N' '∐' bin '∐' ('Un' '＾') where bin (op, (a, b)) = 'Bin' op a b@
 inExpAr = either (const X) num_ops
  where
   num_ops = either N ops
   ops     = either bin (uncurry Un)
   bin (op, (a, b)) = Bin op a b
 
-baseExpAr ::
-  (a -> b) ->
-  (c -> d) ->
-  (e -> f) ->
-  (g -> h) ->
-  (i -> j) ->
-  (k -> l) ->
-  (m -> n) ->
-  a ∐ c ∐ e × g × i ∐ k × m ->
+-- | @'baseExpAr'@ ≡ @f g h j k l z = f '⊕' g '⊕' h '×' j '×' k '⊕' l '×' z@
+baseExpAr ∷
+  (a → b) →
+  (c → d) →
+  (e → f) →
+  (g → h) →
+  (i → j) →
+  (k → l) →
+  (m → n) →
+  a ∐ c ∐ e × g × i ∐ k × m →
   b ∐ d ∐ f × h × j ∐ l × n
--- | @'baseExpAr'@ ≡ @f g h j k l z = f '⊕' g '⊕' h '×' j '×' k '⊕' l × z@
 baseExpAr f g h j k l z = f -|- (g -|- (h >< (j >< k) -|- l >< z))
 
-cataExpAr :: (() ∐ c ∐ BinOp × e × e ∐ UnOp × e -> e) -> ExpAr c -> e
+cataExpAr ∷ (() ∐ c ∐ BinOp × e × e ∐ UnOp × e → e) → ExpAr c → e
 cataExpAr g = g . recExpAr (cataExpAr g) . outExpAr
 
-anaExpAr :: (a -> b ∐ c ∐ BinOp × a × a ∐ UnOp × a) -> a -> ExpAr c
+anaExpAr ∷ (a → b ∐ c ∐ BinOp × a × a ∐ UnOp × a) → a → ExpAr c
 anaExpAr g = inExpAr . recExpAr (anaExpAr g) . g
 
-hyloExpAr ::
-  (() ∐ c ∐ BinOp × d × d ∐ UnOp × d -> d) ->
-  (a -> b ∐ c ∐ BinOp × a × a ∐ UnOp × a) -> a -> d
+hyloExpAr
+  ∷ (() ∐ c ∐ BinOp × d × d ∐ UnOp × d → d)
+  → (a → b ∐ c ∐ BinOp × a × a ∐ UnOp × a)
+  → a
+  → d
 hyloExpAr h g = cataExpAr h . anaExpAr g
 -- -----------------------------------------------------------------------------
-expd :: Floating a => a -> a
+expd ∷ Floating a ⇒ a → a
 expd = Prelude.exp
 -- -----------------------------------------------------------------------------
-eval_exp :: Floating a => a -> (ExpAr a) -> a
+eval_exp ∷ Floating a ⇒ a → (ExpAr a) → a
 eval_exp a = cataExpAr (g_eval_exp a)
 
-optmize_eval :: (Floating a, Eq a) => a -> (ExpAr a) -> a
+optmize_eval ∷ (Floating a, Eq a) ⇒ a → (ExpAr a) → a
 optmize_eval a = hyloExpAr (gopt a) clean
 
-sd :: Floating a => ExpAr a -> ExpAr a
+sd ∷ Floating a ⇒ ExpAr a → ExpAr a
 sd = p2 . cataExpAr sd_gen
 
-ad :: Floating a => a -> ExpAr a -> a
+ad ∷ Floating a ⇒ a → ExpAr a → a
 ad v = p2 . cataExpAr (ad_gen v)
 -- =============================================================================
--- | === Solução
+-- *** Solução
 
 infixr 6 ×
 type a × b = (a, b)
--- | bimap for tuple
-(×) :: (a -> b) -> (c -> d) -> (a, c) -> (b, d)
+-- | bimap de tuplos ('(,)')
+(×) ∷ (a → b) → (c → d) → (a, c) → (b, d)
 (×) = (><)
 -- -----------------------------------------------------------------------------
 infixr 4 ⊕
--- | bimap for either
-(⊕) :: (a -> b) -> (c -> d) -> a ∐ c ->  b ∐ d
+-- | bimap de 'Either'
+(⊕) ∷ (a → b) → (c → d) → a ∐ c → b ∐ d
 (⊕) = (-|-)
 -- -----------------------------------------------------------------------------
 infixr 4 ∐
 type (∐) = Either
-(∐) :: (a -> c) -> (b -> c) -> a ∐ b -> c
+(∐) ∷ (a → c) → (b → c) → a ∐ b → c
 (∐) = either
 -- -----------------------------------------------------------------------------
-type BinExp d = BinOp × ExpAr d × ExpAr d -- ≡ BinOp × (ExpAr d × ExpAr d)
+-- | ≡ @'BinOp' '×' ('ExpAr' d '×' 'ExpAr' d)@
+type BinExp d = BinOp × ExpAr d × ExpAr d
+
 type UnExp d = UnOp × ExpAr d
+
+{- | Isso é uma redefinição do que o Professor definiu.
+É igual excepto os símbolos mais fáceis de ler. -}
 type OutExpAr a = () ∐ a ∐ BinExp a ∐ UnExp a
 -- -----------------------------------------------------------------------------
-class Injective a b where
-    to :: forall b1 a1. (b1 ~ b, a1 ~ a) => a -> b
+{- | Para criar uma interpretação de um tipo A como um tipo B. Assim, por exemplo,
+posso definir que a expressão 'X' do tipo @'ExpAr' a@ pode ser interpretada como
+@'Left' '()'@ do tipo @'OutExpAr' a@. -}
+class Interpretation a b where
+    to ∷ a → b
+    -- O '~' em @to ∷ ∀ b1 a1. (b1 ~ b, a1 ~ a) ⇒ a → b@ é igualdade de tipos
+    -- Essa definição era necessária antes porque estava usando a extensão TypeFamilies (agora uso GADTs)
+    -- e, como dito em [Equality Constraints](https://downloads.haskell.org/~ghc/7.4.1/docs/html/users_guide/equality-constraints.html)
+    -- "In the presence of type families, whether two types are equal cannot generally be decided locally.
+    -- Hence, the contexts of function signatures may include equality constraints"
+    -- Vou remover esse comentário, porque quero confirmar que minha modificação não quebrou nada.
 -- -----------------------------------------------------------------------------
-instance Injective (ExpAr a) (OutExpAr a) where
+{- | Vamos criar uma interpretação de @'ExpAr' a@ como @'OutExpAr' a@.
+Ou seja, essa interpretação é 'outExpAr'. -}
+instance Interpretation (ExpAr a) (OutExpAr a) where
   to X            = Left ()
-  to (N a)        = Right $ Left a
+  to (N a       ) = Right $ Left a
   to (Bin op l r) = Right $ Right $ Left (op, (l, r))
-  to (Un op a)    = Right $ Right $ Right (op, a)
+  to (Un op a   ) = Right $ Right $ Right (op, a)
 
-outExpAr :: ExpAr a -> OutExpAr a
-outExpAr = to :: ExpAr a -> OutExpAr a
+{- | Não há muito o que dizer. Essa função é um sinônimo. -}
+outExpAr ∷ ExpAr a → OutExpAr a
+outExpAr = to ∷ ExpAr a → OutExpAr a
 -- -----------------------------------------------------------------------------
-recExpAr :: (a -> e) -> b ∐ c ∐ d × a × a ∐ g × a -> b ∐ c ∐ d × e × e ∐ g × e
+recExpAr ∷ (a → e) → b ∐ c ∐ d × a × a ∐ g × a → b ∐ c ∐ d × e × e ∐ g × e
 recExpAr f = baseExpAr id id id f f id f
 -- -----------------------------------------------------------------------------
-instance (Num c) => Injective BinOp ((c, c) -> c) where
+
+{-| Interpretamos cada símbolo 'BinOp' como uma função @(c,c) → c@
+Por exemplo, o símbolo 'Sum' é interpretado como a função 'add' -}
+instance (Num c) ⇒ Interpretation BinOp ((c, c) → c) where
   to Sum     = add
   to Product = mul
 
-instance (Floating c) => Injective UnOp (c -> c) where
+-- | Na nossa linguagem mais usual
+outBinOp :: Num c => BinOp -> (c × c) -> c
+outBinOp = to ∷ (Num c) ⇒ BinOp → (c × c → c)
+
+-- | Interpretamos cada símbolo 'UnOp' como uma função @c->c@ onde @c@ é da classe 'Floating'.
+instance (Floating c) ⇒ Interpretation UnOp (c → c) where
   to Negate = negate
   to E      = Prelude.exp
 
-g_eval_exp :: Floating c => c -> b ∐ c ∐ BinOp × c × c ∐ UnOp × c -> c
-g_eval_exp a = const a ∐ id ∐ Cp.ap . (toBin × id) ∐ Cp.ap . (toUn × id)
- where
-  toBin = to :: (Num c) => BinOp -> (c × c -> c)
-  toUn = to :: (Floating c) => UnOp -> (c -> c)
+-- | Na nossa linguagem mais usual
+outUnOp :: Floating c => UnOp -> (c -> c)
+outUnOp = to ∷ (Floating c) ⇒ UnOp → (c → c)
+
+g_eval_exp ∷ Floating c ⇒ c → b ∐ c ∐ BinOp × c × c ∐ UnOp × c → c
+g_eval_exp a = const a ∐ id ∐ Cp.ap . (outBinOp × id) ∐ Cp.ap . (outUnOp × id)
 -- -----------------------------------------------------------------------------
-clean :: (Eq a, Num a) => ExpAr a -> OutExpAr a
+-- | Nós optimizamos 4 casos e para os outros usamos 'outExpAr'
+clean ∷ (Eq a, Num a) ⇒ ExpAr a → OutExpAr a
 clean q = case q of
-  (Un E (N 0))          -> tag 1
-  (Un Negate (N 0))     -> tag 0
-  (Bin Product (N 0) _) -> tag 0
-  (Bin Product _ (N 0)) -> tag 0
-  a                     -> (to :: ExpAr a -> OutExpAr a) a
+  (Un E      (N 0)        ) → tag 1
+  (Un Negate (N 0)        ) → tag 0
+  (Bin Product (N 0) _    ) → tag 0
+  (Bin Product _     (N 0)) → tag 0
+  a                         → outExpAr a
   where tag = i2 . i1
 -- -----------------------------------------------------------------------------
-gopt :: Floating a => a -> () ∐ a ∐ BinOp × a × a ∐ UnOp × a -> a
+gopt ∷ Floating a ⇒ a → () ∐ a ∐ BinOp × a × a ∐ UnOp × a → a
 gopt = undefined
 -- -----------------------------------------------------------------------------
-type Dup d = d × d
-type Bin d = BinOp × d × d
+type Dup d = d × d -- Baseado na função 'dup' definida em [[Cp.hs]]
+type Bin d = BinOp × Dup d
 type Un d = UnOp × d
 
-bin_aux :: (t -> t -> t) -> (t -> t -> t) -> (BinOp, Dup (Dup t)) -> Dup t
-bin_aux f g (op,((e1,d1),(e2,d2))) = case op of
-    Sum     -> (e1 `f` e2, d1 `f` d2)
-    Product -> (e1 `g` e2, f (g e1 d2) (g d1 e2))
+-- | Só extrai o código que se repetia nas funções 'sd_gen' e 'ad_gen' do Tiago
+bin_aux ∷ (t → t → t) → (t → t → t) → (BinOp, Dup (Dup t)) → Dup t
+bin_aux f g (op, ((e1, d1), (e2, d2))) = case op of
+  Sum     → (e1 `f` e2, d1 `f` d2)
+  Product → (e1 `g` e2, f (g e1 d2) (g d1 e2))
 
-un_aux :: (t1 -> t2) -> (t2 -> t1 -> t2) -> (t1 -> t2) -> (UnOp, Dup t1) -> Dup t2
-un_aux f g h (op, (e,d)) = case op of
-    Negate -> (f e, f d)
-    E      -> (h e, g (h e) d)
+-- | Extração do código que se repetia. Veja 'bin_aux'.
+un_aux
+  ∷ (t1 → t2) → (t2 → t1 → t2) → (t1 → t2) → (UnOp, Dup t1) → Dup t2
+un_aux f g h (op, (e, d)) = case op of
+  Negate → (f e, f d)
+  E      → (h e, g (h e) d)
 
-sd_gen :: Floating a => () ∐ a ∐ Bin (Dup (ExpAr a)) ∐ Un (Dup (ExpAr a)) -> Dup (ExpAr a)
+sd_gen
+  ∷ Floating a
+  ⇒ () ∐ a ∐ Bin (Dup (ExpAr a)) ∐ Un (Dup (ExpAr a))
+  → Dup (ExpAr a)
 sd_gen = f ∐ g ∐ h ∐ k where
   f = const (X, N 1)
   g a = (N a, N 0)
   h = bin_aux (Bin Sum) (Bin Product)
   k = un_aux (Un Negate) (Bin Product) (Un E)
 -- -----------------------------------------------------------------------------
-ad_gen :: Floating a => a -> () ∐ a ∐ (BinOp, Dup (Dup a)) ∐ (UnOp, Dup a)  -> Dup a
+ad_gen
+  ∷ Floating a ⇒ a → () ∐ a ∐ (BinOp, Dup (Dup a)) ∐ (UnOp, Dup a) → Dup a
 ad_gen x = f ∐ g ∐ h ∐ k where
-  f = const (x,1)
+  f = const (x, 1)
   g a = (a, 0)
   h = bin_aux (+) (*)
   k = un_aux negate (*) expd
--- ========================================================================== --
--- | === Propriedades
+-- =============================================================================
+-- *** Propriedades
+{- clipboard para testar várias propriedades
+do {quickCheck prop_in_out_idExpAr; quickCheck prop_out_in_idExpAr; quickCheck prop_sum_idr; quickCheck prop_sum_idl; quickCheck prop_product_idr; quickCheck prop_product_idl ; quickCheck prop_e_id; quickCheck prop_negate_id; quickCheck prop_double_negate; quickCheck prop_optimize_respects_semantics; quickCheck prop_const_rule; quickCheck prop_var_rule}
+-}
 
--- do {quickCheck prop_in_out_idExpAr; quickCheck prop_out_in_idExpAr; quickCheck prop_sum_idr; quickCheck prop_sum_idl; quickCheck prop_product_idr; quickCheck prop_product_idl ; quickCheck prop_e_id; quickCheck prop_negate_id; quickCheck prop_double_negate; quickCheck prop_optimize_respects_semantics; quickCheck prop_const_rule; quickCheck prop_var_rule}
-
-prop_in_out_idExpAr :: (Eq a) => ExpAr a -> Bool
+prop_in_out_idExpAr ∷ (Eq a) ⇒ ExpAr a → Bool
 prop_in_out_idExpAr = inExpAr . outExpAr .==. id
 
-prop_out_in_idExpAr :: (Eq a) => OutExpAr a -> Bool
+prop_out_in_idExpAr ∷ (Eq a) ⇒ OutExpAr a → Bool
 prop_out_in_idExpAr = outExpAr . inExpAr .==. id
 
-prop_sum_idr :: (Floating a, Real a) => a -> ExpAr a -> Bool
+prop_sum_idr ∷ (Floating a, Real a) ⇒ a → ExpAr a → Bool
 prop_sum_idr a exp = eval_exp a exp .=?=. sum_idr
   where sum_idr = eval_exp a (Bin Sum exp (N 0))
 
-prop_sum_idl :: (Floating a, Real a) => a -> ExpAr a -> Bool
+prop_sum_idl ∷ (Floating a, Real a) ⇒ a → ExpAr a → Bool
 prop_sum_idl a exp = eval_exp a exp .=?=. sum_idl
   where sum_idl = eval_exp a (Bin Sum (N 0) exp)
 
-prop_product_idr :: (Floating a, Real a) => a -> ExpAr a -> Bool
+prop_product_idr ∷ (Floating a, Real a) ⇒ a → ExpAr a → Bool
 prop_product_idr a exp = eval_exp a exp .=?=. prod_idr
   where prod_idr = eval_exp a (Bin Product exp (N 1))
 
-prop_product_idl :: (Floating a, Real a) => a -> ExpAr a -> Bool
+prop_product_idl ∷ (Floating a, Real a) ⇒ a → ExpAr a → Bool
 prop_product_idl a exp = eval_exp a exp .=?=. prod_idl
   where prod_idl = eval_exp a (Bin Product (N 1) exp)
 
-prop_e_id :: (Floating a, Real a) => a -> Bool
+prop_e_id ∷ (Floating a, Real a) ⇒ a → Bool
 prop_e_id a = eval_exp a (Un E (N 1)) == expd 1
 
-prop_negate_id :: (Floating a, Real a) => a -> Bool
+prop_negate_id ∷ (Floating a, Real a) ⇒ a → Bool
 prop_negate_id a = eval_exp a (Un Negate (N 0)) == 0
 
-prop_double_negate :: (Floating a, Real a) => a -> ExpAr a -> Bool
+prop_double_negate ∷ (Floating a, Real a) ⇒ a → ExpAr a → Bool
 prop_double_negate a exp =
   eval_exp a exp .=?=. eval_exp a (Un Negate (Un Negate exp))
 
-prop_optimize_respects_semantics :: (Floating a, Real a) => a -> ExpAr a -> Bool
-prop_optimize_respects_semantics a exp = eval_exp a exp .=?=. optmize_eval a exp
+prop_optimize_respects_semantics
+  ∷ (Floating a, Real a) ⇒ a → ExpAr a → Bool
+prop_optimize_respects_semantics a exp =
+  eval_exp a exp .=?=. optmize_eval a exp
 
-prop_const_rule :: (Real a, Floating a) => a -> Bool
+prop_const_rule ∷ (Real a, Floating a) ⇒ a → Bool
 prop_const_rule a = sd (N a) == N 0
 
-prop_var_rule :: Bool
+prop_var_rule ∷ Bool
 prop_var_rule = sd X == N 1
 
-prop_sum_rule :: (Real a, Floating a) => ExpAr a -> ExpAr a -> Bool
+prop_sum_rule ∷ (Real a, Floating a) ⇒ ExpAr a → ExpAr a → Bool
 prop_sum_rule exp1 exp2 = sd (Bin Sum exp1 exp2) == sum_rule
   where sum_rule = Bin Sum (sd exp1) (sd exp2)
 
-prop_product_rule :: (Real a, Floating a) => ExpAr a -> ExpAr a -> Bool
+prop_product_rule ∷ (Real a, Floating a) ⇒ ExpAr a → ExpAr a → Bool
 prop_product_rule exp1 exp2 = sd (Bin Product exp1 exp2) == prod_rule
  where
   prod_rule = Bin Sum (Bin Product exp1 (sd exp2)) (Bin Product (sd exp1) exp2)
 
-prop_e_rule :: (Real a, Floating a) => ExpAr a -> Bool
+prop_e_rule ∷ (Real a, Floating a) ⇒ ExpAr a → Bool
 prop_e_rule exp = sd (Un E exp) == Bin Product (Un E exp) (sd exp)
 
-prop_negate_rule :: (Real a, Floating a) => ExpAr a -> Bool
+prop_negate_rule ∷ (Real a, Floating a) ⇒ ExpAr a → Bool
 prop_negate_rule exp = sd (Un Negate exp) == Un Negate (sd exp)
 
-prop_congruent :: (Floating a, Real a) => a -> ExpAr a -> Bool
+prop_congruent ∷ (Floating a, Real a) ⇒ a → ExpAr a → Bool
 prop_congruent a exp = ad a exp .=?=. eval_exp a (sd exp)
 -- =============================================================================
--- | == Problema 2
+-- ** Problema 2
 
 -- =============================================================================
--- | === Código Fornecido
-fib' :: (Integral c, Num b) => c -> b
+-- *** Código Fornecido
+fib' ∷ (Integral c, Num b) ⇒ c → b
 fib' = p1 . for loop init
  where
   loop (fib, f) = (f, fib + f)
   init = (1, 1)
 
-f' :: (Integral c, Num b) => b -> b -> b -> c -> b
+f' ∷ (Integral c, Num b) ⇒ b → b → b → c → b
 f' a b c = p1 . for loop init
  where
   loop (f, k) = (f + k, k + 2 * a)
   init = (c, a + b)
 
-catdef :: Integer -> Integer
+catdef ∷ Integer → Integer
 catdef n = div (fac ((2 * n))) ((fac ((n + 1)) * (fac n)))
 
-oracle :: Num a => [a]
+oracle ∷ Num a ⇒ [a]
 oracle =
   [ 1
   , 1
@@ -303,86 +344,157 @@ oracle =
   , 4861946401452
   ]
 -- =============================================================================
--- | === Propriedades
+-- *** Propriedades
 prop_cat = (>= 0) .==>. (catdef .==. cat)
 -- =============================================================================
--- | === Solução
-loop :: Integral c => (c, c, c) -> (c, c, c)
-loop = g where g(a,b,c) = (div (a*b) c, b+4, c+1)
+-- *** Solução
+loop ∷ Integral c ⇒ (c, c, c) → (c, c, c)
+loop = g where g (a, b, c) = (div (a * b) c, b + 4, c + 1)
 
-inic :: (Num a, Num b, Num c) => (a, b, c)
-inic = (1,2,2)
+inic ∷ (Num a, Num b, Num c) ⇒ (a, b, c)
+inic = (1, 2, 2)
 
-prj :: (a, b, c) -> a
-prj = p where p(a,_,_) = a
+prj ∷ (a, b, c) → a
+prj = p where p (a, _, _) = a
 
-cat :: (Integral c1, Integral c2) => c1 -> c2
+cat ∷ (Integral c1, Integral c2) ⇒ c1 → c2
 cat = prj . for loop inic
 -- =============================================================================
--- | == Problema 3
+-- ** Problema 3
 
 -- =============================================================================
--- | === Código Fornecido
-linear1d :: Rational -> Rational -> OverTime Rational
+-- *** Código Fornecido
+linear1d ∷ Rational → Rational → OverTime Rational
 linear1d a b = formula a b
  where
-  formula :: Rational -> Rational -> Float -> Rational
-  formula x y t = ((1.0 :: Rational) - (toRational t)) * x + (toRational t) * y
+  formula ∷ Rational → Rational → Float → Rational
+  formula x y t = ((1.0 ∷ Rational) - (toRational t)) * x + (toRational t) * y
 
 type NPoint = [Rational]
-type OverTime a = Float -> a
+type OverTime a = Float → a
 -- =============================================================================
--- | === Propriedades
-prop_calcLine_def :: NPoint -> NPoint -> Float -> Bool
+-- *** Propriedades
+prop_calcLine_def ∷ NPoint → NPoint → Float → Bool
 prop_calcLine_def p q d = calcLine p q d == zipWithM linear1d p q d
 
-prop_bezier_sym :: [[Rational]] -> Gen Bool
+prop_bezier_sym ∷ [[Rational]] → Gen Bool
 prop_bezier_sym l = all (< delta) . calc_difs . bezs <$> elements ps
  where
   calc_difs =
-    (\(x, y) -> zipWith (\w v -> if w >= v then w - v else v - w) x y)
+    (\(x, y) → zipWith (\w v → if w >= v then w - v else v - w) x y)
   bezs t =
     ( deCasteljau l           t
     , deCasteljau (reverse l) (fromRational (1 - (toRational t)))
     )
   delta = 1e-2
 -- =============================================================================
--- | === Solução
+-- *** Solução
+
+--- Vamos aproximar o código da linguagem usada na apresentação da documentação
 type ℚ = Rational
-toℚ :: Real a => a -> Rational
+toℚ ∷ Real a ⇒ a → ℚ
 toℚ = toRational
-fromℚ :: Fractional a => Rational -> a
+fromℚ ∷ Fractional a ⇒ ℚ → a
 fromℚ = fromRational
+--- Espero que isso torne o código mais legível.
 
 {- | Spec
 
  @
- 'calcLine' :: 'NPoint' -> ('NPoint' -> 'OverTime' 'NPoint')
+ 'calcLine' ∷ 'NPoint' → ('NPoint' → 'OverTime' 'NPoint')
  'calcLine' [] = 'const' 'nil'
  'calcLine' (p : x) = 'curry' g p ('calcLine' x)
   where
-   g :: (ℚ, 'NPoint' -> 'OverTime' 'NPoint') -> ('NPoint' -> 'OverTime' 'NPoint')
+   g ∷ (ℚ, 'NPoint' → 'OverTime' 'NPoint') → ('NPoint' → 'OverTime' 'NPoint')
    g (d, f) l = case l of
-     [] -> 'nil'
-     (x : xs) -> 'concat' . 'sequenceA' ['singl' . 'linear1d' d x, f xs]
+     [] → 'nil'
+     (x : xs) → 'concat' . 'sequenceA' ['singl' . 'linear1d' d x, f xs]
  @
 -}
-calcLine :: NPoint -> (NPoint -> OverTime NPoint)
+calcLine ∷ NPoint → (NPoint → OverTime NPoint)
 calcLine = cataList h where h = undefined
+
+calc_line' ∷ [ℚ] → [ℚ] → Float → [ℚ]
+calc_line' = myZipWithM linear1d
+
+{- | Interpretar um par de duas listas como algo que é nada ('()') ou
+um par onde o primeiro elemento é um par de elementos e o segundo elemento é um par de listas.
+
+Essa interpretação foi escolhida para que possamos criar uma lista de pares com 'anaList'.
+
+#uncurried_form_preference#
+Prefio representações uncurried, por isso acabamos tendo duas definições para cada função já definida em Haskell:
+@myFunction'@ que está uncurried @myFunction@ que é a @Function@ que quero redefinir. -}
+instance Interpretation ([a], [b]) (() ∐ ((a, b), ([a], [b]))) where
+  to l = case l of
+    ([]    , _     ) → Left ()
+    (_     , []    ) → Left ()
+    (a : as, b : bs) → Right ((a, b), (as, bs))
+
+
+
+outZip ∷ ([a], [b]) → () ∐ ((a, b), ([a], [b]))
+outZip = to :: ([a], [b]) → (() ∐ ((a, b), ([a], [b])))
+
+myZip' ∷ ([a], [b]) → [(a, b)]
+myZip' = anaList outZip
+
+-- | Como [dito](#uncurried_form_preference), temos fazer 'curry' da minha função.
+myZip :: [a] -> [b] -> [(a, b)]
+myZip = curry myZip'
+
+{- | Baseado em 'zipWithM' que é definida como
+@
+'zipWithM' ∷ ('Applicative' m) ⇒ (a → b → m c) → [a] → [b] → m [c]
+'zipWithM' f xs ys  = 'sequenceA' ('zipWith' f xs ys)
+@
+
+Note que 'myZipWithM' é só um caso específico de 'zipWithM' e as duas não são equivalentes.
+
+-}
+myZipWithM ∷ (a1 → b → p → a2) → [a1] → [b] → p → [a2]
+myZipWithM f xs ys = mySequenceA (myZipWith f xs ys)
+
+{- | Função pouco genérica inspirada em 'sequenceA'. Note:
+
+@
+'sequenceA' ∷ 'Applicative' f ⇒ t (f a) → f (t a)
+'sequenceA' = 'traverse' 'id'
+
+'traverse' ∷ 'Applicative' f ⇒ (a → f b) → t a → f (t b)
+'traverse' f = 'sequenceA' . 'fmap' f
+@
+
+Logo,
+
+@
+sequenceA = sequenceA . (fmap id)
+          = sequenceA . (T)
+
+-}
+
+mySequenceA' ∷ p → [p → a] → [a]
+mySequenceA' a = cataList (either nil g2) where g2 (f, fs) = f a : fs
+
+mySequenceA ∷ [p → a] → p → [a]
+mySequenceA = flip mySequenceA'
+
+myZipWith ∷ (a → b → c) → [a] → [b] → [c]
+myZipWith f a b = uncurry f <$> myZip a b
 
 {- | Spec
 
  @
-'deCasteljau' :: ['NPoint'] -> 'OverTime' 'NPoint'
+'deCasteljau' ∷ ['NPoint'] → 'OverTime' 'NPoint'
 'deCasteljau' [] = 'nil'
 'deCasteljau' [p] = 'const' p
-'deCasteljau' l = \pt -> 'calcLine' (p pt) (q pt) pt
+'deCasteljau' l = \pt → 'calcLine' (p pt) (q pt) pt
  where
   p = 'deCasteljau' ('init' l)
   q = 'deCasteljau' ('tail' l)
  @
 -}
-deCasteljau :: [NPoint] -> OverTime NPoint
+deCasteljau ∷ [NPoint] → OverTime NPoint
 deCasteljau = hyloAlgForm alg coalg
  where
   coalg = undefined
@@ -390,84 +502,84 @@ deCasteljau = hyloAlgForm alg coalg
 
 hyloAlgForm = undefined
 -- =============================================================================
--- | == Problema 4
+-- ** Problema 4
 
 -- =============================================================================
--- | === Propriedades
-prop_avg :: (Ord b, Fractional b) => [b] -> Property
+-- *** Propriedades
+prop_avg ∷ (Ord b, Fractional b) ⇒ [b] → Property
 prop_avg = nonempty .==>. diff .<=. const 0.000001
  where
   diff l = avg l - (avgLTree . genLTree) l
   genLTree = anaLTree lsplit
   nonempty = (> [])
 
-avg :: Fractional b => [b] -> b
+avg ∷ Fractional b ⇒ [b] → b
 avg = p1 . avg_aux
 -- =============================================================================
--- | === Solução
-avg_aux :: Fractional b => [b] -> (b, b)
-avg_aux= cataList (either b q) where
-   b () = (0,0)
-   q (h,(a,l)) = ((a*l + h)/(l+1) ,l+1)
+-- *** Solução
+avg_aux ∷ Fractional b ⇒ [b] → (b, b)
+avg_aux = cataList (either b q) where
+  b () = (0, 0)
+  q (h, (a, l)) = ((a * l + h) / (l + 1), l + 1)
 
 avgLTree = p1 . cataLTree gene where gene = undefined
 -- =============================================================================
--- | = Programação dinâmica por recursividade múltipla
-e' :: (Fractional c1, Integral c2) => c1 -> c2 -> c1
+-- * Programação dinâmica por recursividade múltipla
+e' ∷ (Fractional c1, Integral c2) ⇒ c1 → c2 → c1
 e' x = prj . for loop init
  where
   init = (1, x, 2)
   loop (e, h, s) = (h + e, x / s * h, 1 + s)
   prj (e, h, s) = e
 -- =============================================================================
--- | = Código Extra para Problema 3
+-- * Código Extra para Problema 3
 
 -- =============================================================================
--- | === 2D
-bezier2d :: [NPoint] -> OverTime (Float, Float)
+-- ** 2D
+bezier2d ∷ [NPoint] → OverTime (Float, Float)
 bezier2d [] = const (0, 0)
-bezier2d l  = \z ->
-  (fromRational >< fromRational) . (\[x, y] -> (x, y)) $ ((deCasteljau l) z)
+bezier2d l  = \z →
+  (fromRational >< fromRational) . (\[x, y] → (x, y)) $ ((deCasteljau l) z)
 -- =============================================================================
--- | === Modelo
+-- ** Modelo
 data World = World
-  { points :: [NPoint]
-  , time   :: Float
+  { points ∷ [NPoint]
+  , time   ∷ Float
   }
 
-initW :: World
+initW ∷ World
 initW = World [] 0
 
-tick :: Float -> World -> World
+tick ∷ Float → World → World
 tick dt world = world { time = (time world) + dt }
 
-actions :: Event -> World -> World
+actions ∷ Event → World → World
 actions (EventKey (MouseButton LeftButton) Down _ p) world =
-  world { points = (points world) ++ [(\(x, y) -> map toRational [x, y]) p] }
+  world { points = (points world) ++ [(\(x, y) → map toRational [x, y]) p] }
 actions (EventKey (SpecialKey KeyDelete) Down _ _) world =
   world { points = cond (== []) id init (points world) }
 actions _ world = world
 
-scaleTime :: World -> Float
+scaleTime ∷ World → Float
 scaleTime w = (1 + cos (time w)) / 2
 
-bezier2dAtTime :: World -> (Float, Float)
+bezier2dAtTime ∷ World → (Float, Float)
 bezier2dAtTime w = (bezier2dAt w) (scaleTime w)
 
-bezier2dAt :: World -> OverTime (Float, Float)
+bezier2dAt ∷ World → OverTime (Float, Float)
 bezier2dAt w = bezier2d (points w)
 
-thicCirc :: Picture
+thicCirc ∷ Picture
 thicCirc = ThickCircle 4 10
 
-ps :: [Float]
+ps ∷ [Float]
 ps = map fromRational ps'
  where
-  ps' :: [Rational]
+  ps' ∷ [Rational]
   ps' = [0, 0.01 .. 1] -- interval
 -- =============================================================================
--- | === Gloss
-picture :: World -> Picture
+-- ** Gloss
+picture ∷ World → Picture
 picture world = Pictures
   [ animateBezier (scaleTime world) (points world)
   , Color white . Line . map (bezier2dAt world) $ ps
@@ -480,8 +592,8 @@ picture world = Pictures
   ]
   where (cx, cy) = bezier2dAtTime world
 -- =============================================================================
--- | === Animação
-animateBezier :: Float -> [NPoint] -> Picture
+-- ** Animação
+animateBezier ∷ Float → [NPoint] → Picture
 animateBezier _ []  = Blank
 animateBezier _ [_] = Blank
 animateBezier t l   = Pictures
@@ -495,31 +607,32 @@ animateBezier t l   = Pictures
   a@(ax, ay) = bezier2d (init l) t
   b@(bx, by) = bezier2d (tail l) t
 -- =============================================================================
--- | === Propriedades e main
-runBezier :: IO ()
+-- ** Propriedades e main
+runBezier ∷ IO ()
 runBezier =
   play (InWindow "Bézier" (600, 600) (0, 0)) black 50 initW picture actions tick
 
-runBezierSym :: IO ()
+runBezierSym ∷ IO ()
 runBezierSym =
   quickCheckWith (stdArgs { maxSize = 20, maxSuccess = 200 }) prop_bezier_sym
 -- =============================================================================
--- | ==== Compilação e execução dentro do interpretador
-main :: IO ()
+-- *** Compilação e execução dentro do interpretador
+main ∷ IO ()
 main = runBezier
 
 run = do
   system "ghc cp2021t"
   system "./cp2021t"
 
--- | == QuickCheck
+-- * QuickCheck
+
 instance Arbitrary UnOp where
   arbitrary = elements [Negate, E]
 
 instance Arbitrary BinOp where
   arbitrary = elements [Sum, Product]
 
-instance (Arbitrary a) => Arbitrary (ExpAr a) where
+instance (Arbitrary a) ⇒ Arbitrary (ExpAr a) where
   arbitrary = do
     binop <- arbitrary
     unop  <- arbitrary
@@ -530,28 +643,28 @@ instance (Arbitrary a) => Arbitrary (ExpAr a) where
     frequency
       . map (id >< pure)
       $ [(20, X), (15, N a), (35, Bin binop exp1 exp2), (30, Un unop exp1)]
-
--- | == Outras funções auxiliares
+-- =============================================================================
+-- * Outras funções auxiliares
 infixr 5 .=?=.
-(.=?=.) :: Real a => a -> a -> Bool
+(.=?=.) ∷ Real a ⇒ a → a → Bool
 (.=?=.) x y = (toRational x) == (toRational y)
 
 infixr 0 .==>.
-(.==>.) :: (Testable prop) => (a -> Bool) -> (a -> prop) -> a -> Property
-p .==>. f = \a -> p a ==> f a
+(.==>.) ∷ (Testable prop) ⇒ (a → Bool) → (a → prop) → a → Property
+p .==>. f = \a → p a ==> f a
 
 infixr 0 .<==>.
-(.<==>.) :: (a -> Bool) -> (a -> Bool) -> a -> Property
-p .<==>. f = \a -> (p a ==> property (f a)) .&&. (f a ==> property (p a))
+(.<==>.) ∷ (a → Bool) → (a → Bool) → a → Property
+p .<==>. f = \a → (p a ==> property (f a)) .&&. (f a ==> property (p a))
 
 infixr 4 .==.
-(.==.) :: Eq b => (a -> b) -> (a -> b) -> (a -> Bool)
-f .==. g = \a -> f a == g a
+(.==.) ∷ Eq b ⇒ (a → b) → (a → b) → (a → Bool)
+f .==. g = \a → f a == g a
 
 infixr 4 .<=.
-(.<=.) :: Ord b => (a -> b) -> (a -> b) -> (a -> Bool)
-f .<=. g = \a -> f a <= g a
+(.<=.) ∷ Ord b ⇒ (a → b) → (a → b) → (a → Bool)
+f .<=. g = \a → f a <= g a
 
 infixr 4 .&&&.
-(.&&&.) :: (a -> Bool) -> (a -> Bool) -> (a -> Bool)
-f .&&&. g = \a -> ((f a) && (g a))
+(.&&&.) ∷ (a → Bool) → (a → Bool) → (a → Bool)
+f .&&&. g = \a → ((f a) && (g a))

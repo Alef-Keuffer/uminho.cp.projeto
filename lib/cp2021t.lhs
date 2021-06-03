@@ -16,7 +16,7 @@
 \let\uk=\emph
 \def\aspas#1{``#1"}
 %================= lhs2tex=====================================================%
-%include polycode.fmt 
+%include polycode.fmt
 %format (div (x)(y)) = x "\div " y
 %format succ = "\succ "
 %format ==> = "\Longrightarrow "
@@ -55,7 +55,7 @@
 %format (cataB (f) (g)) = "\cata{" f "~" g "}_B"
 %format (cata (f)) = "\cata{" f "}"
 %format (anaB (f) (g)) = "\ana{" f "~" g "}_B"
-%format Either a b = a "+" b 
+%format Either a b = a "+" b
 %format fmap = "\mathsf{fmap}"
 %format NA   = "\textsc{na}"
 %format NB   = "\textsc{nb}"
@@ -129,13 +129,13 @@
 \begin{tabular}{ll}
 \textbf{Grupo} nr. & 999 (preencher)
 \\\hline
-a11111 & Nome1 (preencher)	
+a11111 & Nome1 (preencher)
 \\
-a22222 & Nome2 (preencher)	
+a22222 & Nome2 (preencher)
 \\
-a33333 & Nome3 (preencher)	
+a33333 & Nome3 (preencher)
 \\
-a44444 & Nome4 (preencher, se aplicável, ou apagar)	
+a44444 & Nome4 (preencher, se aplicável, ou apagar)
 \end{tabular}
 \end{center}
 
@@ -147,10 +147,10 @@ parte-se de um repertório de \emph{combinadores} que formam uma álgebra da
 programação (conjunto de leis universais e seus corolários) e usam-se esses
 combinadores para construir programas \emph{composicionalmente}, isto é,
 agregando programas já existentes.
-  
+
 Na sequência pedagógica dos planos de estudo dos dois cursos que têm
 esta disciplina, opta-se pela aplicação deste método à programação
-em \Haskell\ (sem prejuízo da sua aplicação a outras linguagens 
+em \Haskell\ (sem prejuízo da sua aplicação a outras linguagens
 funcionais). Assim, o presente trabalho prático coloca os
 alunos perante problemas concretos que deverão ser implementados em
 \Haskell.  Há ainda um outro objectivo: o de ensinar a documentar
@@ -193,7 +193,7 @@ o ``kit'' básico, escrito em \Haskell, para realizar o trabalho. Basta executar
 \begin{code}
 {-# OPTIONS_GHC -XNPlusKPatterns #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving, DeriveDataTypeable, FlexibleInstances #-}
-module Main where 
+module Main where
 import Cp
 import List hiding (fac)
 import Nat
@@ -289,7 +289,7 @@ uma grande capacidade expressiva ao programador. Graças à sua flexibilidade,
 torna-se trivial implementar \DSL s
 e até mesmo \href{http://www.cse.chalmers.se/~ulfn/papers/thesis.pdf}{linguagens de programação}.
 
-Paralelamente, um tópico bastante estudado no âmbito de \DL\ 
+Paralelamente, um tópico bastante estudado no âmbito de \DL\
 é a derivação automática de expressões matemáticas, por exemplo, de derivadas.
 Duas técnicas que podem ser utilizadas para o cálculo de derivadas são:
 
@@ -552,7 +552,7 @@ Seguindo a regra acima, calcula-se de imediato a seguinte implementação, em Ha
 \begin{code}
 f' a b c = p1 . for loop init where
   loop(f,k) = (f+k,k+2*a)
-  init = (c,a+b) 
+  init = (c,a+b)
 \end{code}
 O que se pede então, nesta pergunta?
 Dada a fórmula que dá o |n|-ésimo \catalan{número de Catalan},
@@ -578,7 +578,7 @@ prop_cat = (>=0) .==>. (catdef  .==. cat)
 no anexo \ref{sec:recmul} para o problema (semelhante) da função exponencial.
 
 
-\Problema 
+\Problema
 
 As \bezier{curvas de Bézier}, designação dada em honra ao engenheiro
 \href{https://en.wikipedia.org/wiki/Pierre_B%C3%A9zier}{Pierre Bézier},
@@ -631,7 +631,7 @@ O tipo de dados |OverTime a| representa um termo do tipo |a| num dado instante
 type OverTime a = Float -> a
 \end{code}
 %
-O anexo \ref{sec:codigo} tem definida a função 
+O anexo \ref{sec:codigo} tem definida a função
     \begin{spec}
     calcLine :: NPoint -> (NPoint -> OverTime NPoint)
     \end{spec}
@@ -691,8 +691,8 @@ Logo $avg$ está em recursividade mútua com $length$ e o par de funções pode 
 \begin{enumerate}
 
 \item	Recorra à lei de recursividade mútua para derivar a função
-|avg_aux = cata (either b q)| tal que 
-|avg_aux = split avg length| em listas não vazias. 
+|avg_aux = cata (either b q)| tal que
+|avg_aux = split avg length| em listas não vazias.
 
 \item	Generalize o raciocínio anterior para o cálculo da média de todos os elementos de uma \LTree\ recorrendo a uma única travessia da árvore (i.e.\ catamorfismo).
 
@@ -709,7 +709,7 @@ prop_avg = nonempty .==>. diff .<=. const 0.000001 where
 \end{code}
 \end{propriedade}
 
-\Problema	(\textbf{NB}: Esta questão é \textbf{opcional} e funciona como \textbf{valorização} apenas para os alunos que desejarem fazê-la.) 
+\Problema	(\textbf{NB}: Esta questão é \textbf{opcional} e funciona como \textbf{valorização} apenas para os alunos que desejarem fazê-la.)
 
 \vskip 1em \noindent
 Existem muitas linguagens funcionais para além do \Haskell, que é a linguagem usada neste trabalho prático. Uma delas é o \Fsharp\ da Microsoft. Na directoria \verb!fsharp! encontram-se os módulos \Cp, \Nat\ e \LTree\ codificados em \Fsharp. O que se pede é a biblioteca \BTree\ escrita na mesma linguagem.
@@ -724,7 +724,7 @@ Modo de execução: o código que tiverem produzido nesta pergunta deve ser colo
 
 \section{Como exprimir cálculos e diagramas em LaTeX/lhs2tex}
 Como primeiro exemplo, estudar o texto fonte deste trabalho para obter o
-efeito:\footnote{Exemplos tirados de \cite{Ol18}.} 
+efeito:\footnote{Exemplos tirados de \cite{Ol18}.}
 \begin{eqnarray*}
 \start
 	|id = split f g|
@@ -747,8 +747,8 @@ efeito:\footnote{Exemplos tirados de \cite{Ol18}.}
 \qed
 \end{eqnarray*}
 
-Os diagramas podem ser produzidos recorrendo à \emph{package} \LaTeX\ 
-\href{https://ctan.org/pkg/xymatrix}{xymatrix}, por exemplo: 
+Os diagramas podem ser produzidos recorrendo à \emph{package} \LaTeX\
+\href{https://ctan.org/pkg/xymatrix}{xymatrix}, por exemplo:
 \begin{eqnarray*}
 \xymatrix@@C=2cm{
     |Nat0|
@@ -772,7 +772,7 @@ onde se pretende implementar um ciclo que implemente
 o cálculo da aproximação até |i=n| da função exponencial $exp\ x = e^x$,
 via série de Taylor:
 \begin{eqnarray}
-	exp\ x 
+	exp\ x
 & = &
 	\sum_{i=0}^{\infty} \frac {x^i} {i!}
 \end{eqnarray}
@@ -993,7 +993,7 @@ alterados os nomes ou tipos das funções dadas, mas pode ser adicionado
 texto, disgramas e/ou outras funções auxiliares que sejam necessárias.
 
 Valoriza-se a escrita de \emph{pouco} código que corresponda a soluções
-simples e elegantes. 
+simples e elegantes.
 
 \subsection*{Problema 1} \label{pg:P1}
 São dadas:
@@ -1044,7 +1044,7 @@ clean (Un Negate (N 0)) = i2 $ i1 0
 clean (Un op a) = i2 $ i2 $ i2 (op,a)
 ---
 gopt :: Floating a => a -> Either () (Either a (Either (BinOp, (a, a)) (UnOp, a))) -> a
-gopt = g_eval_exp 
+gopt = g_eval_exp
 \end{code}
 
 \begin{code}
@@ -1129,7 +1129,7 @@ Solução para árvores de tipo \LTree:
 avgLTree = p1.cataLTree gene where
    gene = either g q where
       g a = (a,1)
-      q((a1,l1),(a2,l2)) = (((a1*l1)+(a2*l2))/(l1+l2),l1+l2) 
+      q((a1,l1),(a2,l2)) = (((a1*l1)+(a2*l2))/(l1+l2),l1+l2)
 \end{code}
 
 \subsection*{Problema 5}

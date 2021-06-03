@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# OPTIONS_GHC -XNPlusKPatterns #-}</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-comment">-- (c) MP-I (1998/9-2006/7) and CP (2005/6-2018/9)</span><span>
+</span><span id="line-4"></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Nat</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-6"></span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Cp.html"><span class="hs-identifier">Cp</span></a></span><span>
+</span><span id="line-8"></span><span>
+</span><span id="line-9"></span><span class="hs-comment">-- (1) Datatype definition -----------------------------------------------------</span><span>
+</span><span id="line-10"></span><span>
+</span><span id="line-11"></span><span class="hs-comment">-- &quot;data Nat = 0 | succ Nat&quot;   -- in fact: Haskell Integer is used as carrier type</span><span>
+</span><span id="line-12"></span><span>
+</span><span id="line-13"></span><span id="inNat"><span class="annot"><span class="annottext">inNat :: Either b Integer -&gt; Integer
+</span><a href="Nat.html#inNat"><span class="hs-identifier hs-var hs-var">inNat</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(b -&gt; Integer)
+-&gt; (Integer -&gt; Integer) -&gt; Either b Integer -&gt; Integer
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; b -&gt; Integer
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">0</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Integer
+forall a. Enum a =&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">succ</span></a></span><span>
+</span><span id="line-14"></span><span>
+</span><span id="line-15"></span><span id="outNat"><span class="annot"><span class="annottext">outNat :: b -&gt; Either () b
+</span><a href="Nat.html#outNat"><span class="hs-identifier hs-var hs-var">outNat</span></a></span></span><span> </span><span class="annot"><span class="annottext">b
+</span><span class="hs-number">0</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">() -&gt; Either () b
+forall a b. a -&gt; Either a b
+</span><a href="Cp.html#i1"><span class="hs-identifier hs-var">i1</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-16"></span><span class="annot"><a href="Nat.html#outNat"><span class="hs-identifier hs-var">outNat</span></a></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679067349"><span class="annot"><span class="annottext">n :: b
+</span><a href="#local-6989586621679067349"><span class="hs-identifier hs-var">n</span></a></span></span><span class="hs-operator">+</span><span class="hs-number">1</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">b -&gt; Either () b
+forall b a. b -&gt; Either a b
+</span><a href="Cp.html#i2"><span class="hs-identifier hs-var">i2</span></a></span><span> </span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067349"><span class="hs-identifier hs-var">n</span></a></span><span>
+</span><span id="line-17"></span><span>
+</span><span id="line-18"></span><span class="hs-comment">-- NB: inNat and outNat are isomorphisms only if restricted to non-negative integers</span><span>
+</span><span id="line-19"></span><span>
+</span><span id="line-20"></span><span class="hs-comment">-- (2) Ana + cata + hylo -------------------------------------------------------</span><span>
+</span><span id="line-21"></span><span>
+</span><span id="line-22"></span><span id="cataNat"><span class="annot"><span class="annottext">cataNat :: (Either () d -&gt; d) -&gt; c -&gt; d
+</span><a href="Nat.html#cataNat"><span class="hs-identifier hs-var hs-var">cataNat</span></a></span></span><span> </span><span id="local-6989586621679067346"><span class="annot"><span class="annottext">Either () d -&gt; d
+</span><a href="#local-6989586621679067346"><span class="hs-identifier hs-var">g</span></a></span></span><span>   </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Either () d -&gt; d
+</span><a href="#local-6989586621679067346"><span class="hs-identifier hs-var">g</span></a></span><span> </span><span class="annot"><span class="annottext">(Either () d -&gt; d) -&gt; (c -&gt; Either () d) -&gt; c -&gt; d
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="annot"><span class="annottext">(c -&gt; d) -&gt; Either () c -&gt; Either () d
+forall c d b. (c -&gt; d) -&gt; Either b c -&gt; Either b d
+</span><a href="Nat.html#recNat"><span class="hs-identifier hs-var">recNat</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Either () d -&gt; d) -&gt; c -&gt; d
+</span><a href="Nat.html#cataNat"><span class="hs-identifier hs-var">cataNat</span></a></span><span> </span><span class="annot"><span class="annottext">Either () d -&gt; d
+</span><a href="#local-6989586621679067346"><span class="hs-identifier hs-var">g</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Either () c -&gt; Either () d)
+-&gt; (c -&gt; Either () c) -&gt; c -&gt; Either () d
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="annot"><span class="annottext">c -&gt; Either () c
+forall b. Integral b =&gt; b -&gt; Either () b
+</span><a href="Nat.html#outNat"><span class="hs-identifier hs-var">outNat</span></a></span><span>
+</span><span id="line-23"></span><span>
+</span><span id="line-24"></span><span id="recNat"><span class="annot"><span class="annottext">recNat :: (c -&gt; d) -&gt; Either b c -&gt; Either b d
+</span><a href="Nat.html#recNat"><span class="hs-identifier hs-var hs-var">recNat</span></a></span></span><span> </span><span id="local-6989586621679067343"><span class="annot"><span class="annottext">c -&gt; d
+</span><a href="#local-6989586621679067343"><span class="hs-identifier hs-var">f</span></a></span></span><span>    </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">b -&gt; b
+forall a. a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">id</span></a></span><span> </span><span class="annot"><span class="annottext">(b -&gt; b) -&gt; (c -&gt; d) -&gt; Either b c -&gt; Either b d
+forall a b c d. (a -&gt; b) -&gt; (c -&gt; d) -&gt; Either a c -&gt; Either b d
+</span><a href="Cp.html#-%7C-"><span class="hs-operator hs-var">-|-</span></a></span><span> </span><span class="annot"><span class="annottext">c -&gt; d
+</span><a href="#local-6989586621679067343"><span class="hs-identifier hs-var">f</span></a></span><span>                                 </span><span class="hs-comment">-- this is F f for this datatype</span><span>
+</span><span id="line-25"></span><span>
+</span><span id="line-26"></span><span id="anaNat"><span class="annot"><span class="annottext">anaNat :: (c -&gt; Either b c) -&gt; c -&gt; Integer
+</span><a href="Nat.html#anaNat"><span class="hs-identifier hs-var hs-var">anaNat</span></a></span></span><span> </span><span id="local-6989586621679067339"><span class="annot"><span class="annottext">c -&gt; Either b c
+</span><a href="#local-6989586621679067339"><span class="hs-identifier hs-var">h</span></a></span></span><span>    </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Either b Integer -&gt; Integer
+forall b. Either b Integer -&gt; Integer
+</span><a href="Nat.html#inNat"><span class="hs-identifier hs-var">inNat</span></a></span><span> </span><span class="annot"><span class="annottext">(Either b Integer -&gt; Integer)
+-&gt; (c -&gt; Either b Integer) -&gt; c -&gt; Integer
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(c -&gt; Integer) -&gt; Either b c -&gt; Either b Integer
+forall c d b. (c -&gt; d) -&gt; Either b c -&gt; Either b d
+</span><a href="Nat.html#recNat"><span class="hs-identifier hs-var">recNat</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(c -&gt; Either b c) -&gt; c -&gt; Integer
+</span><a href="Nat.html#anaNat"><span class="hs-identifier hs-var">anaNat</span></a></span><span> </span><span class="annot"><span class="annottext">c -&gt; Either b c
+</span><a href="#local-6989586621679067339"><span class="hs-identifier hs-var">h</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Either b c -&gt; Either b Integer)
+-&gt; (c -&gt; Either b c) -&gt; c -&gt; Either b Integer
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="annot"><span class="annottext">c -&gt; Either b c
+</span><a href="#local-6989586621679067339"><span class="hs-identifier hs-var">h</span></a></span><span>
+</span><span id="line-27"></span><span>
+</span><span id="line-28"></span><span id="hyloNat"><span class="annot"><span class="annottext">hyloNat :: (Either () c -&gt; c) -&gt; (c -&gt; Either b c) -&gt; c -&gt; c
+</span><a href="Nat.html#hyloNat"><span class="hs-identifier hs-var hs-var">hyloNat</span></a></span></span><span> </span><span id="local-6989586621679067337"><span class="annot"><span class="annottext">Either () c -&gt; c
+</span><a href="#local-6989586621679067337"><span class="hs-identifier hs-var">g</span></a></span></span><span> </span><span id="local-6989586621679067336"><span class="annot"><span class="annottext">c -&gt; Either b c
+</span><a href="#local-6989586621679067336"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () c -&gt; c) -&gt; Integer -&gt; c
+forall c d. Integral c =&gt; (Either () d -&gt; d) -&gt; c -&gt; d
+</span><a href="Nat.html#cataNat"><span class="hs-identifier hs-var">cataNat</span></a></span><span> </span><span class="annot"><span class="annottext">Either () c -&gt; c
+</span><a href="#local-6989586621679067337"><span class="hs-identifier hs-var">g</span></a></span><span> </span><span class="annot"><span class="annottext">(Integer -&gt; c) -&gt; (c -&gt; Integer) -&gt; c -&gt; c
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="annot"><span class="annottext">(c -&gt; Either b c) -&gt; c -&gt; Integer
+forall c b. (c -&gt; Either b c) -&gt; c -&gt; Integer
+</span><a href="Nat.html#anaNat"><span class="hs-identifier hs-var">anaNat</span></a></span><span> </span><span class="annot"><span class="annottext">c -&gt; Either b c
+</span><a href="#local-6989586621679067336"><span class="hs-identifier hs-var">h</span></a></span><span>
+</span><span id="line-29"></span><span>
+</span><span id="line-30"></span><span class="hs-comment">-- paraNat g   = g . recNat (split id (paraNat g)) . outNat</span><span>
+</span><span id="line-31"></span><span>
+</span><span id="line-32"></span><span class="hs-comment">-- (3) Map ---------------------------------------------------------------------</span><span>
+</span><span id="line-33"></span><span>
+</span><span id="line-34"></span><span class="hs-comment">-- (4) Examples ----------------------------------------------------------------</span><span>
+</span><span id="line-35"></span><span>
+</span><span id="line-36"></span><span class="hs-comment">-- (4.1) for is the &quot;fold&quot; of natural numbers</span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span id="for"><span class="annot"><span class="annottext">for :: (b -&gt; b) -&gt; b -&gt; c -&gt; b
+</span><a href="Nat.html#for"><span class="hs-identifier hs-var hs-var">for</span></a></span></span><span> </span><span id="local-6989586621679067334"><span class="annot"><span class="annottext">b -&gt; b
+</span><a href="#local-6989586621679067334"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span id="local-6989586621679067333"><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067333"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () b -&gt; b) -&gt; c -&gt; b
+forall c d. Integral c =&gt; (Either () d -&gt; d) -&gt; c -&gt; d
+</span><a href="Nat.html#cataNat"><span class="hs-identifier hs-var">cataNat</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(() -&gt; b) -&gt; (b -&gt; b) -&gt; Either () b -&gt; b
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">b -&gt; () -&gt; b
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067333"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">b -&gt; b
+</span><a href="#local-6989586621679067334"><span class="hs-identifier hs-var">b</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-39"></span><span>
+</span><span id="line-40"></span><span id="somar"><span class="annot"><span class="annottext">somar :: d -&gt; c -&gt; d
+</span><a href="Nat.html#somar"><span class="hs-identifier hs-var hs-var">somar</span></a></span></span><span> </span><span id="local-6989586621679067331"><span class="annot"><span class="annottext">d
+</span><a href="#local-6989586621679067331"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () d -&gt; d) -&gt; c -&gt; d
+forall c d. Integral c =&gt; (Either () d -&gt; d) -&gt; c -&gt; d
+</span><a href="Nat.html#cataNat"><span class="hs-identifier hs-var">cataNat</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(() -&gt; d) -&gt; (d -&gt; d) -&gt; Either () d -&gt; d
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">d -&gt; () -&gt; d
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="annot"><span class="annottext">d
+</span><a href="#local-6989586621679067331"><span class="hs-identifier hs-var">a</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">d -&gt; d
+forall a. Enum a =&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">succ</span></a></span><span class="hs-special">)</span><span>        </span><span class="hs-comment">-- for succ a</span><span>
+</span><span id="line-41"></span><span>
+</span><span id="line-42"></span><span id="multip"><span class="annot"><span class="annottext">multip :: d -&gt; c -&gt; d
+</span><a href="Nat.html#multip"><span class="hs-identifier hs-var hs-var">multip</span></a></span></span><span> </span><span id="local-6989586621679067329"><span class="annot"><span class="annottext">d
+</span><a href="#local-6989586621679067329"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () d -&gt; d) -&gt; c -&gt; d
+forall c d. Integral c =&gt; (Either () d -&gt; d) -&gt; c -&gt; d
+</span><a href="Nat.html#cataNat"><span class="hs-identifier hs-var">cataNat</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(() -&gt; d) -&gt; (d -&gt; d) -&gt; Either () d -&gt; d
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">d -&gt; () -&gt; d
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="annot"><span class="annottext">d
+</span><span class="hs-number">0</span></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">d
+</span><a href="#local-6989586621679067329"><span class="hs-identifier hs-var">a</span></a></span><span class="annot"><span class="annottext">d -&gt; d -&gt; d
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">+</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>       </span><span class="hs-comment">-- for (a+) 0</span><span>
+</span><span id="line-43"></span><span>
+</span><span id="line-44"></span><span id="exp"><span class="annot"><span class="annottext">exp :: d -&gt; c -&gt; d
+</span><a href="Nat.html#exp"><span class="hs-identifier hs-var hs-var">exp</span></a></span></span><span> </span><span id="local-6989586621679067326"><span class="annot"><span class="annottext">d
+</span><a href="#local-6989586621679067326"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () d -&gt; d) -&gt; c -&gt; d
+forall c d. Integral c =&gt; (Either () d -&gt; d) -&gt; c -&gt; d
+</span><a href="Nat.html#cataNat"><span class="hs-identifier hs-var">cataNat</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(() -&gt; d) -&gt; (d -&gt; d) -&gt; Either () d -&gt; d
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">d -&gt; () -&gt; d
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="annot"><span class="annottext">d
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">d
+</span><a href="#local-6989586621679067326"><span class="hs-identifier hs-var">a</span></a></span><span class="annot"><span class="annottext">d -&gt; d -&gt; d
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">*</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>          </span><span class="hs-comment">-- for (a*) 1</span><span>
+</span><span id="line-45"></span><span>
+</span><span id="line-46"></span><span class="hs-comment">-- (4.2) sq (square of a natural number) </span><span>
+</span><span id="line-47"></span><span>
+</span><span id="line-48"></span><span id="sq"><span class="annot"><span class="annottext">sq :: p -&gt; p
+</span><a href="Nat.html#sq"><span class="hs-identifier hs-var hs-var">sq</span></a></span></span><span> </span><span class="annot"><span class="annottext">p
+</span><span class="hs-number">0</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">p
+</span><span class="hs-number">0</span></span><span>
+</span><span id="line-49"></span><span class="annot"><a href="Nat.html#sq"><span class="hs-identifier hs-var">sq</span></a></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679067323"><span class="annot"><span class="annottext">n :: p
+</span><a href="#local-6989586621679067323"><span class="hs-identifier hs-var">n</span></a></span></span><span class="hs-operator">+</span><span class="hs-number">1</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">p -&gt; p
+forall a. Num a =&gt; a -&gt; a
+</span><a href="#local-6989586621679067322"><span class="hs-identifier hs-var">oddn</span></a></span><span> </span><span class="annot"><span class="annottext">p
+</span><a href="#local-6989586621679067323"><span class="hs-identifier hs-var">n</span></a></span><span> </span><span class="annot"><span class="annottext">p -&gt; p -&gt; p
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">+</span></a></span><span> </span><span class="annot"><span class="annottext">p -&gt; p
+</span><a href="Nat.html#sq"><span class="hs-identifier hs-var">sq</span></a></span><span> </span><span class="annot"><span class="annottext">p
+</span><a href="#local-6989586621679067323"><span class="hs-identifier hs-var">n</span></a></span><span> </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679067322"><span class="annot"><span class="annottext">oddn :: a -&gt; a
+</span><a href="#local-6989586621679067322"><span class="hs-identifier hs-var hs-var">oddn</span></a></span></span><span> </span><span id="local-6989586621679067321"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067321"><span class="hs-identifier hs-var">n</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">a
+</span><span class="hs-number">2</span></span><span class="annot"><span class="annottext">a -&gt; a -&gt; a
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">*</span></a></span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067321"><span class="hs-identifier hs-var">n</span></a></span><span class="annot"><span class="annottext">a -&gt; a -&gt; a
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">+</span></a></span><span class="annot"><span class="annottext">a
+</span><span class="hs-number">1</span></span><span>
+</span><span id="line-50"></span><span>
+</span><span id="line-51"></span><span class="hs-comment">-- sq = paraNat (either (const 0) g)i</span><span>
+</span><span id="line-52"></span><span>
+</span><span id="line-53"></span><span id="sq%27"><span class="annot"><span class="annottext">sq' :: Integer -&gt; Integer
+</span><a href="Nat.html#sq%27"><span class="hs-identifier hs-var hs-var">sq'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Integer, Integer) -&gt; Integer
+forall a b. (a, b) -&gt; a
+</span><a href="Cp.html#p1"><span class="hs-identifier hs-var">p1</span></a></span><span> </span><span class="annot"><span class="annottext">((Integer, Integer) -&gt; Integer)
+-&gt; (Integer -&gt; (Integer, Integer)) -&gt; Integer -&gt; Integer
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; (Integer, Integer)
+</span><a href="#local-6989586621679067318"><span class="hs-identifier hs-var">aux</span></a></span><span>
+</span><span id="line-54"></span><span>       </span><span class="hs-comment">-- this is the outcome of calculating sq as a for loop using the</span><span>
+</span><span id="line-55"></span><span>       </span><span class="hs-comment">-- mutual recursion law</span><span>
+</span><span id="line-56"></span><span>      </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679067318"><span class="annot"><span class="annottext">aux :: Integer -&gt; (Integer, Integer)
+</span><a href="#local-6989586621679067318"><span class="hs-identifier hs-var hs-var">aux</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Either () (Integer, Integer) -&gt; (Integer, Integer))
+-&gt; Integer -&gt; (Integer, Integer)
+forall c d. Integral c =&gt; (Either () d -&gt; d) -&gt; c -&gt; d
+</span><a href="Nat.html#cataNat"><span class="hs-identifier hs-var">cataNat</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(() -&gt; (Integer, Integer))
+-&gt; ((Integer, Integer) -&gt; (Integer, Integer))
+-&gt; Either () (Integer, Integer)
+-&gt; (Integer, Integer)
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(() -&gt; Integer) -&gt; (() -&gt; Integer) -&gt; () -&gt; (Integer, Integer)
+forall a b c. (a -&gt; b) -&gt; (a -&gt; c) -&gt; a -&gt; (b, c)
+</span><a href="Cp.html#split"><span class="hs-identifier hs-var">split</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; () -&gt; Integer
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">0</span></span><span class="hs-special">)</span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; () -&gt; Integer
+forall a b. a -&gt; b -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">const</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">((Integer, Integer) -&gt; Integer)
+-&gt; ((Integer, Integer) -&gt; Integer)
+-&gt; (Integer, Integer)
+-&gt; (Integer, Integer)
+forall a b c. (a -&gt; b) -&gt; (a -&gt; c) -&gt; a -&gt; (b, c)
+</span><a href="Cp.html#split"><span class="hs-identifier hs-var">split</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Integer -&gt; Integer -&gt; Integer) -&gt; (Integer, Integer) -&gt; Integer
+forall a b c. (a -&gt; b -&gt; c) -&gt; (a, b) -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">uncurry</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Integer -&gt; Integer
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">(+)</span></a></span><span class="hs-special">)</span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">2</span></span><span class="annot"><span class="annottext">Integer -&gt; Integer -&gt; Integer
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">+</span></a></span><span class="hs-special">)</span><span class="annot"><span class="annottext">(Integer -&gt; Integer)
+-&gt; ((Integer, Integer) -&gt; Integer) -&gt; (Integer, Integer) -&gt; Integer
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span class="annot"><span class="annottext">(Integer, Integer) -&gt; Integer
+forall a b. (a, b) -&gt; b
+</span><a href="Cp.html#p2"><span class="hs-identifier hs-var">p2</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-57"></span><span>
+</span><span id="line-58"></span><span id="sq%27%27"><span class="annot"><span class="annottext">sq'' :: c -&gt; b
+</span><a href="Nat.html#sq%27%27"><span class="hs-identifier hs-var hs-var">sq''</span></a></span></span><span> </span><span id="local-6989586621679067313"><span class="annot"><span class="annottext">c
+</span><a href="#local-6989586621679067313"><span class="hs-identifier hs-var">n</span></a></span></span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="hs-comment">-- the same as a for loop (putting variables in)</span><span>
+</span><span id="line-59"></span><span>       </span><span class="annot"><span class="annottext">(b, b) -&gt; b
+forall a b. (a, b) -&gt; a
+</span><a href="Cp.html#p1"><span class="hs-identifier hs-var">p1</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">((b, b) -&gt; (b, b)) -&gt; (b, b) -&gt; c -&gt; (b, b)
+forall c b. Integral c =&gt; (b -&gt; b) -&gt; b -&gt; c -&gt; b
+</span><a href="Nat.html#for"><span class="hs-identifier hs-var">for</span></a></span><span> </span><span class="annot"><span class="annottext">(b, b) -&gt; (b, b)
+forall b. Num b =&gt; (b, b) -&gt; (b, b)
+</span><a href="#local-6989586621679067312"><span class="hs-identifier hs-var">body</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">b
+</span><span class="hs-number">0</span></span><span class="hs-special">,</span><span class="annot"><span class="annottext">b
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">c
+</span><a href="#local-6989586621679067313"><span class="hs-identifier hs-var">n</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-60"></span><span>       </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679067312"><span class="annot"><span class="annottext">body :: (b, b) -&gt; (b, b)
+</span><a href="#local-6989586621679067312"><span class="hs-identifier hs-var hs-var">body</span></a></span></span><span class="hs-special">(</span><span id="local-6989586621679067311"><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067311"><span class="hs-identifier hs-var">s</span></a></span></span><span class="hs-special">,</span><span id="local-6989586621679067310"><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067310"><span class="hs-identifier hs-var">o</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067311"><span class="hs-identifier hs-var">s</span></a></span><span class="annot"><span class="annottext">b -&gt; b -&gt; b
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">+</span></a></span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067310"><span class="hs-identifier hs-var">o</span></a></span><span class="hs-special">,</span><span class="annot"><span class="annottext">b
+</span><span class="hs-number">2</span></span><span class="annot"><span class="annottext">b -&gt; b -&gt; b
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">+</span></a></span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679067310"><span class="hs-identifier hs-var">o</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-61"></span><span>
+</span><span id="line-62"></span><span class="hs-comment">-- (4.3) factorial</span><span>
+</span><span id="line-63"></span><span>
+</span><span id="line-64"></span><span id="fac"><span class="annot"><span class="annottext">fac :: Integer -&gt; Integer
+</span><a href="Nat.html#fac"><span class="hs-identifier hs-var hs-var">fac</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Integer, Integer) -&gt; Integer
+forall a b. (a, b) -&gt; b
+</span><a href="Cp.html#p2"><span class="hs-identifier hs-var">p2</span></a></span><span class="annot"><span class="annottext">((Integer, Integer) -&gt; Integer)
+-&gt; (Integer -&gt; (Integer, Integer)) -&gt; Integer -&gt; Integer
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; (Integer, Integer)
+</span><a href="Nat.html#facfor"><span class="hs-identifier hs-var">facfor</span></a></span><span>
+</span><span id="line-65"></span><span id="facfor"><span class="annot"><span class="annottext">facfor :: Integer -&gt; (Integer, Integer)
+</span><a href="Nat.html#facfor"><span class="hs-identifier hs-var hs-var">facfor</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">((Integer, Integer) -&gt; (Integer, Integer))
+-&gt; (Integer, Integer) -&gt; Integer -&gt; (Integer, Integer)
+forall c b. Integral c =&gt; (b -&gt; b) -&gt; b -&gt; c -&gt; b
+</span><a href="Nat.html#for"><span class="hs-identifier hs-var">for</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">((Integer, Integer) -&gt; Integer)
+-&gt; ((Integer, Integer) -&gt; Integer)
+-&gt; (Integer, Integer)
+-&gt; (Integer, Integer)
+forall a b c. (a -&gt; b) -&gt; (a -&gt; c) -&gt; a -&gt; (b, c)
+</span><a href="Cp.html#split"><span class="hs-identifier hs-var">split</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; Integer
+forall a. Enum a =&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">succ</span></a></span><span class="annot"><span class="annottext">(Integer -&gt; Integer)
+-&gt; ((Integer, Integer) -&gt; Integer) -&gt; (Integer, Integer) -&gt; Integer
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span class="annot"><span class="annottext">(Integer, Integer) -&gt; Integer
+forall a b. (a, b) -&gt; a
+</span><a href="Cp.html#p1"><span class="hs-identifier hs-var">p1</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Integer, Integer) -&gt; Integer
+forall c. Num c =&gt; (c, c) -&gt; c
+</span><a href="Cp.html#mul"><span class="hs-identifier hs-var">mul</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">1</span></span><span class="hs-special">,</span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span> </span><span>
+</span><span id="line-66"></span><span>
+</span><span id="line-67"></span><span class="hs-comment">-- factorial = paraNat (either (const 1) g) where g(n,r) = (n+1) * r</span><span>
+</span><span id="line-68"></span><span>
+</span><span id="line-69"></span><span class="hs-comment">-- (4.4) integer division as an anamorphism --------------</span><span>
+</span><span id="line-70"></span><span>
+</span><span id="line-71"></span><span class="annot"><a href="Nat.html#idiv"><span class="hs-identifier hs-type">idiv</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/integer-gmp-1.0.3.0/src"><span class="hs-identifier hs-type">Integer</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/integer-gmp-1.0.3.0/src"><span class="hs-identifier hs-type">Integer</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/integer-gmp-1.0.3.0/src"><span class="hs-identifier hs-type">Integer</span></a></span><span>
+</span><span id="line-72"></span><span class="hs-comment">{-- pointwise
+x `wdiv` y  |   x &lt;  y    = 0
+            |   x &gt;= y    = (x - y) `wdiv` y + 1
+--}</span><span>
+</span><span id="line-76"></span><span>
+</span><span id="line-77"></span><span id="idiv"><span class="annot"><span class="annottext">idiv :: Integer -&gt; Integer -&gt; Integer
+</span><a href="Nat.html#idiv"><span class="hs-identifier hs-var hs-var">idiv</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Integer -&gt; Integer -&gt; Integer) -&gt; Integer -&gt; Integer -&gt; Integer
+forall a b c. (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">flip</span></a></span><span> </span><span class="annot"><span class="annottext">Integer -&gt; Integer -&gt; Integer
+forall c. (Ord c, Num c) =&gt; c -&gt; c -&gt; Integer
+</span><a href="Nat.html#aux"><span class="hs-identifier hs-var">aux</span></a></span><span>
+</span><span id="line-78"></span><span>
+</span><span id="line-79"></span><span id="aux"><span class="annot"><span class="annottext">aux :: c -&gt; c -&gt; Integer
+</span><a href="Nat.html#aux"><span class="hs-identifier hs-var hs-var">aux</span></a></span></span><span> </span><span id="local-6989586621679067303"><span class="annot"><span class="annottext">c
+</span><a href="#local-6989586621679067303"><span class="hs-identifier hs-var">y</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(c -&gt; Either () c) -&gt; c -&gt; Integer
+forall c b. (c -&gt; Either b c) -&gt; c -&gt; Integer
+</span><a href="Nat.html#anaNat"><span class="hs-identifier hs-var">anaNat</span></a></span><span> </span><span class="annot"><span class="annottext">c -&gt; Either () c
+</span><a href="#local-6989586621679067302"><span class="hs-identifier hs-var">divide</span></a></span><span> </span><span class="hs-keyword">where</span><span> </span><span>
+</span><span id="line-80"></span><span>           </span><span id="local-6989586621679067302"><span class="annot"><span class="annottext">divide :: c -&gt; Either () c
+</span><a href="#local-6989586621679067302"><span class="hs-identifier hs-var hs-var">divide</span></a></span></span><span> </span><span id="local-6989586621679067301"><span class="annot"><span class="annottext">c
+</span><a href="#local-6989586621679067301"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">c
+</span><a href="#local-6989586621679067301"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">c -&gt; c -&gt; Bool
+forall a. Ord a =&gt; a -&gt; a -&gt; Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-operator hs-var">&lt;</span></a></span><span>  </span><span class="annot"><span class="annottext">c
+</span><a href="#local-6989586621679067303"><span class="hs-identifier hs-var">y</span></a></span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">() -&gt; Either () c
+forall a b. a -&gt; Either a b
+</span><a href="Cp.html#i1"><span class="hs-identifier hs-var">i1</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-81"></span><span>                    </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">c
+</span><a href="#local-6989586621679067301"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">c -&gt; c -&gt; Bool
+forall a. Ord a =&gt; a -&gt; a -&gt; Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-operator hs-var">&gt;=</span></a></span><span> </span><span class="annot"><span class="annottext">c
+</span><a href="#local-6989586621679067303"><span class="hs-identifier hs-var">y</span></a></span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">c -&gt; Either () c
+forall b a. b -&gt; Either a b
+</span><a href="Cp.html#i2"><span class="hs-identifier hs-var">i2</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">c
+</span><a href="#local-6989586621679067301"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">c -&gt; c -&gt; c
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-glyph hs-var">-</span></a></span><span> </span><span class="annot"><span class="annottext">c
+</span><a href="#local-6989586621679067303"><span class="hs-identifier hs-var">y</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-82"></span><span>
+</span><span id="line-83"></span><span class="hs-comment">--- (4.5) bubble sort -----------------------------------</span><span>
+</span><span id="line-84"></span><span>
+</span><span id="line-85"></span><span id="bSort"><span class="annot"><span class="annottext">bSort :: [a] -&gt; [a]
+</span><a href="Nat.html#bSort"><span class="hs-identifier hs-var hs-var">bSort</span></a></span></span><span> </span><span id="local-6989586621679067298"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067298"><span class="hs-identifier hs-var">xs</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">([a] -&gt; [a]) -&gt; [a] -&gt; Int -&gt; [a]
+forall c b. Integral c =&gt; (b -&gt; b) -&gt; b -&gt; c -&gt; b
+</span><a href="Nat.html#for"><span class="hs-identifier hs-var">for</span></a></span><span> </span><span class="annot"><span class="annottext">[a] -&gt; [a]
+forall a. Ord a =&gt; [a] -&gt; [a]
+</span><a href="#local-6989586621679067297"><span class="hs-identifier hs-var">bubble</span></a></span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067298"><span class="hs-identifier hs-var">xs</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[a] -&gt; Int
+forall (t :: * -&gt; *) a. Foldable t =&gt; t a -&gt; Int
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">length</span></a></span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067298"><span class="hs-identifier hs-var">xs</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-86"></span><span>   </span><span id="local-6989586621679067297"><span class="annot"><span class="annottext">bubble :: [a] -&gt; [a]
+</span><a href="#local-6989586621679067297"><span class="hs-identifier hs-var hs-var">bubble</span></a></span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679067295"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067295"><span class="hs-identifier hs-var">x</span></a></span></span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-type">:</span></a></span><span id="local-6989586621679067294"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067294"><span class="hs-identifier hs-var">y</span></a></span></span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-type">:</span></a></span><span id="local-6989586621679067293"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067293"><span class="hs-identifier hs-var">xs</span></a></span></span><span class="hs-special">)</span><span>
+</span><span id="line-87"></span><span>       </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067295"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; a -&gt; Bool
+forall a. Ord a =&gt; a -&gt; a -&gt; Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-operator hs-var">&gt;</span></a></span><span> </span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067294"><span class="hs-identifier hs-var">y</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067294"><span class="hs-identifier hs-var">y</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; [a] -&gt; [a]
+forall a. a -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-var">:</span></a></span><span> </span><span class="annot"><span class="annottext">[a] -&gt; [a]
+</span><a href="#local-6989586621679067297"><span class="hs-identifier hs-var">bubble</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067295"><span class="hs-identifier hs-var">x</span></a></span><span class="annot"><span class="annottext">a -&gt; [a] -&gt; [a]
+forall a. a -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-var">:</span></a></span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067293"><span class="hs-identifier hs-var">xs</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-88"></span><span>       </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">otherwise</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067295"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; [a] -&gt; [a]
+forall a. a -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-var">:</span></a></span><span> </span><span class="annot"><span class="annottext">[a] -&gt; [a]
+</span><a href="#local-6989586621679067297"><span class="hs-identifier hs-var">bubble</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679067294"><span class="hs-identifier hs-var">y</span></a></span><span class="annot"><span class="annottext">a -&gt; [a] -&gt; [a]
+forall a. a -&gt; [a] -&gt; [a]
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-glyph hs-var">:</span></a></span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067293"><span class="hs-identifier hs-var">xs</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-89"></span><span>   </span><span class="annot"><a href="#local-6989586621679067297"><span class="hs-identifier hs-var">bubble</span></a></span><span> </span><span id="local-6989586621679067291"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067291"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679067291"><span class="hs-identifier hs-var">x</span></a></span><span>
+</span><span id="line-90"></span><span>
+</span><span id="line-91"></span><span class="hs-comment">--- (5) While loop -------------------------------------</span><span>
+</span><span id="line-92"></span><span>
+</span><span id="line-93"></span><span class="hs-comment">{-- pointwise 
+
+while p f x | not (p x) = x
+              | otherwise = while p f (f x)
+--}</span><span>
+</span><span id="line-98"></span><span>
+</span><span id="line-99"></span><span id="local-6989586621679067290"><span class="annot"><a href="Nat.html#while"><span class="hs-identifier hs-type">while</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679067290"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/ghc-prim-0.6.1/src"><span class="hs-identifier hs-type">Bool</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679067290"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679067290"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679067290"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679067290"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-100"></span><span id="while"><span class="annot"><span class="annottext">while :: (a -&gt; Bool) -&gt; (a -&gt; a) -&gt; a -&gt; a
+</span><a href="Nat.html#while"><span class="hs-identifier hs-var hs-var">while</span></a></span></span><span> </span><span id="local-6989586621679067288"><span class="annot"><span class="annottext">a -&gt; Bool
+</span><a href="#local-6989586621679067288"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span id="local-6989586621679067287"><span class="annot"><span class="annottext">a -&gt; a
+</span><a href="#local-6989586621679067287"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">a -&gt; a
+</span><a href="#local-6989586621679067286"><span class="hs-identifier hs-var">w</span></a></span><span> </span><span class="hs-keyword">where</span><span> </span><span id="local-6989586621679067286"><span class="annot"><span class="annottext">w :: a -&gt; a
+</span><a href="#local-6989586621679067286"><span class="hs-identifier hs-var hs-var">w</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(a -&gt; a) -&gt; (a -&gt; a) -&gt; Either a a -&gt; a
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">either</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; a
+forall a. a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">id</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; a
+forall a. a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">id</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Either a a -&gt; a) -&gt; (a -&gt; Either a a) -&gt; a -&gt; a
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a -&gt; a
+</span><a href="#local-6989586621679067286"><span class="hs-identifier hs-var">w</span></a></span><span> </span><span class="annot"><span class="annottext">(a -&gt; a) -&gt; (a -&gt; a) -&gt; Either a a -&gt; Either a a
+forall a b c d. (a -&gt; b) -&gt; (c -&gt; d) -&gt; Either a c -&gt; Either b d
+</span><a href="Cp.html#-%7C-"><span class="hs-operator hs-var">-|-</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; a
+forall a. a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">id</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Either a a -&gt; Either a a) -&gt; (a -&gt; Either a a) -&gt; a -&gt; Either a a
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a -&gt; a
+</span><a href="#local-6989586621679067287"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">(a -&gt; a) -&gt; (a -&gt; a) -&gt; Either a a -&gt; Either a a
+forall a b c d. (a -&gt; b) -&gt; (c -&gt; d) -&gt; Either a c -&gt; Either b d
+</span><a href="Cp.html#-%7C-"><span class="hs-operator hs-var">-|-</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; a
+forall a. a -&gt; a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">id</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Either a a -&gt; Either a a) -&gt; (a -&gt; Either a a) -&gt; a -&gt; Either a a
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-operator hs-var">.</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(a -&gt; Bool) -&gt; a -&gt; Either a a
+forall a. (a -&gt; Bool) -&gt; a -&gt; Either a a
+</span><a href="Cp.html#grd"><span class="hs-identifier hs-var">grd</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; Bool
+</span><a href="#local-6989586621679067288"><span class="hs-identifier hs-var">p</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-101"></span><span>
+</span><span id="line-102"></span><span class="hs-comment">--- (5) Monadic for -------------------------------------</span><span>
+</span><span id="line-103"></span><span>
+</span><span id="line-104"></span><span id="mfor"><span class="annot"><span class="annottext">mfor :: (t -&gt; m t) -&gt; t -&gt; t -&gt; m t
+</span><a href="Nat.html#mfor"><span class="hs-identifier hs-var hs-var">mfor</span></a></span></span><span> </span><span id="local-6989586621679067283"><span class="annot"><span class="annottext">t -&gt; m t
+</span><a href="#local-6989586621679067283"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span id="local-6989586621679067282"><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679067282"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span class="annot"><span class="annottext">t
+</span><span class="hs-number">0</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">t -&gt; m t
+forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
+</span><a href="../file:///home/alef/.ghcup/ghc/8.10.4/share/doc/ghc-8.10.4/html/libraries/base-4.14.1.0/src"><span class="hs-identifier hs-var">return</span></a></span><span> </span><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679067282"><span class="hs-identifier hs-var">i</span></a></span><span>
+</span><span id="line-105"></span><span class="annot"><a href="Nat.html#mfor"><span class="hs-identifier hs-var">mfor</span></a></span><span> </span><span id="local-6989586621679067281"><span class="annot"><span class="annottext">t -&gt; m t
+</span><a href="#local-6989586621679067281"><span class="hs-identifier hs-var">b</span></a></span></span><span> </span><span id="local-6989586621679067280"><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679067280"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679067279"><span class="annot"><span class="annottext">n :: t
+</span><a href="#local-6989586621679067279"><span class="hs-identifier hs-var">n</span></a></span></span><span class="hs-operator">+</span><span class="hs-number">1</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span> </span><span class="hs-special">{</span><span id="local-6989586621679067278"><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679067278"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(t -&gt; m t) -&gt; t -&gt; t -&gt; m t
+</span><a href="Nat.html#mfor"><span class="hs-identifier hs-var">mfor</span></a></span><span> </span><span class="annot"><span class="annottext">t -&gt; m t
+</span><a href="#local-6989586621679067281"><span class="hs-identifier hs-var">b</span></a></span><span> </span><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679067280"><span class="hs-identifier hs-var">i</span></a></span><span> </span><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679067279"><span class="hs-identifier hs-var">n</span></a></span><span> </span><span class="hs-special">;</span><span> </span><span class="annot"><span class="annottext">t -&gt; m t
+</span><a href="#local-6989586621679067281"><span class="hs-identifier hs-var">b</span></a></span><span> </span><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679067278"><span class="hs-identifier hs-var">x</span></a></span><span class="hs-special">}</span><span>
+</span><span id="line-106"></span><span>
+</span><span id="line-107"></span><span class="hs-comment">--- end of Nat.hs ----------------------------------------</span><span>
+</span><span id="line-108"></span></pre></body></html>
