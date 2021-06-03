@@ -18,9 +18,10 @@ outList (a:x) = i2(a,x)
 
 -- (2) Ana + cata + hylo -------------------------------------------------------
 
-cataList g   = g . recList (cataList g) . outList   
+cataList g   = g . recList (cataList g) . outList
 
 recList  f   = id -|- id >< f                   -- this is F f for this data type
+
 
 anaList  g   = inList . recList (anaList g) . g
 
@@ -157,7 +158,7 @@ myfoldr f u = cataList (either (const u) (uncurry f))
 
 myfoldl :: (a -> b -> a) -> a -> [b] -> a
 myfoldl f u = cataList' (either (const u) (uncurry f . swap))
-              where cataList' g   = g . recList (cataList' g) . outList'   
+              where cataList' g   = g . recList (cataList' g) . outList'
                     outList' [] = i1()
                     outList' x =i2(last x, blast x)
                     blast = tail . reverse
@@ -190,7 +191,7 @@ lam = cataList ( either (return.nil)(fmap cons.dstr) )
 -- monadic catas
 
 mcataList :: Strong ff => (Either () (b, c) -> ff c) -> [b] -> ff c
-mcataList g = g .! (dl . recList (mcataList g) . outList)   
+mcataList g = g .! (dl . recList (mcataList g) . outList)
 
 dl :: Strong m => Either () (b, m a) -> m (Either () (b, a))
 dl = either (return.i1)(fmap i2. lstr)

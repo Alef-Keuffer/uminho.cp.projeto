@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
@@ -10,7 +11,7 @@
 {-# LANGUAGE RankNTypes                 #-} -- Para quantificar na tipagem. Usado em 'to' de 'Interpretation'
 {-# LANGUAGE GADTs                      #-} -- Usado em 'to' de 'Interpretation' ('TypeFamilies' também funciona, investigar isso)
 {-# LANGUAGE TypeOperators              #-} -- Para '∐' e '×' nos tipos
-{-# LANGUAGE UnicodeSyntax              #-} -- Para que 'forall' = '∀', -> = →, :: = ∷, etc.
+{-# LANGUAGE UnicodeSyntax              #-} -- Para que 'forall' = '∀', → = →, ∷ = ∷, etc.
 {-# OPTIONS_HADDOCK show-extensions     #-} -- Estou gerado documentação Haddock, é necessário só para isso.
 -- =============================================================================
 
@@ -166,16 +167,16 @@ instance (Num c) ⇒ Interpretation BinOp ((c, c) → c) where
   to Product = mul
 
 -- | Na nossa linguagem mais usual
-outBinOp :: Num c => BinOp -> (c × c) -> c
+outBinOp ∷ Num c => BinOp → (c × c) → c
 outBinOp = to ∷ (Num c) ⇒ BinOp → (c × c → c)
 
--- | Interpretamos cada símbolo 'UnOp' como uma função @c->c@ onde @c@ é da classe 'Floating'.
+-- | Interpretamos cada símbolo 'UnOp' como uma função @c→c@ onde @c@ é da classe 'Floating'.
 instance (Floating c) ⇒ Interpretation UnOp (c → c) where
   to Negate = negate
   to E      = Prelude.exp
 
 -- | Na nossa linguagem mais usual
-outUnOp :: Floating c => UnOp -> (c -> c)
+outUnOp ∷ Floating c => UnOp → (c → c)
 outUnOp = to ∷ (Floating c) ⇒ UnOp → (c → c)
 
 g_eval_exp ∷ Floating c ⇒ c → b ∐ c ∐ BinOp × c × c ∐ UnOp × c → c
@@ -390,97 +391,36 @@ prop_bezier_sym l = all (< delta) . calc_difs . bezs <$> elements ps
 -- =============================================================================
 -- *** Solução
 
---- Vamos aproximar o código da linguagem usada na apresentação da documentação
+
 type ℚ = Rational
 toℚ ∷ Real a ⇒ a → ℚ
 toℚ = toRational
 fromℚ ∷ Fractional a ⇒ ℚ → a
 fromℚ = fromRational
---- Espero que isso torne o código mais legível.
 
-{- | Spec
-
- @
- 'calcLine' ∷ 'NPoint' → ('NPoint' → 'OverTime' 'NPoint')
- 'calcLine' [] = 'const' 'nil'
- 'calcLine' (p : x) = 'curry' g p ('calcLine' x)
-  where
-   g ∷ (ℚ, 'NPoint' → 'OverTime' 'NPoint') → ('NPoint' → 'OverTime' 'NPoint')
-   g (d, f) l = case l of
-     [] → 'nil'
-     (x : xs) → 'concat' . 'sequenceA' ['singl' . 'linear1d' d x, f xs]
- @
--}
 calcLine ∷ NPoint → (NPoint → OverTime NPoint)
-calcLine = cataList h where h = undefined
+calcLine xs ys e = cataList (either nil h) ((fmap (uncurry linear1d) $ (uncurry zip) (xs,ys))) where
+    h (f, fs) = f e : fs
+{-
 
-calc_line' ∷ [ℚ] → [ℚ] → Float → [ℚ]
-calc_line' = myZipWithM linear1d
+seq' l a = cataList (either nil (\(f,fs) -> f a : fs)) l
 
-{- | Interpretar um par de duas listas como algo que é nada ('()') ou
-um par onde o primeiro elemento é um par de elementos e o segundo elemento é um par de listas.
+seq2 = \l -> \a -> cataList (either nil (\(f,fs) -> f a : fs)) l
 
-Essa interpretação foi escolhida para que possamos criar uma lista de pares com 'anaList'.
-
-#uncurried_form_preference#
-Prefio representações uncurried, por isso acabamos tendo duas definições para cada função já definida em Haskell:
-@myFunction'@ que está uncurried @myFunction@ que é a @Function@ que quero redefinir. -}
-instance Interpretation ([a], [b]) (() ∐ ((a, b), ([a], [b]))) where
-  to l = case l of
-    ([]    , _     ) → Left ()
-    (_     , []    ) → Left ()
-    (a : as, b : bs) → Right ((a, b), (as, bs))
+calcLine' = sequenceA' ° (z ° zip) where z = fmap (uncurry linear1d)
+calcLine2 = (sequenceA' . z) ° zip where z = fmap (uncurry linear1d) -}
 
 
+(°) = (.) . (.)
+(//) = (°) ° (°)
+(<<) = flip (.)
 
-outZip ∷ ([a], [b]) → () ∐ ((a, b), ([a], [b]))
-outZip = to :: ([a], [b]) → (() ∐ ((a, b), ([a], [b])))
 
-myZip' ∷ ([a], [b]) → [(a, b)]
-myZip' = anaList outZip
-
--- | Como [dito](#uncurried_form_preference), temos fazer 'curry' da minha função.
-myZip :: [a] -> [b] -> [(a, b)]
-myZip = curry myZip'
-
-{- | Baseado em 'zipWithM' que é definida como
-@
-'zipWithM' ∷ ('Applicative' m) ⇒ (a → b → m c) → [a] → [b] → m [c]
-'zipWithM' f xs ys  = 'sequenceA' ('zipWith' f xs ys)
-@
-
-Note que 'myZipWithM' é só um caso específico de 'zipWithM' e as duas não são equivalentes.
-
--}
-myZipWithM ∷ (a1 → b → p → a2) → [a1] → [b] → p → [a2]
-myZipWithM f xs ys = mySequenceA (myZipWith f xs ys)
-
-{- | Função pouco genérica inspirada em 'sequenceA'. Note:
-
-@
-'sequenceA' ∷ 'Applicative' f ⇒ t (f a) → f (t a)
-'sequenceA' = 'traverse' 'id'
-
-'traverse' ∷ 'Applicative' f ⇒ (a → f b) → t a → f (t b)
-'traverse' f = 'sequenceA' . 'fmap' f
-@
-
-Logo,
-
-@
-sequenceA = sequenceA . (fmap id)
-          = sequenceA . (T)
-
--}
-
-mySequenceA' ∷ p → [p → a] → [a]
-mySequenceA' a = cataList (either nil g2) where g2 (f, fs) = f a : fs
-
-mySequenceA ∷ [p → a] → p → [a]
-mySequenceA = flip mySequenceA'
-
-myZipWith ∷ (a → b → c) → [a] → [b] → [c]
-myZipWith f a b = uncurry f <$> myZip a b
+calcLine3 e = cataList k where
+  k = z . (id ⊕ j × id)
+  j = uncurry linear1d
+  z = either nil h where
+    h (f, fs) = f e : fs
 
 {- | Spec
 
@@ -512,17 +452,42 @@ prop_avg = nonempty .==>. diff .<=. const 0.000001
   diff l = avg l - (avgLTree . genLTree) l
   genLTree = anaLTree lsplit
   nonempty = (> [])
-
+-- =============================================================================
+-- *** Código fornecido
 avg ∷ Fractional b ⇒ [b] → b
 avg = p1 . avg_aux
 -- =============================================================================
 -- *** Solução
-avg_aux ∷ Fractional b ⇒ [b] → (b, b)
-avg_aux = cataList (either b q) where
+
+------------------------
+in2 ∷ Bool → a → Either a a
+in2 True = Left
+in2 False = Right
+
+infixr 1 ?
+
+(?) ∷ (a → Bool) → a → Either a a
+(?) = (in2 =<<)
+
+-- | My adaptation of McCarthy conditional
+infixl 0 -→
+
+(-→) ∷ (b → Bool) → (b → c, b → c) → b → c
+p -→ (g, h) = either g h . (p ?)
+
+--avg_aux ∷ Fractional b ⇒ [b] → (b, b)
+avg_aux ∷ (Fractional b) => [b] → (b, b)
+avg_aux = cataList (either b q) . filt  where
   b () = (0, 0)
   q (h, (a, l)) = ((a * l + h) / (l + 1), l + 1)
+  filt [] = error "lista vazia"
+  filt a = a
 
-avgLTree = p1 . cataLTree gene where gene = undefined
+avgLTree ∷ Fractional b => LTree b → b
+avgLTree = p1 . cataLTree gene where
+   gene = either g q where
+      g a = (a,1)
+      q((a1,l1),(a2,l2)) = (((a1*l1)+(a2*l2))/(l1+l2),l1+l2)
 -- =============================================================================
 -- * Programação dinâmica por recursividade múltipla
 e' ∷ (Fractional c1, Integral c2) ⇒ c1 → c2 → c1
