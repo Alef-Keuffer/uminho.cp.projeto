@@ -1,4 +1,8 @@
-``` haskell {curried versions}
+# Rascunho
+
+## curried versions
+
+``` haskell
 out ∷ [a] × [b] → Either () ((a × b) × ([a] × [b]))
 out = \case
   ([],_)           → Left ()
@@ -24,7 +28,9 @@ calcLine' = curry aux where
   aux = zipWithM' (uncurry linear1d)
 ```
 
-```haskell {uncurried}
+## uncurried
+
+```haskell
 out ∷ [a] → [b] → Either () ((a × b) × ([a] × [b]))
 out [] _          = Left ()
 out _ []          = Left ()
@@ -43,7 +49,9 @@ calcLine' ∷ [ℚ] → [ℚ] → Float → [ℚ]
 calcLine' = zipWithM' linear1d
 ```
 
-```haskell {information given}
+## Facts
+
+```haskell
 linear1d ∷ Rational → Rational → OverTime Rational
 linear1d = formula
  where
@@ -51,7 +59,9 @@ linear1d = formula
   formula x y t = ((1.0 ∷ Rational) - (toRational t)) * x + (toRational t) * y
 ```
 
-```haskell {pointwise}
+## pointwise
+
+```haskell
 out ∷ [a] → [b] → Either () ((a × b) × ([a] × [b]))
 out [] _          = Left ()
 out _ []          = Left ()
@@ -75,7 +85,9 @@ calcLine' ∷ [ℚ] → [ℚ] → Float → [ℚ]
 calcLine' = zipWithM' linear1d
 ```
 
-```haskell {trying to calculate}
+## trying to calculate
+
+```haskell
 out ∷ [a] × [b] → Either () ((a × b) × ([a] × [b]))
 out = \case
   ([],_)           → Left ()
@@ -107,7 +119,9 @@ calcLine' = curry aux where
     -- aux = sequenceA' ⋅ (fmap (uncurry linear1d) ⋅ (anaList out))
 ```
 
-```haskell {making simple definitions}
+## making simple definitions
+
+```haskell
 out ∷ [a] × [b] → Either () ((a × b) × ([a] × [b]))
 out = \case
   ([],_)           → Left ()
@@ -166,7 +180,9 @@ zipWithM f xs ys  =  sequenceA (zipWith f xs ys)
 
 ```
 
-```haskell {Working calcLine}
+## Working calcLine
+
+```haskell
 out ∷ ([a] , [b]) → Either () ((a × b) × ([a] × [b]))
 out = \case
   ([],_)           → Left ()
