@@ -1083,17 +1083,34 @@ cat = prj . (for loop inic)
 seja a função pretendida.
 \textbf{NB}: usar divisão inteira.
 Apresentar de seguida a justificação da solução encontrada.
+\begin{eqnarray}
+    C_n = \frac{(2n)!}{(n+1)! (n!) }
+    \label{eq:cat}
+\end{eqnarray}
+
+catalan(0) = 1
+catalan(n+1) = \frac {catalan(n) a(n)}{b(n)}
+
+a(n) = 4n + 2
+b(n) = n + 2
+
+a(0) = 2
+a(n+1) = a(n) + 4
+
+b(0) = 2
+b(n+1) = b(n) + 1
 
 \subsection*{Problema 3}
 
 \begin{code}
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
 calcLine = cataList h where
-   h = undefined --either (const 0) (const 0)
-      ---g = nil
-      --g (a,[]) = nil
-      --g (a,(x:xs)) = \z -> concat $ (sequenceA [singl . linear1d a x, xs]) z 
+    h = either f g where
+        f _ _ = nil 
+        g _ [] =  nil 
+        g (d,f) (x:xs) =  \z -> concat $ (sequenceA [singl . linear1d d x, f xs]) z
 
+                        
 deCasteljau :: [NPoint] -> OverTime NPoint
 deCasteljau = hyloAlgForm alg coalg where
    coalg = undefined
@@ -1101,13 +1118,7 @@ deCasteljau = hyloAlgForm alg coalg where
 
 hyloAlgForm = undefined
 
-calcLine' :: NPoint -> (NPoint -> OverTime NPoint)
-calcLine' [] = const nil
-calcLine'(p:x) = curry g p (calcLine' x) where
-   g :: (Rational, NPoint -> OverTime NPoint) -> (NPoint -> OverTime NPoint)
-   g (d,f) l = case l of
-       []     -> nil
-       (x:xs) -> \z -> concat $ (sequenceA [singl . linear1d d x, f xs]) z
+
 
 
 \end{code}
@@ -1120,8 +1131,14 @@ avg = p1.avg_aux
 \end{code}
 
 \begin{code}
-avg_aux = cataList (either b q) where
-   b () = (0,0)
+
+outL [a] = i1 a
+outL (a:x) = i2 (a,x)
+recL  f   = id -|- id >< f 
+cataL g   = g . recL (cataL g) . outL 
+
+avg_aux = cataL (either b q) where
+   b a = (a,1)
    q (h,(a,l)) = ((h + (a*l)) / (l+1) ,l+1)
 \end{code}
 Solução para árvores de tipo \LTree:
