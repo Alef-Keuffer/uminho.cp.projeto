@@ -1033,7 +1033,25 @@ g_eval_exp x (Right (Right (Left (Product,(e,d))))) = e*d
 g_eval_exp x (Right (Right (Right (Negate,a)))) = negate a
 g_eval_exp x (Right (Right (Right (E,a)))) = expd a
 
----
+clean  a = outExpAr  (h a)  where
+    h :: (Eq a, Num a) => ExpAr a -> ExpAr a
+    h (Bin Product (N 0) r) = N 0
+    h (Bin Product r (N 0) ) = N 0
+    h (Un E (N 0)) = N 1
+    h (Un Negate (N 0)) = N 0
+    h x = x
+    
+gopt a = g_eval_exp a
+
+t :: (Eq a, Num a) => ExpAr a -> ExpAr a
+t (Bin Product (N 0) r) = N 0
+t (Bin Product r (N 0) ) = N 0
+t (Un E (N 0)) = N 1
+t (Un Negate (N 0)) = N 0
+t x = x
+
+
+{-
 clean X = i1 ()
 clean (N a) = i2 $ i1 a
 clean (Bin Product (N 0) r) = i2 $ i1 0
@@ -1042,9 +1060,10 @@ clean (Bin op l r) = i2 $ i2 $ i1 (op,(l,r))
 clean (Un E (N 0)) = i2 $ i1 1
 clean (Un Negate (N 0)) = i2 $ i1 0
 clean (Un op a) = i2 $ i2 $ i2 (op,a)
----
-gopt :: Floating a => a -> Either () (Either a (Either (BinOp, (a, a)) (UnOp, a))) -> a
-gopt = g_eval_exp
+-}
+
+
+
 \end{code}
 
 \begin{code}
@@ -1116,7 +1135,7 @@ deCasteljau = hyloAlgForm alg  coalg where
    coalg = (id -|- (id -|- (split init  tail)))  . outSL 
    alg = either (const nil) a where
     a = either const b where
-    b (e,d) = (\pt -> (calcLine (e pt) (d pt)) pt)
+        b (e,d) = \pt -> (calcLine (e pt) (d pt)) pt
 
 outSL [] = i1 ()
 outSL [a] = i2 (i1 a) 
@@ -1142,7 +1161,6 @@ anaC g = inC . fC(anaC g) . g
 
 
 
-
 \end{code}
 
 \subsection*{Problema 4}
@@ -1162,6 +1180,7 @@ cataL g   = g . recL (cataL g) . outL
 avg_aux = cataL (either b q) where
    b a = (a,1)
    q (h,(a,l)) = ((h + (a*l)) / (l+1) ,l+1)
+
 \end{code}
 Solução para árvores de tipo \LTree:
 \begin{code}
