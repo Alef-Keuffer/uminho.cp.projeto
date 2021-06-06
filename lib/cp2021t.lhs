@@ -99,6 +99,7 @@
 %format (cataLTree (x)) = "\llparenthesis\, " x "\,\rrparenthesis"
 %format (anaLTree (x)) = "\mathopen{[\!(}" x "\mathclose{)\!]}"
 %format delta = "\Delta "
+%format (cataL (f)) = "\cata{" f "}"
 
 %---------------------------------------------------------------------------
 
@@ -1034,7 +1035,6 @@ g_eval_exp x (Right (Right (Right (Negate,a)))) = negate a
 g_eval_exp x (Right (Right (Right (E,a)))) = expd a
 
 clean  a = outExpAr  (h a)  where
-    h :: (Eq a, Num a) => ExpAr a -> ExpAr a
     h (Bin Product (N 0) r) = N 0
     h (Bin Product r (N 0) ) = N 0
     h (Un E (N 0)) = N 1
@@ -1043,38 +1043,18 @@ clean  a = outExpAr  (h a)  where
     
 gopt a = g_eval_exp a
 
-t :: (Eq a, Num a) => ExpAr a -> ExpAr a
-t (Bin Product (N 0) r) = N 0
-t (Bin Product r (N 0) ) = N 0
-t (Un E (N 0)) = N 1
-t (Un Negate (N 0)) = N 0
-t x = x
-
-
-{-
-clean X = i1 ()
-clean (N a) = i2 $ i1 a
-clean (Bin Product (N 0) r) = i2 $ i1 0
-clean (Bin Product l (N 0)) = i2 $ i1 0
-clean (Bin op l r) = i2 $ i2 $ i1 (op,(l,r))
-clean (Un E (N 0)) = i2 $ i1 1
-clean (Un Negate (N 0)) = i2 $ i1 0
-clean (Un op a) = i2 $ i2 $ i2 (op,a)
--}
-
-
 
 \end{code}
 
 \begin{code}
 sd_gen :: Floating a =>
-    Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) -> (ExpAr a, ExpAr a)
+    Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), 
+    (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) -> (ExpAr a, ExpAr a)
 sd_gen (Left ()) = (X, N 1)
 sd_gen (Right (Left a)) = (N a, N 0)
 sd_gen (Right (Right (Left (Sum,((e1,d1),(e2,d2)))))) = (Bin Sum e1 e2, Bin Sum d1 d2)
-
-
-sd_gen (Right (Right (Left (Product,((e1,d1),(e2,d2)))))) = (Bin Product e1 e2, Bin Sum (Bin Product e1 d2) (Bin Product d1 e2 ))
+sd_gen (Right (Right (Left (Product,((e1,d1),(e2,d2)))))) 
+    = (Bin Product e1 e2, Bin Sum (Bin Product e1 d2) (Bin Product d1 e2 ))
 sd_gen (Right (Right (Right (Negate,(e,d))))) = (Un Negate e , Un Negate d)
 sd_gen (Right (Right (Right (E,(e,d))))) = (Un E e , Bin Product (Un E e) d)
 \end{code}
@@ -1107,17 +1087,20 @@ Apresentar de seguida a justificação da solução encontrada.
     \label{eq:cat}
 \end{eqnarray}
 
-catalan(0) = 1
-catalan(n+1) = \frac {catalan(n) a(n)}{b(n)}
-
-a(n) = 4n + 2
-b(n) = n + 2
-
-a(0) = 2
-a(n+1) = a(n) + 4
-
-b(0) = 2
-b(n+1) = b(n) + 1
+$\begin{array}{cccc}
+ & C_{0} & = & 1\\
+ & C_{n+1} & = & \frac{C_{n}a_{n}}{b_{n}}\\
+\\
+ & a_{n} & = & 4n+2\\
+ & b_{n} & = & n+2\\
+\\
+ & a_{0} & = & 2\\
+ & a_{n+1} & = & a_{n}+4\\
+\\
+ & b_{0} & = & 2\\
+ & b_{n+1} & = & b_{n}+1\\
+\\
+\end{array}$
 
 \subsection*{Problema 3}
 
@@ -1174,8 +1157,8 @@ avg = p1.avg_aux
 
 outL [a] = i1 a
 outL (a:x) = i2 (a,x)
-recL  f   = id -|- id >< f 
-cataL g   = g . recL (cataL g) . outL 
+recL f = id -|- id >< f 
+cataL g = g . recL (cataL g) . outL 
 
 avg_aux = cataL (either b q) where
    b a = (a,1)
