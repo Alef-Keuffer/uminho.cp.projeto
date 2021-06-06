@@ -1113,15 +1113,14 @@ calcLine = cataList h where
                         
 deCasteljau :: [NPoint] -> OverTime NPoint
 deCasteljau = hyloAlgForm alg  coalg where
-   coalg = (id -|- (id -|- (split init  tail)))  . outAlg 
+   coalg = (id -|- (id -|- (split init  tail)))  . outSL 
    alg = either (const nil) a where
     a = either const b where
     b (e,d) = (\pt -> (calcLine (e pt) (d pt)) pt)
 
-outAlg [] = i1 ()
-outAlg [a] = i2 (i1 a)
-outAlg (x:xs) = i2  (i2 (x:xs))
-recAlg f = id -|- (id -|- f >< f)
+outSL [] = i1 ()
+outSL [a] = i2 (i1 a) 
+outSL l = i2  (i2 l)
 
 hyloAlgForm = h where
     h a b = cataC a . anaC b 
