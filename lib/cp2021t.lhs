@@ -1113,31 +1113,33 @@ calcLine = cataList h where
                         
 deCasteljau :: [NPoint] -> OverTime NPoint
 deCasteljau = hyloAlgForm alg  coalg where
-   coalg = (id -|- (id -|- (split i  t)))  . outAlg where
-    i (x,xs) = init (x:xs)
-    t (x,xs) = xs
-   alg = a where
-    a (Left ())  = nil
-    a (Right (Left x)) = const x
-    a (Right (Right (e,d)))  = \pt -> (calcLine (e pt) (d pt)) pt 
+   coalg = (id -|- (id -|- (split init  tail)))  . outAlg 
+   alg = either (const nil) a where
+    a = either const b where
+    b (e,d) = (\pt -> (calcLine (e pt) (d pt)) pt)
 
-deCasteljau' :: [NPoint] -> OverTime NPoint
-deCasteljau' [] = nil
-deCasteljau' [p] = const p
-deCasteljau' l = \pt -> (calcLine (p pt) (q pt)) pt where
-  p = deCasteljau' (init l)
-  q = deCasteljau' (tail l)
-
-
-
-inAlg = either (nil) (either(singl) (cons))
 outAlg [] = i1 ()
 outAlg [a] = i2 (i1 a)
-outAlg (x:xs) = i2  (i2 (x,xs))
+outAlg (x:xs) = i2  (i2 (x:xs))
 recAlg f = id -|- (id -|- f >< f)
 
 hyloAlgForm = h where
-    h a b = a . (recAlg deCasteljau) . b
+    h a b = cataC a . anaC b 
+    
+
+data Castel a = Empty | Single a | InitTail (Castel a, Castel a) deriving Show 
+
+inC = either (const Empty) (either Single InitTail)
+
+outC Empty = i1 ()
+outC (Single a) = i2 (i1 a)
+outC (InitTail (e,d)) = i2 (i2 (e,d))
+
+fC f = id -|- (id -|- f >< f )
+
+cataC f = f . fC (cataC f) .  outC
+anaC g = inC . fC(anaC g) . g
+
 
 
 
