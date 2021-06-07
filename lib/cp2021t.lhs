@@ -1095,8 +1095,6 @@ clean  a = (outExpAr . h) a  where
 gopt a = g_eval_exp a
 
 
-
-
 \end{code}
 
 \begin{code}
@@ -1164,10 +1162,30 @@ calcLine = cataList h where
         f _ _ = nil 
         g _ [] =  nil 
         g (d,f) (x:xs) =  \z -> concat $ (sequenceA [singl . linear1d d x, f xs]) z
+\end{code}
 
-                        
+
+\begin{code}
 deCasteljau :: [NPoint] -> OverTime NPoint
 deCasteljau = hyloAlgForm alg  coalg where
+    coalg = c where
+        c [] = i1 []
+        c [a] = i1 [a]
+        c l = i2  (init l, tail l)
+    alg = either a b where
+        a [] = nil
+        a [x]  =  const x
+        b (e,d) = \pt -> (calcLine (e pt) (d pt)) pt
+
+hyloAlgForm = hyloLTree
+
+\end{code}
+
+Uma outra solução para o deCasteljau, criando uma novo tipo de dados.
+
+\begin{code}                        
+deCasteljau' :: [NPoint] -> OverTime NPoint
+deCasteljau' = hyloAlgForm' alg  coalg where
    coalg = (id -|- (id -|- (split init  tail)))  . outSL 
    alg = either (const nil) a where
     a = either const b where
@@ -1177,7 +1195,7 @@ outSL [] = i1 ()
 outSL [a] = i2 (i1 a) 
 outSL l = i2  (i2 l)
 
-hyloAlgForm = h where
+hyloAlgForm' = h where
     h a b = cataC a . anaC b 
     
 
@@ -1194,8 +1212,11 @@ fC f = id -|- (id -|- f >< f )
 cataC f = f . fC (cataC f) .  outC
 anaC g = inC . fC(anaC g) . g
 
-
 \end{code}
+
+
+
+
 
 \subsection*{Problema 4}
 
