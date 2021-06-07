@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.6)  7 JUN 2021 01:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.6)  7 JUN 2021 13:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -829,14 +829,14 @@ LaTeX Warning: Citation `Ol18' on page 9 undefined on input line 1074.
 
 <xymatrix 2x2 191>
 
-Package hyperref Warning: Suppressing link with empty target on input line 1108
+Package hyperref Warning: Suppressing link with empty target on input line 1110
 .
 
 
-LaTeX Warning: Citation `Ol18' on page 9 undefined on input line 1109.
+LaTeX Warning: Citation `Ol18' on page 9 undefined on input line 1111.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 1109
+Package hyperref Warning: Suppressing link with empty target on input line 1111
 .
 
 \openout5 = `cp2021t.ptb'.
@@ -871,77 +871,77 @@ Package hyperref Warning: Suppressing link with empty target on input line 1109
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
  [][] 
  []
 
@@ -950,17 +950,38 @@ Overfull \hbox (8.57883pt too wide) in paragraph at lines 1426--1475
 \openout5 = `cp2021t.ptb'.
 
 [12]
-Overfull \hbox (266.16043pt too wide) in alignment at lines 1556--1590
+Overfull \hbox (256.6263pt too wide) in alignment at lines 1558--1592
  [][][] []
  []
 
-\openout5 = `cp2021t.ptb'.
 
+! LaTeX Error: Environment equation* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1594 \begin{equation*}
+                        
+? 
+<xymatrix 2x3 122>
+
+! LaTeX Error: \begin{document} ended by \end{equation*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1602 \end{equation*}
+                      
+? 
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
 
 [13]
+\openout5 = `cp2021t.ptb'.
+
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
@@ -977,12 +998,12 @@ Overfull \hbox (266.16043pt too wide) in alignment at lines 1556--1590
 
 No file cp2021t.ind.
 No file cp2021t.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1892.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1903.
 [15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1892.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1903.
  (./cp2021t.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1892.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1892.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1903.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1903.
 
 Package rerunfilecheck Info: File `cp2021t.out' has not changed.
 (rerunfilecheck)             Checksum: 7ABFEEFBC6EDEE4EAEC2BDEF142178CE;514.
@@ -993,16 +1014,16 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1892.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1903.
  ) 
 Here is how much of TeX's memory you used:
- 13350 strings out of 483107
- 193994 string characters out of 5964631
- 526871 words of memory out of 5000000
- 27963 multiletter control sequences out of 15000+600000
+ 13363 strings out of 483107
+ 194068 string characters out of 5964631
+ 525871 words of memory out of 5000000
+ 27976 multiletter control sequences out of 15000+600000
  567979 words of font info for 125 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 48i,18n,77p,3294b,477s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,18n,77p,3294b,666s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
@@ -1029,7 +1050,7 @@ exmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/xypic/xyatip10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/xypi
 c/xybtip10.pfb>
-Output written on cp2021t.pdf (15 pages, 335806 bytes).
+Output written on cp2021t.pdf (15 pages, 338709 bytes).
 PDF statistics:
  362 PDF objects out of 1000 (max. 8388607)
  312 compressed objects within 4 object streams

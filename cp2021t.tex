@@ -1104,6 +1104,8 @@ Os diagramas podem ser produzidos recorrendo à \emph{package} \LaTeX\
 }
 \end{eqnarray*}
 
+
+
 \section{Programação dinâmica por recursividade múltipla}\label{sec:recmul}
 Neste anexo dão-se os detalhes da resolução do Exercício \ref{ex:exp} dos apontamentos da
 disciplina\footnote{Cf.\ \cite{Ol18}, página \pageref{ex:exp}.},
@@ -1569,7 +1571,7 @@ Definir:
 %
 \just\equiv{ igualdade extensional, def-comp}
 %
-       \ensuremath{\Varid{outExpAr}\;\underline{\cdot }\;(\Conid{X}\;\Varid{a})\mathrel{=}\Varid{id}\comp \p1\;\Varid{a}}
+       \ensuremath{\Varid{outExpAr}\;\underline{\Conid{X}}\;()\mathrel{=}\Varid{id}\comp \p1\;()}
        %
        \ensuremath{\Varid{outExpAr}\;\Conid{N}\;\Varid{a}\mathrel{=}\Varid{id}\comp \p1\;\Varid{a}}
        %
@@ -1579,7 +1581,7 @@ Definir:
 %
 \just\equiv{ def const, def N, def bin, def uncurry, def Un, def-comp}
 %
-       \ensuremath{\Varid{outExpAr}\;\Conid{X}\;\Varid{a}\mathrel{=}\Varid{id}\mathbin{\$}\p1\;\Varid{a}}
+       \ensuremath{\Varid{outExpAr}\;\Conid{X}\mathrel{=}\Varid{id}\mathbin{\$}\p1\;()}
        %
        \ensuremath{\Varid{outExpAr}\;\Conid{N}\;\Varid{a}\mathrel{=}\Varid{id}\mathbin{\$}\p1\;\Varid{a}}
        %
@@ -1589,6 +1591,15 @@ Definir:
 %
 \end{eqnarray*}
 
+\begin{equation*}
+\xymatrix@C=2cm{
+    & X + N\text{ }a + Bin\text{ }BinOp\text{ }(ExpAr\text{ }a) (ExpAr\text{ }a) + Un\text{ }UnOp\text{ }(ExpAr\text{ }a)\ar@/^3pc/[dd]^{out}
+    \\ &=
+    \\ &() + a + (BinOp,\text{ }(ExpAr\text{ }a, ExpAr\text{ }a)) + (UnOp\text{ },(ExpAr\text{ }a))\ar@/^3pc/[uu]^{in}
+}
+
+
+\end{equation*}
 
 
 

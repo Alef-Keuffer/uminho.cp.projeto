@@ -766,6 +766,8 @@ Os diagramas podem ser produzidos recorrendo à \emph{package} \LaTeX\
 }
 \end{eqnarray*}
 
+
+
 \section{Programação dinâmica por recursividade múltipla}\label{sec:recmul}
 Neste anexo dão-se os detalhes da resolução do Exercício \ref{ex:exp} dos apontamentos da
 disciplina\footnote{Cf.\ \cite{Ol18}, página \pageref{ex:exp}.},
@@ -1034,7 +1036,7 @@ Definir:
 %
 \just\equiv{ igualdade extensional, def-comp}
 %
-       |outExpAr  const (X a)  = id . p1 a|
+       |outExpAr  (const X) ()  = id . p1 ()|
        %
        |outExpAr  N a = id . p1 a|
        %
@@ -1044,7 +1046,7 @@ Definir:
 %
 \just\equiv{ def const, def N, def bin, def uncurry, def Un, def-comp}
 %
-       |outExpAr  X a  = id $ p1 a|
+       |outExpAr  X  = id $ p1 ()|
        %
        |outExpAr  N a = id $ p1 a|
        %
@@ -1054,6 +1056,15 @@ Definir:
 %
 \end{eqnarray*}
 
+\begin{equation*}
+\xymatrix@@C=2cm{
+    & X + N\text{ }a + Bin\text{ }BinOp\text{ }(ExpAr\text{ }a) (ExpAr\text{ }a) + Un\text{ }UnOp\text{ }(ExpAr\text{ }a)\ar@@/^3pc/[dd]^{out}
+    \\ &=
+    \\ &() + a + (BinOp,\text{ }(ExpAr\text{ }a, ExpAr\text{ }a)) + (UnOp\text{ },(ExpAr\text{ }a))\ar@@/^3pc/[uu]^{in}
+}
+
+
+\end{equation*}
 
 
 
