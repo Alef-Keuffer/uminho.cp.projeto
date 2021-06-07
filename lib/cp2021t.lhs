@@ -1009,6 +1009,7 @@ eval_exp a = cataExpAr (g_eval_exp a)
 optmize_eval :: (Floating a, Eq a) => a -> (ExpAr a) -> a
 optmize_eval a = hyloExpAr (gopt a) clean
 
+
 sd :: Floating a => ExpAr a -> ExpAr a
 sd = p2 . cataExpAr sd_gen
 
@@ -1016,6 +1017,45 @@ ad :: Floating a => a -> ExpAr a -> a
 ad v = p2 . cataExpAr (ad_gen v)
 \end{code}
 Definir:
+
+\begin{eqnarray*}
+\start
+    |outExpAr . inExpAr   = id|
+%
+\just\equiv{ def inExpAr, fusao-+,  Eq-+ }
+%
+       |outExpAr . const X  = id . p1|
+       %
+       |outExpAr . N  = id . p1|
+       %
+       |outExpAr . Bin  = id . p2 .p2 . p1|
+       %
+       |outExpAr . uncurry Un = id . p2 .p2 . p2|
+%
+\just\equiv{ igualdade extensional, def-comp}
+%
+       |outExpAr  const (X a)  = id . p1 a|
+       %
+       |outExpAr  N a = id . p1 a|
+       %
+       |outExpAr bin (op,(l,r))  = id . p2 .p2 . p1 (op,(l,r))|
+       %
+       |outExpAr  uncurry Un (op,a) = id . p2 .p2 . p2 (op,a)|
+%
+\just\equiv{ def const, def N, def bin, def uncurry, def Un, def-comp}
+%
+       |outExpAr  X a  = id $ p1 a|
+       %
+       |outExpAr  N a = id $ p1 a|
+       %
+       |outExpAr (Bin op l r)  = id $ p2  $ p2 $ p1 (op,(l,r))|
+       %
+       |outExpAr  (Un op a) = id $ p2 $ p2 $ p2 (op,a)|
+%
+\end{eqnarray*}
+
+
+
 
 \begin{code}
 outExpAr X = i1 ()
@@ -1034,14 +1074,16 @@ g_eval_exp x (Right (Right (Left (Product,(e,d))))) = e*d
 g_eval_exp x (Right (Right (Right (Negate,a)))) = negate a
 g_eval_exp x (Right (Right (Right (E,a)))) = expd a
 
-clean  a = outExpAr  (h a)  where
+clean  a = (outExpAr . h) a  where
     h (Bin Product (N 0) r) = N 0
     h (Bin Product r (N 0) ) = N 0
     h (Un E (N 0)) = N 1
     h (Un Negate (N 0)) = N 0
     h x = x
-    
+
 gopt a = g_eval_exp a
+
+
 
 
 \end{code}
@@ -1140,8 +1182,6 @@ fC f = id -|- (id -|- f >< f )
 
 cataC f = f . fC (cataC f) .  outC
 anaC g = inC . fC(anaC g) . g
-
-
 
 
 \end{code}
