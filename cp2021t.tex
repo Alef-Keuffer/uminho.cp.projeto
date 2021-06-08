@@ -1553,38 +1553,35 @@ São dadas:
 \>[B]{}\Varid{ad}\;\Varid{v}\mathrel{=}\p2\comp \Varid{cataExpAr}\;(\Varid{ad\char95 gen}\;\Varid{v}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-Definir:
-\\ 
 
-\ensuremath{\Varid{outExpAr}}
 \\
 
 \begin{math}
-outExpAr \ . \ inExpAr = id
+\ensuremath{\Varid{outExpAr}} \ . \ \ensuremath{\Varid{inExpAr}} = \ensuremath{\Varid{id}}
 \\
 \just\equiv{ def inExpAr, fusao-+,  Eq-+ }
 \\
 
   \left\{
     \begin{array}{l}
-                outExpAr\ .\ \ensuremath{\underline{\Conid{X}}} = id\ .\ \ensuremath{\p1}\\ 
-                outExpAr\ .\ N  = id\ .\ \ensuremath{\p1} \\ 
-                outExpAr\ .\ Bin  = id\ . \ \ensuremath{\p2} \ . \ \ensuremath{\p2} \ . \ \ensuremath{\p1}\\
-                outExpAr\ .\ \ensuremath{\uncurry{\Conid{Un}}} = id\ .\ \ensuremath{\p2}\ .\ \ensuremath{\p2}\ .\ \ensuremath{\p2}
+                outExpAr\ .\ \ensuremath{\underline{\Conid{X}}} = id\ .\ \ensuremath{i_1}\\ 
+                outExpAr\ .\ N  = id\ .\ \ensuremath{i_1} \\ 
+                outExpAr\ .\ Bin  = id\ . \ \ensuremath{i_2} \ . \ \ensuremath{i_2} \ . \ \ensuremath{i_1}\\
+                outExpAr\ .\ \ensuremath{\uncurry{\Conid{Un}}} = id\ .\ \ensuremath{i_2}\ .\ \ensuremath{i_2}\ .\ \ensuremath{i_2}
     \end{array}
   \right.
 \end{math}
 \newline\\
-\just\equiv{ igualdade extensinal, def-comp, fusao-+,  Eq-+, Natural-id }
+\just\equiv{ igualdade extensional, def-comp, fusao-+,  Eq-+, Natural-id }
 \\
 
 \begin{math}
   \left\{
     \begin{array}{l}
-                outExpAr\ . \ \ensuremath{\underline{\Conid{X}}}\ () = \ensuremath{\p1}\ ()\\ 
-                outExpAr\ .\ N \ a  =  \ensuremath{\p1} \ a \\ 
-                outExpAr\ .\ Bin \  (op,(l,r))  = \ensuremath{\p2} \ . \ \ensuremath{\p2} \ . \ \ensuremath{\p1}\ (op,(l,r)) \\
-                outExpAr\  .\ \ensuremath{\uncurry{\Conid{Un}}} \ (op,a) = \ensuremath{\p2}\ . \ \ensuremath{\p2} \ . \ \ensuremath{\p2} \ (op,a)
+                outExpAr\ . \ \ensuremath{\underline{\Conid{X}}}\ () = \ensuremath{i_1}\ ()\\ 
+                outExpAr\ .\ N \ a  =  \ensuremath{i_1} \ a \\ 
+                outExpAr\ .\ Bin \  (op,(l,r))  = \ensuremath{i_2} \ . \ \ensuremath{i_2} \ . \ \ensuremath{i_1}\ (op,(l,r)) \\
+                outExpAr\  .\ \ensuremath{\uncurry{\Conid{Un}}} \ (op,a) = \ensuremath{i_2}\ . \ \ensuremath{i_2} \ . \ \ensuremath{i_2} \ (op,a)
     \end{array}
   \right.
 \end{math}
@@ -1596,10 +1593,10 @@ outExpAr \ . \ inExpAr = id
 \begin{math}
   \left\{
     \begin{array}{l}
-                outExpAr \ X  =  \ensuremath{\p1} \ ()\\ 
-                outExpAr \ (N \ a) = \ensuremath{\p1} \ a \\ 
-                outExpAr\ (Bin \ op \ l \  r)  = \ensuremath{\p2} \ \ensuremath{\mathbin{\$}} \ensuremath{\p2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{\p1}\ (op,(l,r)) \\
-                outExpAr \ (Un \ op \ a) = \ensuremath{\p2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{\p2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{\p2} \  (op,a)
+                outExpAr \ X  =  \ensuremath{i_1} \ ()\\ 
+                outExpAr \ (N \ a) = \ensuremath{i_1} \ a \\ 
+                outExpAr\ (Bin \ op \ l \  r)  = \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{i_1}\ (op,(l,r)) \\
+                outExpAr \ (Un \ op \ a) = \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{i_2} \  (op,a)
     \end{array}
   \right.
 \end{math}
@@ -1607,14 +1604,26 @@ outExpAr \ . \ inExpAr = id
 \\
 \begin{equation*}
 \xymatrix@C=2cm{
-    & X + N\text{ }a + Bin \ BinOp \ (ExpAr \ a) (ExpAr \ a) + Un \ UnOp \ (ExpAr \ a)\ar@/^3pc/[dd]^{outExpAr}
+    & X + N \ a + Bin \ BinOp \ (ExpAr \ a) (ExpAr \ a) + Un \ UnOp \ (ExpAr \ a)\ar@/^3pc/[dd]^{outExpAr}
     \\ & {\cong}
     \\ &() + a + (BinOp,\ (ExpAr \ a, ExpAr \ a)) + (UnOp,(ExpAr \ a))\ar@/^3pc/[uu]^{inExpAr}
 }
 \newline\\
-
-Definir:
 \end{equation*}
+
+\\ 
+
+
+
+\begin{math}
+\ensuremath{\Varid{recExprAr}\;\Varid{f}} =   \ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\mathbin{+}(\Varid{id}\times(\Varid{f}\times\Varid{f})\mathbin{+}\Varid{id}\times\Varid{f}))}
+\\
+\just\equiv{ def baseExpAr }
+
+\ensuremath{\Varid{recExprAr}} \ \ensuremath{\Varid{f}} = \ensuremath{\Varid{baseExpAr}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{f}} \ \ensuremath{\Varid{f}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{f}}
+\newline\\
+\end{math}
+Definir:
 
 
 
