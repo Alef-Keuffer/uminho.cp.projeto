@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.6)  7 JUN 2021 22:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.6)  8 JUN 2021 18:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -950,8 +950,156 @@ Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
 \openout5 = `cp2021t.ptb'.
 
 [12]
-Overfull \hbox (256.6263pt too wide) in alignment at lines 1558--1592
- [][][] []
+Underfull \hbox (badness 10000) in paragraph at lines 1555--1558
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1559--1561
+
+ []
+
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.1565 \just\equiv{ def inExpAr, fusao-+,  Eq-+ }
+                                                 
+? 
+! Misplaced alignment tab character &.
+\just #1#2->\\ &#1&
+                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
+l.1565 \just\equiv{ def inExpAr, fusao-+,  Eq-+ }
+                                                 
+? 
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.1565 \just\equiv{ def inExpAr, fusao-+,  Eq-+ }
+                                                 
+? 
+! Misplaced alignment tab character &.
+\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
+                                                   
+l.1565 \just\equiv{ def inExpAr, fusao-+,  Eq-+ }
+                                                 
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1567 
+       
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1562--1567
+
+ []
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1568   \left
+              \{
+? 
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.1578 ..., def-comp, fusao-+,  Eq-+, Natural-id }
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1578 ..., def-comp, fusao-+,  Eq-+, Natural-id }
+                                                  
+? 
+! Misplaced alignment tab character &.
+\just #1#2->\\ &#1&
+                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
+l.1578 ..., def-comp, fusao-+,  Eq-+, Natural-id }
+                                                  
+? 
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.1578 ..., def-comp, fusao-+,  Eq-+, Natural-id }
+                                                  
+? 
+! Misplaced alignment tab character &.
+\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
+                                                   
+l.1578 ..., def-comp, fusao-+,  Eq-+, Natural-id }
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1580 
+       
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1568--1580
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1568--1580
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1568--1580
+
+ []
+
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.1592 ... def bin, def uncurry, def Un, def-comp}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1592 ... def bin, def uncurry, def Un, def-comp}
+                                                  
+? 
+! Misplaced alignment tab character &.
+\just #1#2->\\ &#1&
+                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
+l.1592 ... def bin, def uncurry, def Un, def-comp}
+                                                  
+? 
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.1592 ... def bin, def uncurry, def Un, def-comp}
+                                                  
+? 
+! Misplaced alignment tab character &.
+\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
+                                                   
+l.1592 ... def bin, def uncurry, def Un, def-comp}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1594 
+       
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+
  []
 
 
@@ -961,10 +1109,29 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1594 \begin{equation*}
+l.1608 \begin{equation*}
                         
 ? 
 <xymatrix 2x3 122>
+Underfull \hbox (badness 10000) in paragraph at lines 1596--1615
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1596--1615
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1596--1615
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1596--1615
+
+ []
+
 
 ! LaTeX Error: \begin{document} ended by \end{equation*}.
 
@@ -972,11 +1139,9 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1602 \end{equation*}
+l.1617 \end{equation*}
                       
 ? 
-\openout5 = `cp2021t.ptb'.
-
 \openout5 = `cp2021t.ptb'.
 
 [13]
@@ -999,15 +1164,17 @@ l.1602 \end{equation*}
 
 \openout5 = `cp2021t.ptb'.
 
+\openout5 = `cp2021t.ptb'.
 
+ [15]
 No file cp2021t.ind.
 No file cp2021t.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1962.
-[15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1962.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1977.
+[16]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1977.
  (./cp2021t.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1962.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1962.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1977.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1977.
 
 Package rerunfilecheck Info: File `cp2021t.out' has not changed.
 (rerunfilecheck)             Checksum: 7ABFEEFBC6EDEE4EAEC2BDEF142178CE;514.
@@ -1018,16 +1185,16 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1962.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1977.
  ) 
 Here is how much of TeX's memory you used:
- 13378 strings out of 483107
- 194289 string characters out of 5964631
- 525871 words of memory out of 5000000
+ 13379 strings out of 483107
+ 194296 string characters out of 5964631
+ 524871 words of memory out of 5000000
  27991 multiletter control sequences out of 15000+600000
  567979 words of font info for 125 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 48i,18n,77p,3294b,666s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,20n,77p,3294b,714s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
@@ -1054,10 +1221,10 @@ exmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/xypic/xyatip10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/xypi
 c/xybtip10.pfb>
-Output written on cp2021t.pdf (15 pages, 339208 bytes).
+Output written on cp2021t.pdf (16 pages, 341402 bytes).
 PDF statistics:
- 362 PDF objects out of 1000 (max. 8388607)
- 312 compressed objects within 4 object streams
- 73 named destinations out of 1000 (max. 500000)
+ 366 PDF objects out of 1000 (max. 8388607)
+ 315 compressed objects within 4 object streams
+ 74 named destinations out of 1000 (max. 500000)
  70 words of extra memory for PDF output out of 10000 (max. 10000000)
 

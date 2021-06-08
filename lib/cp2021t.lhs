@@ -1019,51 +1019,66 @@ ad :: Floating a => a -> ExpAr a -> a
 ad v = p2 . cataExpAr (ad_gen v)
 \end{code}
 Definir:
+\\ 
 
-\begin{eqnarray*}
-\start
-    |outExpAr . inExpAr   = id|
-%
+|outExpAr|
+\\
+
+\begin{math}
+outExpAr \ . \ inExpAr = id
+\\
 \just\equiv{ def inExpAr, fusao-+,  Eq-+ }
-%
-       |outExpAr . const X  = id . p1|
-       %
-       |outExpAr . N  = id . p1|
-       %
-       |outExpAr . Bin  = id . p2 .p2 . p1|
-       %
-       |outExpAr . uncurry Un = id . p2 .p2 . p2|
-%
-\just\equiv{ igualdade extensional, def-comp}
-%
-       |outExpAr  (const X) ()  = id . p1 ()|
-       %
-       |outExpAr  N a = id . p1 a|
-       %
-       |outExpAr bin (op,(l,r))  = id . p2 .p2 . p1 (op,(l,r))|
-       %
-       |outExpAr  uncurry Un (op,a) = id . p2 .p2 . p2 (op,a)|
-%
-\just\equiv{ def const, def N, def bin, def uncurry, def Un, def-comp}
-%
-       |outExpAr  X  = id $ p1 ()|
-       %
-       |outExpAr  N a = id $ p1 a|
-       %
-       |outExpAr (Bin op l r)  = id $ p2  $ p2 $ p1 (op,(l,r))|
-       %
-       |outExpAr  (Un op a) = id $ p2 $ p2 $ p2 (op,a)|
-%
-\end{eqnarray*}
+\\
 
+  \left\{
+    \begin{array}{l}
+                outExpAr\ .\ |const X| = id\ .\ |p1|\\ 
+                outExpAr\ .\ N  = id\ .\ |p1| \\ 
+                outExpAr\ .\ Bin  = id\ . \ |p2| \ . \ |p2| \ . \ |p1|\\
+                outExpAr\ .\ |uncurry Un| = id\ .\ |p2|\ .\ |p2|\ .\ |p2|
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+\just\equiv{ igualdade extensinal, def-comp, fusao-+,  Eq-+, Natural-id }
+\\
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                outExpAr\ . \ |const X|\ () = |p1|\ ()\\ 
+                outExpAr\ .\ N \ a  =  |p1| \ a \\ 
+                outExpAr\ .\ Bin \  (op,(l,r))  = |p2| \ . \ |p2| \ . \ |p1|\ (op,(l,r)) \\
+                outExpAr\  .\ |uncurry Un| \ (op,a) = |p2|\ . \ |p2| \ . \ |p2| \ (op,a)
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+\just\equiv{ def-const, def N, def bin, def uncurry, def Un, def-comp}
+\\
+
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                outExpAr \ X  =  |p1| \ ()\\ 
+                outExpAr \ (N \ a) = |p1| \ a \\ 
+                outExpAr\ (Bin \ op \ l \  r)  = |p2| \ |$| |p2| \ |$| \ |p1|\ (op,(l,r)) \\
+                outExpAr \ (Un \ op \ a) = |p2| \ |$| \ |p2| \ |$| \ |p2| \  (op,a)
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+\\
 \begin{equation*}
 \xymatrix@@C=2cm{
-    & X + N\text{ }a + Bin\text{ }BinOp\text{ }(ExpAr\text{ }a) (ExpAr\text{ }a) + Un\text{ }UnOp\text{ }(ExpAr\text{ }a)\ar@@/^3pc/[dd]^{out}
-    \\ &=
-    \\ &() + a + (BinOp,\text{ }(ExpAr\text{ }a, ExpAr\text{ }a)) + (UnOp\text{ },(ExpAr\text{ }a))\ar@@/^3pc/[uu]^{in}
+    & X + N\text{ }a + Bin \ BinOp \ (ExpAr \ a) (ExpAr \ a) + Un \ UnOp \ (ExpAr \ a)\ar@@/^3pc/[dd]^{outExpAr}
+    \\ & {\cong}
+    \\ &() + a + (BinOp,\ (ExpAr \ a, ExpAr \ a)) + (UnOp,(ExpAr \ a))\ar@@/^3pc/[uu]^{inExpAr}
 }
+\newline\\
 
-
+Definir:
 \end{equation*}
 
 

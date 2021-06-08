@@ -1554,51 +1554,66 @@ São dadas:
 \ColumnHook
 \end{hscode}\resethooks
 Definir:
+\\ 
 
-\begin{eqnarray*}
-\start
-    \ensuremath{\Varid{outExpAr}\comp \Varid{inExpAr}\mathrel{=}\Varid{id}}
-%
+\ensuremath{\Varid{outExpAr}}
+\\
+
+\begin{math}
+outExpAr \ . \ inExpAr = id
+\\
 \just\equiv{ def inExpAr, fusao-+,  Eq-+ }
-%
-       \ensuremath{\Varid{outExpAr}\comp \underline{\Conid{X}}\mathrel{=}\Varid{id}\comp \p1}
-       %
-       \ensuremath{\Varid{outExpAr}\comp \Conid{N}\mathrel{=}\Varid{id}\comp \p1}
-       %
-       \ensuremath{\Varid{outExpAr}\comp \Conid{Bin}\mathrel{=}\Varid{id}\comp \p2\comp \p2\comp \p1}
-       %
-       \ensuremath{\Varid{outExpAr}\comp \uncurry{\Conid{Un}}\mathrel{=}\Varid{id}\comp \p2\comp \p2\comp \p2}
-%
-\just\equiv{ igualdade extensional, def-comp}
-%
-       \ensuremath{\Varid{outExpAr}\;\underline{\Conid{X}}\;()\mathrel{=}\Varid{id}\comp \p1\;()}
-       %
-       \ensuremath{\Varid{outExpAr}\;\Conid{N}\;\Varid{a}\mathrel{=}\Varid{id}\comp \p1\;\Varid{a}}
-       %
-       \ensuremath{\Varid{outExpAr}\;\Varid{bin}\;(\Varid{op},(\Varid{l},\Varid{r}))\mathrel{=}\Varid{id}\comp \p2\comp \p2\comp \p1\;(\Varid{op},(\Varid{l},\Varid{r}))}
-       %
-       \ensuremath{\Varid{outExpAr}\;\uncurry{\cdot }\;\Conid{Un}\;(\Varid{op},\Varid{a})\mathrel{=}\Varid{id}\comp \p2\comp \p2\comp \p2\;(\Varid{op},\Varid{a})}
-%
-\just\equiv{ def const, def N, def bin, def uncurry, def Un, def-comp}
-%
-       \ensuremath{\Varid{outExpAr}\;\Conid{X}\mathrel{=}\Varid{id}\mathbin{\$}\p1\;()}
-       %
-       \ensuremath{\Varid{outExpAr}\;\Conid{N}\;\Varid{a}\mathrel{=}\Varid{id}\mathbin{\$}\p1\;\Varid{a}}
-       %
-       \ensuremath{\Varid{outExpAr}\;(\Conid{Bin}\;\Varid{op}\;\Varid{l}\;\Varid{r})\mathrel{=}\Varid{id}\mathbin{\$}\p2\mathbin{\$}\p2\mathbin{\$}\p1\;(\Varid{op},(\Varid{l},\Varid{r}))}
-       %
-       \ensuremath{\Varid{outExpAr}\;(\Conid{Un}\;\Varid{op}\;\Varid{a})\mathrel{=}\Varid{id}\mathbin{\$}\p2\mathbin{\$}\p2\mathbin{\$}\p2\;(\Varid{op},\Varid{a})}
-%
-\end{eqnarray*}
+\\
 
+  \left\{
+    \begin{array}{l}
+                outExpAr\ .\ \ensuremath{\underline{\Conid{X}}} = id\ .\ \ensuremath{\p1}\\ 
+                outExpAr\ .\ N  = id\ .\ \ensuremath{\p1} \\ 
+                outExpAr\ .\ Bin  = id\ . \ \ensuremath{\p2} \ . \ \ensuremath{\p2} \ . \ \ensuremath{\p1}\\
+                outExpAr\ .\ \ensuremath{\uncurry{\Conid{Un}}} = id\ .\ \ensuremath{\p2}\ .\ \ensuremath{\p2}\ .\ \ensuremath{\p2}
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+\just\equiv{ igualdade extensinal, def-comp, fusao-+,  Eq-+, Natural-id }
+\\
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                outExpAr\ . \ \ensuremath{\underline{\Conid{X}}}\ () = \ensuremath{\p1}\ ()\\ 
+                outExpAr\ .\ N \ a  =  \ensuremath{\p1} \ a \\ 
+                outExpAr\ .\ Bin \  (op,(l,r))  = \ensuremath{\p2} \ . \ \ensuremath{\p2} \ . \ \ensuremath{\p1}\ (op,(l,r)) \\
+                outExpAr\  .\ \ensuremath{\uncurry{\Conid{Un}}} \ (op,a) = \ensuremath{\p2}\ . \ \ensuremath{\p2} \ . \ \ensuremath{\p2} \ (op,a)
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+\just\equiv{ def-const, def N, def bin, def uncurry, def Un, def-comp}
+\\
+
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                outExpAr \ X  =  \ensuremath{\p1} \ ()\\ 
+                outExpAr \ (N \ a) = \ensuremath{\p1} \ a \\ 
+                outExpAr\ (Bin \ op \ l \  r)  = \ensuremath{\p2} \ \ensuremath{\mathbin{\$}} \ensuremath{\p2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{\p1}\ (op,(l,r)) \\
+                outExpAr \ (Un \ op \ a) = \ensuremath{\p2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{\p2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{\p2} \  (op,a)
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+\\
 \begin{equation*}
 \xymatrix@C=2cm{
-    & X + N\text{ }a + Bin\text{ }BinOp\text{ }(ExpAr\text{ }a) (ExpAr\text{ }a) + Un\text{ }UnOp\text{ }(ExpAr\text{ }a)\ar@/^3pc/[dd]^{out}
-    \\ &=
-    \\ &() + a + (BinOp,\text{ }(ExpAr\text{ }a, ExpAr\text{ }a)) + (UnOp\text{ },(ExpAr\text{ }a))\ar@/^3pc/[uu]^{in}
+    & X + N\text{ }a + Bin \ BinOp \ (ExpAr \ a) (ExpAr \ a) + Un \ UnOp \ (ExpAr \ a)\ar@/^3pc/[dd]^{outExpAr}
+    \\ & {\cong}
+    \\ &() + a + (BinOp,\ (ExpAr \ a, ExpAr \ a)) + (UnOp,(ExpAr \ a))\ar@/^3pc/[uu]^{inExpAr}
 }
+\newline\\
 
-
+Definir:
 \end{equation*}
 
 
