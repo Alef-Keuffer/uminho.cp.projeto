@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.6)  8 JUN 2021 18:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.6)  9 JUN 2021 01:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -548,24 +548,24 @@ LaTeX Warning: Label `eq:cat' multiply defined.
 )
 \openout1 = `cp2021t.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 302.
-LaTeX Font Info:    ... okay on input line 302.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 302.
-LaTeX Font Info:    ... okay on input line 302.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 302.
-LaTeX Font Info:    ... okay on input line 302.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 302.
-LaTeX Font Info:    ... okay on input line 302.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 302.
-LaTeX Font Info:    ... okay on input line 302.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 302.
-LaTeX Font Info:    ... okay on input line 302.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 302.
-LaTeX Font Info:    ... okay on input line 302.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 302.
-LaTeX Font Info:    ... okay on input line 302.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 303.
+LaTeX Font Info:    ... okay on input line 303.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 303.
+LaTeX Font Info:    ... okay on input line 303.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 303.
+LaTeX Font Info:    ... okay on input line 303.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 303.
+LaTeX Font Info:    ... okay on input line 303.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 303.
+LaTeX Font Info:    ... okay on input line 303.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 303.
+LaTeX Font Info:    ... okay on input line 303.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 303.
+LaTeX Font Info:    ... okay on input line 303.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 303.
+LaTeX Font Info:    ... okay on input line 303.
 LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 3
-02.
+03.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
@@ -604,7 +604,7 @@ File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box55
-Package hyperref Info: Link coloring ON on input line 302.
+Package hyperref Info: Link coloring ON on input line 303.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 
@@ -616,9 +616,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count286
 )
-LaTeX Info: Redefining \ref on input line 302.
-LaTeX Info: Redefining \pageref on input line 302.
-LaTeX Info: Redefining \nameref on input line 302.
+LaTeX Info: Redefining \ref on input line 303.
+LaTeX Info: Redefining \pageref on input line 303.
+LaTeX Info: Redefining \nameref on input line 303.
 
 (./cp2021t.out) (./cp2021t.out)
 \@outlinefile=\write7
@@ -647,54 +647,54 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 302
+LaTeX Font Info:    Trying to load font information for U+msa on input line 303
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 302
+LaTeX Font Info:    Trying to load font information for U+msb on input line 303
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for U+stmry on input line 3
-02.
+03.
 
 (/usr/share/texlive/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
-Package xypdf Info: Line width: 0.39998pt on input line 302.
+Package xypdf Info: Line width: 0.39998pt on input line 303.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
 
-LaTeX Warning: Citation `Kn92' on page 1 undefined on input line 340.
+LaTeX Warning: Citation `Kn92' on page 1 undefined on input line 341.
 
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 3
-48.
+49.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (5.29178pt too wide) in paragraph at lines 385--388
+Overfull \hbox (5.29178pt too wide) in paragraph at lines 386--389
 []\OT1/ppl/m/n/10 Recomenda-se uma abordagem participativa dos membros do grupo
  de trabalho por forma a poderem
  []
 
 LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 4
-29.
+30.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 )
-Overfull \hbox (9.59102pt too wide) in paragraph at lines 446--450
+Overfull \hbox (9.59102pt too wide) in paragraph at lines 447--451
 \OT1/ppl/m/n/10 Os \OT1/ppl/m/it/10 tipos de dados alg^^Sebricos \OT1/ppl/m/n/1
 0 estudados ao longo desta disciplina oferecem uma grande capacidade expressiva
 
  []
 
 [2]
-Overfull \hbox (6.65025pt too wide) in paragraph at lines 464--469
+Overfull \hbox (6.65025pt too wide) in paragraph at lines 465--470
 \OT1/ppl/m/n/10 descontrolada, levando a um c[]alculo pouco eficiente. \OT1/ppl
 /m/it/10 Automatic differentiation \OT1/ppl/m/n/10 tenta resolver este problema
 ,
@@ -709,7 +709,7 @@ Overfull \hbox (6.65025pt too wide) in paragraph at lines 464--469
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (6.3199pt too wide) in paragraph at lines 560--563
+Overfull \hbox (6.3199pt too wide) in paragraph at lines 561--564
 []$[]$ \OT1/ppl/m/it/10 e $[]$ s~ao testemunhas de um isomorfismo, isto ^^Se, $
 [] []
  []
@@ -726,7 +726,7 @@ Overfull \hbox (6.3199pt too wide) in paragraph at lines 560--563
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (1.88171pt too wide) in paragraph at lines 668--672
+Overfull \hbox (1.88171pt too wide) in paragraph at lines 669--673
 []\OT1/ppl/m/n/10 Para calcular a derivada de uma express[]ao, []e necess[]ario
  aplicar transforma[][]oes []a express[]ao original
  []
@@ -740,24 +740,24 @@ Overfull \hbox (1.88171pt too wide) in paragraph at lines 668--672
 
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 764.
+Package hyperref Warning: Suppressing link with empty target on input line 765.
 
 
 
-LaTeX Warning: Citation `Ol18' on page 5 undefined on input line 764.
+LaTeX Warning: Citation `Ol18' on page 5 undefined on input line 765.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 764.
+Package hyperref Warning: Suppressing link with empty target on input line 765.
 
 
 
-Overfull \hbox (17.15103pt too wide) in paragraph at lines 762--765
+Overfull \hbox (17.15103pt too wide) in paragraph at lines 763--766
 \OT1/ppl/m/n/10 Nesta disciplina estudou-se como fazer [][]programa[][]ao din[]
 amica[][][] por c[]alculo, recorrendo []a lei de recursividade
  []
 
 LaTeX Font Info:    Trying to load font information for OT1+phv on input line 7
-71.
+72.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
@@ -766,13 +766,13 @@ File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 \openout5 = `cp2021t.ptb'.
 
  [5]
-Overfull \hbox (5.61159pt too wide) in paragraph at lines 802--805
+Overfull \hbox (5.61159pt too wide) in paragraph at lines 803--806
 []\OT1/ppl/m/n/10 Para as vari[]aveis escolhem-se os pr[]oprios nomes das fun[]
 []oes, pela ordem que se achar conveniente.[][][][][] 
  []
 
 
-LaTeX Warning: Citation `Ol18' on page 6 undefined on input line 810.
+LaTeX Warning: Citation `Ol18' on page 6 undefined on input line 811.
 
 \openout5 = `cp2021t.ptb'.
 
@@ -786,7 +786,7 @@ LaTeX Warning: Citation `Ol18' on page 6 undefined on input line 810.
 File: cp2021t_media/Bezier_curves.png Graphic file (type png)
 <use cp2021t_media/Bezier_curves.png>
 Package pdftex.def Info: cp2021t_media/Bezier_curves.png  used on input line 88
-0.
+1.
 (pdftex.def)             Requested size: 364.19667pt x 151.75493pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -797,7 +797,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (23.14105pt too wide) in paragraph at lines 921--924
+Overfull \hbox (23.14105pt too wide) in paragraph at lines 922--925
 \OT1/ppl/m/n/10 Por exemplo, um ponto de 2 dimens[]oes e um ponto de 3 dimens[]
 oes podem ser representados, respetivamente,
  []
@@ -811,7 +811,7 @@ oes podem ser representados, respetivamente,
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (0.10011pt too wide) in paragraph at lines 962--964
+Overfull \hbox (0.10011pt too wide) in paragraph at lines 963--965
 []\OT1/ppl/m/n/10 Implemente $[]$ como um catamorfismo de listas, testando a su
 a defini[][]ao com a propriedade:[] 
  []
@@ -825,18 +825,18 @@ a defini[][]ao com a propriedade:[]
 
  [8]
 
-LaTeX Warning: Citation `Ol18' on page 9 undefined on input line 1074.
+LaTeX Warning: Citation `Ol18' on page 9 undefined on input line 1075.
 
 <xymatrix 2x2 191>
 
-Package hyperref Warning: Suppressing link with empty target on input line 1110
+Package hyperref Warning: Suppressing link with empty target on input line 1111
 .
 
 
-LaTeX Warning: Citation `Ol18' on page 9 undefined on input line 1111.
+LaTeX Warning: Citation `Ol18' on page 9 undefined on input line 1112.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 1111
+Package hyperref Warning: Suppressing link with empty target on input line 1112
 .
 
 \openout5 = `cp2021t.ptb'.
@@ -871,77 +871,77 @@ Package hyperref Warning: Suppressing link with empty target on input line 1111
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
  [][] 
  []
 
@@ -950,155 +950,156 @@ Overfull \hbox (8.57883pt too wide) in paragraph at lines 1428--1477
 \openout5 = `cp2021t.ptb'.
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 1555--1558
 
- []
+! LaTeX Error: There's no line here to end.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1559--1561
-
- []
-
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1559 
+       
+? 
 ! Misplaced alignment tab character &.
 <recently read> &
                  
-l.1565 \just\equiv{ def inExpAr, fusao-+,  Eq-+ }
-                                                 
+l.1563 ... de inExpAr, Fusão-+,  Cancelamento-+ }
+                                                  
 ? 
 ! Misplaced alignment tab character &.
 \just #1#2->\\ &#1&
                     \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.1565 \just\equiv{ def inExpAr, fusao-+,  Eq-+ }
-                                                 
+l.1563 ... de inExpAr, Fusão-+,  Cancelamento-+ }
+                                                  
 ? 
 ! Misplaced alignment tab character &.
 <recently read> &
                  
-l.1565 \just\equiv{ def inExpAr, fusao-+,  Eq-+ }
-                                                 
+l.1563 ... de inExpAr, Fusão-+,  Cancelamento-+ }
+                                                  
 ? 
 ! Misplaced alignment tab character &.
 \just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
                                                    
-l.1565 \just\equiv{ def inExpAr, fusao-+,  Eq-+ }
-                                                 
+l.1563 ... de inExpAr, Fusão-+,  Cancelamento-+ }
+                                                  
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.1567 
+l.1565 
        
 ? 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1562--1567
+Underfull \hbox (badness 10000) in paragraph at lines 1560--1565
 
  []
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.1568   \left
+l.1566   \left
               \{
 ? 
 ! Misplaced alignment tab character &.
 <recently read> &
                  
-l.1578 ..., def-comp, fusao-+,  Eq-+, Natural-id }
+l.1576 ...uiv{ Igualdade extensional, Natural-id }
                                                   
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.1578 ..., def-comp, fusao-+,  Eq-+, Natural-id }
+l.1576 ...uiv{ Igualdade extensional, Natural-id }
                                                   
 ? 
 ! Misplaced alignment tab character &.
 \just #1#2->\\ &#1&
                     \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.1578 ..., def-comp, fusao-+,  Eq-+, Natural-id }
+l.1576 ...uiv{ Igualdade extensional, Natural-id }
                                                   
 ? 
 ! Misplaced alignment tab character &.
 <recently read> &
                  
-l.1578 ..., def-comp, fusao-+,  Eq-+, Natural-id }
+l.1576 ...uiv{ Igualdade extensional, Natural-id }
                                                   
 ? 
 ! Misplaced alignment tab character &.
 \just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
                                                    
-l.1578 ..., def-comp, fusao-+,  Eq-+, Natural-id }
+l.1576 ...uiv{ Igualdade extensional, Natural-id }
                                                   
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.1580 
+l.1578 
        
 ? 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1568--1580
+Underfull \hbox (badness 10000) in paragraph at lines 1566--1578
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1568--1580
+Underfull \hbox (badness 10000) in paragraph at lines 1566--1578
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1568--1580
+Underfull \hbox (badness 10000) in paragraph at lines 1566--1578
 
  []
 
 ! Misplaced alignment tab character &.
 <recently read> &
                  
-l.1592 ... def bin, def uncurry, def Un, def-comp}
+l.1590 ...ão de bin, Uncurry, Definição de Un }
                                                   
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.1592 ... def bin, def uncurry, def Un, def-comp}
+l.1590 ...ão de bin, Uncurry, Definição de Un }
                                                   
 ? 
 ! Misplaced alignment tab character &.
 \just #1#2->\\ &#1&
                     \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.1592 ... def bin, def uncurry, def Un, def-comp}
+l.1590 ...ão de bin, Uncurry, Definição de Un }
                                                   
 ? 
 ! Misplaced alignment tab character &.
 <recently read> &
                  
-l.1592 ... def bin, def uncurry, def Un, def-comp}
+l.1590 ...ão de bin, Uncurry, Definição de Un }
                                                   
 ? 
 ! Misplaced alignment tab character &.
 \just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
                                                    
-l.1592 ... def bin, def uncurry, def Un, def-comp}
+l.1590 ...ão de bin, Uncurry, Definição de Un }
                                                   
 ? 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.1594 
+l.1592 
        
 ? 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+Underfull \hbox (badness 10000) in paragraph at lines 1579--1592
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+Underfull \hbox (badness 10000) in paragraph at lines 1579--1592
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1581--1594
+Underfull \hbox (badness 10000) in paragraph at lines 1579--1592
 
  []
 
@@ -1109,29 +1110,10 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1608 \begin{equation*}
+l.1606 \begin{equation*}
                         
 ? 
-<xymatrix 2x3 122>
-Underfull \hbox (badness 10000) in paragraph at lines 1596--1615
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1596--1615
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1596--1615
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1596--1615
-
- []
-
+<xymatrix 3x1 158>
 
 ! LaTeX Error: \begin{document} ended by \end{equation*}.
 
@@ -1139,18 +1121,182 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1617 \end{equation*}
+l.1612 \end{equation*}
                       
 ? 
-\openout5 = `cp2021t.ptb'.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1594--1613
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1594--1613
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1594--1613
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1594--1613
+
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1616 
+       
+? 
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.1622 \just\equiv{ Definição de baseExpAr }
+                                              
+? 
+! Misplaced alignment tab character &.
+\just #1#2->\\ &#1&
+                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
+l.1622 \just\equiv{ Definição de baseExpAr }
+                                              
+? 
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.1622 \just\equiv{ Definição de baseExpAr }
+                                              
+? 
+! Misplaced alignment tab character &.
+\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
+                                                   
+l.1622 \just\equiv{ Definição de baseExpAr }
+                                              
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1623 
+       
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1619--1623
+
+ []
+
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1626 \end{math}
+                 
+? 
+
+! LaTeX Error: Environment equation* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1629 \begin{equation*}
+                        
+? 
+<xymatrix 3x2 246>
+
+! LaTeX Error: \begin{document} ended by \end{equation*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1634 \end{equation*}
+                      
+? 
+
+! LaTeX Error: Environment equation* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1638 \begin{equation*}
+                        
+? 
+<xymatrix 3x2 246>
+
+! LaTeX Error: \begin{document} ended by \end{equation*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1643 \end{equation*}
+                      
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1624--1646
+
+ []
 
 [13]
-\openout5 = `cp2021t.ptb'.
-
-\openout5 = `cp2021t.ptb'.
-
-\openout5 = `cp2021t.ptb'.
-
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
@@ -1167,14 +1313,23 @@ l.1617 \end{equation*}
 \openout5 = `cp2021t.ptb'.
 
  [15]
+\openout5 = `cp2021t.ptb'.
+
+\openout5 = `cp2021t.ptb'.
+
+\openout5 = `cp2021t.ptb'.
+
+\openout5 = `cp2021t.ptb'.
+
+
 No file cp2021t.ind.
 No file cp2021t.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1977.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2002.
 [16]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1977.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2002.
  (./cp2021t.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1977.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1977.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2002.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2002.
 
 Package rerunfilecheck Info: File `cp2021t.out' has not changed.
 (rerunfilecheck)             Checksum: 7ABFEEFBC6EDEE4EAEC2BDEF142178CE;514.
@@ -1185,16 +1340,16 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1977.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2002.
  ) 
 Here is how much of TeX's memory you used:
- 13379 strings out of 483107
- 194296 string characters out of 5964631
- 524871 words of memory out of 5000000
- 27991 multiletter control sequences out of 15000+600000
+ 13373 strings out of 483107
+ 194216 string characters out of 5964631
+ 523871 words of memory out of 5000000
+ 27985 multiletter control sequences out of 15000+600000
  567979 words of font info for 125 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 48i,20n,77p,3294b,714s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,18n,77p,3294b,743s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
@@ -1221,7 +1376,7 @@ exmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/xypic/xyatip10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/xypi
 c/xybtip10.pfb>
-Output written on cp2021t.pdf (16 pages, 341402 bytes).
+Output written on cp2021t.pdf (16 pages, 345604 bytes).
 PDF statistics:
  366 PDF objects out of 1000 (max. 8388607)
  315 compressed objects within 4 object streams
