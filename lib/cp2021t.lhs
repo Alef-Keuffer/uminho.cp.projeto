@@ -1120,10 +1120,10 @@ outExpAr X = i1 ()
 outExpAr (N a) = i2 $ i1 a
 outExpAr (Bin op l r) = i2 $ i2 $ i1 (op,(l,r))
 outExpAr (Un op a) = i2 $ i2 $ i2 (op,a)
----
+
+
 recExpAr f  = baseExpAr id id id f f id f
 
----
 
 g_eval_exp x (Left ()) = x
 g_eval_exp x (Right (Left a)) = a
@@ -1132,12 +1132,14 @@ g_eval_exp x (Right (Right (Left (Product,(e,d))))) = e*d
 g_eval_exp x (Right (Right (Right (Negate,a)))) = negate a
 g_eval_exp x (Right (Right (Right (E,a)))) = expd a
 
+
 clean a = (outExpAr . h)  a where
     h (Bin Product (N 0) r) = N 0
     h (Bin Product r (N 0) ) = N 0
     h (Un E (N 0)) = N 1
     h (Un Negate (N 0)) = N 0
     h x = x
+
 
 gopt a = g_eval_exp a
 
