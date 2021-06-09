@@ -15,6 +15,7 @@
 {-# OPTIONS_HADDOCK show-extensions     #-} -- Estou gerado documentação Haddock, é necessário só para isso.
 -- =============================================================================
 
+{-# LANGUAGE DeriveFunctor #-}
 module Solucoes where
 
 import           Control.Applicative     hiding ( (<|>) )
@@ -399,48 +400,104 @@ fromℚ ∷ Fractional a ⇒ ℚ → a
 fromℚ = fromRational
 
 calcLine ∷ NPoint → (NPoint → OverTime NPoint)
-calcLine xs ys e = cataList (either nil h) ((fmap (uncurry linear1d) $ (uncurry zip) (xs,ys))) where
+calcLine = cataList h where
+    h = either f g
+    f _ _ = nil
+    g _ [] =  nil
+    g (d,f) (x:xs) =  \z → concat $ (sequenceA [singl . linear1d d x, f xs]) z
+
+calcLineAlt ∷ NPoint → (NPoint → OverTime NPoint)
+calcLineAlt xs ys e = cataList (either nil h) ((fmap (uncurry linear1d) $ (uncurry zip) (xs,ys))) where
     h (f, fs) = f e : fs
-{-
-
-seq' l a = cataList (either nil (\(f,fs) -> f a : fs)) l
-
-seq2 = \l -> \a -> cataList (either nil (\(f,fs) -> f a : fs)) l
-
-calcLine' = sequenceA' ° (z ° zip) where z = fmap (uncurry linear1d)
-calcLine2 = (sequenceA' . z) ° zip where z = fmap (uncurry linear1d) -}
 
 
-(°) = (.) . (.)
-(//) = (°) ° (°)
+seq' l a = cataList (either nil (\(f,fs) → f a : fs)) l
+
+seq2 = \l → \a → cataList (either nil (\(f,fs) → f a : fs)) l
+
+calcLine6 = sequenceA ° (z ° zip) where z = fmap (uncurry linear1d)
+calcLine2 = (sequenceA . z) ° zip where z = fmap (uncurry linear1d)
+
+out ∷ [a] × [b] → Either () ((a × b) × ([a] × [b]))
+out = \case
+  ([],_)           → Left ()
+  (_,[])           → Left ()
+  ((a:as), (b:bs)) → Right ((a,b) , (as,bs))
+
+zip' ∷ [a] × [b] → [a × b]
+zip' = anaList out
+
+zipWith' ∷ ((a × b) → c) → ([a] × [b]) → [c]
+zipWith' f = fmap f . zip'
+
+sequenceA' ∷ [t → a] → t → [a]
+sequenceA' = flip aux where
+  aux a = cataList (either nil h)  where
+    h (f, fs) = f a : fs
+
+zipWithM' ∷ ((a × b) → t → c) → ([a] × [b]) → t → [c]
+zipWithM' f = sequenceA' . zipWith' f
+
+calcLine' ∷ [ℚ] → [ℚ] → Float → [ℚ]
+calcLine' = curry aux where
+  aux = zipWithM' (uncurry linear1d)
+
+
+-- Tests
+
+(°) ∷ (Functor f, Functor g) ⇒ (a → b) → f (g a) → f (g b)
+(°) = fmap . fmap
+(//) = (<<) (.)
 (<<) = flip (.)
 
 
+zipWithFree :: ((a, b1) → b2, ([a], [b1])) → [b2]
+zipWithFree =  uncurry $ fmap << (uncurry zip <<)
+
+--
 calcLine3 e = cataList k where
-  k = z . (id ⊕ j × id)
-  j = uncurry linear1d
-  z = either nil h where
-    h (f, fs) = f e : fs
+  k = z . (baseList (uncurry linear1d) id)
+  z = either nil h
+  h (f, fs) = f e : fs
 
-{- | Spec
+--
 
- @
-'deCasteljau' ∷ ['NPoint'] → 'OverTime' 'NPoint'
-'deCasteljau' [] = 'nil'
-'deCasteljau' [p] = 'const' p
-'deCasteljau' l = \pt → 'calcLine' (p pt) (q pt) pt
- where
-  p = 'deCasteljau' ('init' l)
-  q = 'deCasteljau' ('tail' l)
- @
--}
-deCasteljau ∷ [NPoint] → OverTime NPoint
-deCasteljau = hyloAlgForm alg coalg
- where
-  coalg = undefined
-  alg   = undefined
+deCasteljau :: [NPoint] -> OverTime NPoint
+deCasteljau = hyloAlgForm alg  coalg where
+   coalg = (id ⊕ id ⊕ split init tail) . outSL
+   alg = const nil ∐ a
+   a = const ∐ b
+   b (e,d) pt = (calcLine (e pt) (d pt)) pt
 
-hyloAlgForm = undefined
+outSL :: [a] -> () ∐ a ∐ [a]
+outSL [] = i1 ()
+outSL [a] = i2 (i1 a)
+outSL l = i2 (i2 l)
+
+hyloAlgForm ::
+  (() ∐ b ∐ c × c -> c) ->
+  (a -> d ∐ b ∐ a × a) -> a -> c
+hyloAlgForm = h where
+    h a b = cataCastel a . anaCastel b
+
+newtype Castel' a = Castel' (() ∐ a ∐ Castel a × Castel a)
+data Castel a = Empty | Single a | InitTail (Castel a × Castel a) deriving Show
+
+inCastel :: b ∐ a ∐ Castel a × Castel a -> Castel a
+inCastel = const Empty ∐ Single ∐ InitTail
+
+outCastel :: Castel a -> () ∐ a ∐ Castel a × Castel a
+outCastel Empty = i1 ()
+outCastel (Single a) = i2 (i1 a)
+outCastel (InitTail (e,d)) = i2 (i2 (e,d))
+
+fC :: (a -> d) -> b1 ∐ b2 ∐ a × a -> b1 ∐ b2 ∐ d × d
+fC f = id ⊕ id ⊕ f × f
+
+cataCastel :: (() ∐ b ∐ d × d -> d) -> Castel b -> d
+cataCastel f = f . fC (cataCastel f) . outCastel
+anaCastel :: (a1 -> b ∐ a2 ∐ a1 × a1) -> a1 -> Castel a2
+anaCastel g = inCastel . fC (anaCastel g) . g
 -- =============================================================================
 -- ** Problema 4
 
@@ -459,31 +516,22 @@ avg = p1 . avg_aux
 -- =============================================================================
 -- *** Solução
 
-------------------------
-in2 ∷ Bool → a → Either a a
-in2 True = Left
-in2 False = Right
+outL :: [a] -> a ∐ a × [a]
+outL [a] = i1 a
+outL (a:x) = i2 (a,x)
 
-infixr 1 ?
+recL :: (c -> d) -> (b1 ∐ b2 × c) -> b1 ∐ b2 × d
+recL  f   = id ⊕ id × f
 
-(?) ∷ (a → Bool) → a → Either a a
-(?) = (in2 =<<)
+cataL :: (b ∐ b × d -> d) -> [b] -> d
+cataL g   = g . recL (cataL g) . outL
 
--- | My adaptation of McCarthy conditional
-infixl 0 -→
+avg_aux ∷ Fractional b ⇒ [b] → (b, b)
+avg_aux = cataL (either b q) where
+   b a = (a,1)
+   q (h,(a,l)) = ((h + (a*l)) / (l+1) ,l+1)
 
-(-→) ∷ (b → Bool) → (b → c, b → c) → b → c
-p -→ (g, h) = either g h . (p ?)
-
---avg_aux ∷ Fractional b ⇒ [b] → (b, b)
-avg_aux ∷ (Fractional b) => [b] → (b, b)
-avg_aux = cataList (either b q) . filt  where
-  b () = (0, 0)
-  q (h, (a, l)) = ((a * l + h) / (l + 1), l + 1)
-  filt [] = error "lista vazia"
-  filt a = a
-
-avgLTree ∷ Fractional b => LTree b → b
+avgLTree ∷ Fractional b ⇒ LTree b → b
 avgLTree = p1 . cataLTree gene where
    gene = either g q where
       g a = (a,1)
