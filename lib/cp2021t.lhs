@@ -100,6 +100,8 @@
 %format (anaLTree (x)) = "\mathopen{[\!(}" x "\mathclose{)\!]}"
 %format delta = "\Delta "
 %format (cataL (f)) = "\cata{" f "}"
+%format (ana (f)) = "\ana{" f "}"
+
 
 %---------------------------------------------------------------------------
 
@@ -1024,34 +1026,34 @@ ad v = p2 . cataExpAr (ad_gen v)
 \begin{math}
 |outExpAr| \ . \ |inExpAr| = |id|
 \\
-\just\equiv{ def inExpAr, fusao-+,  Eq-+ }
+\just\equiv{ Definição de inExpAr, Fusão-+,  Cancelamento-+ }
 \\
 
   \left\{
     \begin{array}{l}
                 outExpAr\ .\ |const X| = id\ .\ |i1|\\ 
-                outExpAr\ .\ N  = id\ .\ |i1| \\ 
-                outExpAr\ .\ Bin  = id\ . \ |i2| \ . \ |i2| \ . \ |i1|\\
+                outExpAr\ .\ N  = id\ .\ |i2| \ . \ |i1| \\ 
+                outExpAr\ .\ bin  = id\ . \ |i2| \ . \ |i2| \ . \ |i1|\\
                 outExpAr\ .\ |uncurry Un| = id\ .\ |i2|\ .\ |i2|\ .\ |i2|
     \end{array}
   \right.
 \end{math}
 \newline\\
-\just\equiv{ igualdade extensional, def-comp, fusao-+,  Eq-+, Natural-id }
+\just\equiv{ Igualdade extensional, Natural-id }
 \\
 
 \begin{math}
   \left\{
     \begin{array}{l}
-                outExpAr\ . \ |const X|\ () = |i1|\ ()\\ 
-                outExpAr\ .\ N \ a  =  |i1| \ a \\ 
-                outExpAr\ .\ Bin \  (op,(l,r))  = |i2| \ . \ |i2| \ . \ |i1|\ (op,(l,r)) \\
-                outExpAr\  .\ |uncurry Un| \ (op,a) = |i2|\ . \ |i2| \ . \ |i2| \ (op,a)
+                (outExpAr\ . \ |const X|)\ () = |i1|\ ()\\ 
+                (outExpAr\ .\ N) \ a  =  (|i2| \ . \ |i1|) \ a \\ 
+                (outExpAr\ .\ bin) \  (op,(l,r))  = (|i2| \ . \ |i2| \ . \ |i1|)\ (op,(l,r)) \\
+                (outExpAr\  .\ |uncurry Un|) \ (op,a) = (|i2|\ . \ |i2| \ . \ |i2|) \ (op,a)
     \end{array}
   \right.
 \end{math}
 \newline\\
-\just\equiv{ def-const, def N, def bin, def uncurry, def Un, def-comp}
+\just\equiv{ Def-comp , Def-const, Definição de N, Definição de bin, Uncurry, Definição de Un }
 \\
 
 
@@ -1059,7 +1061,7 @@ ad v = p2 . cataExpAr (ad_gen v)
   \left\{
     \begin{array}{l}
                 outExpAr \ X  =  |i1| \ ()\\ 
-                outExpAr \ (N \ a) = |i1| \ a \\ 
+                outExpAr \ (N \ a) = |i2| \ |$| \ |i1| \ a \\ 
                 outExpAr\ (Bin \ op \ l \  r)  = |i2| \ |$| |i2| \ |$| \ |i1|\ (op,(l,r)) \\
                 outExpAr \ (Un \ op \ a) = |i2| \ |$| \ |i2| \ |$| \ |i2| \  (op,a)
     \end{array}
@@ -1069,12 +1071,12 @@ ad v = p2 . cataExpAr (ad_gen v)
 \\
 \begin{equation*}
 \xymatrix@@C=2cm{
-    & X + N \ a + Bin \ BinOp \ (ExpAr \ a) (ExpAr \ a) + Un \ UnOp \ (ExpAr \ a)\ar@@/^3pc/[dd]^{outExpAr}
-    \\ & {\cong}
-    \\ &() + a + (BinOp,\ (ExpAr \ a, ExpAr \ a)) + (UnOp,(ExpAr \ a))\ar@@/^3pc/[uu]^{inExpAr}
+    & ExpAr \ A\ar@@/^3pc/[r]^{outExpAr} \ar@@{{}{ }{}}@@/^1.8pc/[r]_{\cong}
+    & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar@@/^3pc/[l]^{inExpAr}
 }
 \newline\\
 \end{equation*}
+
 
 \\ 
 
@@ -1083,11 +1085,32 @@ ad v = p2 . cataExpAr (ad_gen v)
 \begin{math}
 |recExprAr f| =   |id + (id + (id >< (f >< f ) + id >< f ))|
 \\
-\just\equiv{ def baseExpAr }
+\just\equiv{ Definição de baseExpAr }
 
 |recExprAr| \ |f| = |baseExpAr| \ |id| \ |id| \ |id| \ |f| \ |f| \ |id| \ |f|
 \newline\\
 \end{math}
+\newline\\
+\\
+\begin{equation*}
+\xymatrix@@C=2cm@@R=3cm{
+    & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr}\ar[d]_{|cata (g_eval a)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |cata (g_eval a)|}\ar@@/^2pc/[l]^{inExpAr}  \\
+    & |Nat0|  & 1 + |Nat0| + BinOp \times |Nat0|^2 + UnOp \times |Nat0|\ar[l]_(0.6){g\_eval \ a}
+}
+\end{equation*}
+\newline\\
+\\
+\\
+\begin{equation*}
+\xymatrix@@C=2cm@@R=3cm{
+    & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar@@/^2pc/[l]^{inExpAr}  \\
+    & ExpAr \ A\ar[r]^(0.25){clean} \ar[u]^{|ana (clean)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[u]_{recExpAr \ |ana(clean)|}
+}
+\end{equation*}
+\newline\\
+\newline\\
+
+
 Definir:
 
 
@@ -1109,7 +1132,7 @@ g_eval_exp x (Right (Right (Left (Product,(e,d))))) = e*d
 g_eval_exp x (Right (Right (Right (Negate,a)))) = negate a
 g_eval_exp x (Right (Right (Right (E,a)))) = expd a
 
-clean  a = (outExpAr . h) a  where
+clean a = (outExpAr . h)  a where
     h (Bin Product (N 0) r) = N 0
     h (Bin Product r (N 0) ) = N 0
     h (Un E (N 0)) = N 1
@@ -1235,6 +1258,7 @@ fC f = id -|- (id -|- f >< f )
 
 cataC f = f . fC (cataC f) .  outC
 anaC g = inC . fC(anaC g) . g
+
 
 \end{code}
 

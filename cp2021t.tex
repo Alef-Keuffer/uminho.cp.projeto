@@ -278,6 +278,7 @@
 \def\ana#1{\mathopen{[\!(}#1\mathclose{)\!]}}
 %%format (bin (n) (k)) = "\Big(\vcenter{\xymatrix@R=1pt{" n "\\" k "}}\Big)"
 
+
 %---------------------------------------------------------------------------
 
 \title{
@@ -1559,34 +1560,34 @@ São dadas:
 \begin{math}
 \ensuremath{\Varid{outExpAr}} \ . \ \ensuremath{\Varid{inExpAr}} = \ensuremath{\Varid{id}}
 \\
-\just\equiv{ def inExpAr, fusao-+,  Eq-+ }
+\just\equiv{ Definição de inExpAr, Fusão-+,  Cancelamento-+ }
 \\
 
   \left\{
     \begin{array}{l}
                 outExpAr\ .\ \ensuremath{\underline{\Conid{X}}} = id\ .\ \ensuremath{i_1}\\ 
-                outExpAr\ .\ N  = id\ .\ \ensuremath{i_1} \\ 
-                outExpAr\ .\ Bin  = id\ . \ \ensuremath{i_2} \ . \ \ensuremath{i_2} \ . \ \ensuremath{i_1}\\
+                outExpAr\ .\ N  = id\ .\ \ensuremath{i_2} \ . \ \ensuremath{i_1} \\ 
+                outExpAr\ .\ bin  = id\ . \ \ensuremath{i_2} \ . \ \ensuremath{i_2} \ . \ \ensuremath{i_1}\\
                 outExpAr\ .\ \ensuremath{\uncurry{\Conid{Un}}} = id\ .\ \ensuremath{i_2}\ .\ \ensuremath{i_2}\ .\ \ensuremath{i_2}
     \end{array}
   \right.
 \end{math}
 \newline\\
-\just\equiv{ igualdade extensional, def-comp, fusao-+,  Eq-+, Natural-id }
+\just\equiv{ Igualdade extensional, Natural-id }
 \\
 
 \begin{math}
   \left\{
     \begin{array}{l}
-                outExpAr\ . \ \ensuremath{\underline{\Conid{X}}}\ () = \ensuremath{i_1}\ ()\\ 
-                outExpAr\ .\ N \ a  =  \ensuremath{i_1} \ a \\ 
-                outExpAr\ .\ Bin \  (op,(l,r))  = \ensuremath{i_2} \ . \ \ensuremath{i_2} \ . \ \ensuremath{i_1}\ (op,(l,r)) \\
-                outExpAr\  .\ \ensuremath{\uncurry{\Conid{Un}}} \ (op,a) = \ensuremath{i_2}\ . \ \ensuremath{i_2} \ . \ \ensuremath{i_2} \ (op,a)
+                (outExpAr\ . \ \ensuremath{\underline{\Conid{X}}})\ () = \ensuremath{i_1}\ ()\\ 
+                (outExpAr\ .\ N) \ a  =  (\ensuremath{i_2} \ . \ \ensuremath{i_1}) \ a \\ 
+                (outExpAr\ .\ bin) \  (op,(l,r))  = (\ensuremath{i_2} \ . \ \ensuremath{i_2} \ . \ \ensuremath{i_1})\ (op,(l,r)) \\
+                (outExpAr\  .\ \ensuremath{\uncurry{\Conid{Un}}}) \ (op,a) = (\ensuremath{i_2}\ . \ \ensuremath{i_2} \ . \ \ensuremath{i_2}) \ (op,a)
     \end{array}
   \right.
 \end{math}
 \newline\\
-\just\equiv{ def-const, def N, def bin, def uncurry, def Un, def-comp}
+\just\equiv{ Def-comp , Def-const, Definição de N, Definição de bin, Uncurry, Definição de Un }
 \\
 
 
@@ -1594,7 +1595,7 @@ São dadas:
   \left\{
     \begin{array}{l}
                 outExpAr \ X  =  \ensuremath{i_1} \ ()\\ 
-                outExpAr \ (N \ a) = \ensuremath{i_1} \ a \\ 
+                outExpAr \ (N \ a) = \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{i_1} \ a \\ 
                 outExpAr\ (Bin \ op \ l \  r)  = \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{i_1}\ (op,(l,r)) \\
                 outExpAr \ (Un \ op \ a) = \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{i_2} \  (op,a)
     \end{array}
@@ -1604,12 +1605,12 @@ São dadas:
 \\
 \begin{equation*}
 \xymatrix@C=2cm{
-    & X + N \ a + Bin \ BinOp \ (ExpAr \ a) (ExpAr \ a) + Un \ UnOp \ (ExpAr \ a)\ar@/^3pc/[dd]^{outExpAr}
-    \\ & {\cong}
-    \\ &() + a + (BinOp,\ (ExpAr \ a, ExpAr \ a)) + (UnOp,(ExpAr \ a))\ar@/^3pc/[uu]^{inExpAr}
+    & ExpAr \ A\ar@/^3pc/[r]^{outExpAr} \ar@{{}{ }{}}@/^1.8pc/[r]_{\cong}
+    & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar@/^3pc/[l]^{inExpAr}
 }
 \newline\\
 \end{equation*}
+
 
 \\ 
 
@@ -1618,11 +1619,32 @@ São dadas:
 \begin{math}
 \ensuremath{\Varid{recExprAr}\;\Varid{f}} =   \ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\mathbin{+}(\Varid{id}\times(\Varid{f}\times\Varid{f})\mathbin{+}\Varid{id}\times\Varid{f}))}
 \\
-\just\equiv{ def baseExpAr }
+\just\equiv{ Definição de baseExpAr }
 
 \ensuremath{\Varid{recExprAr}} \ \ensuremath{\Varid{f}} = \ensuremath{\Varid{baseExpAr}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{f}} \ \ensuremath{\Varid{f}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{f}}
 \newline\\
 \end{math}
+\newline\\
+\\
+\begin{equation*}
+\xymatrix@C=2cm@R=3cm{
+    & ExpAr \ A\ar@/^2pc/[r]^{outExpAr}\ar[d]_{\ensuremath{\cata{\Varid{g\char95 eval}\;\Varid{a}}}} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ \ensuremath{\cata{\Varid{g\char95 eval}\;\Varid{a}}}}\ar@/^2pc/[l]^{inExpAr}  \\
+    & \ensuremath{\N_0}  & 1 + \ensuremath{\N_0} + BinOp \times \ensuremath{\N_0}^2 + UnOp \times \ensuremath{\N_0}\ar[l]_(0.6){g\_eval \ a}
+}
+\end{equation*}
+\newline\\
+\\
+\\
+\begin{equation*}
+\xymatrix@C=2cm@R=3cm{
+    & ExpAr \ A\ar@/^2pc/[r]^{outExpAr} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar@/^2pc/[l]^{inExpAr}  \\
+    & ExpAr \ A\ar[r]^(0.25){clean} \ar[u]^{\ensuremath{\ana{\Varid{clean}}}} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[u]_{recExpAr \ \ensuremath{\ana{\Varid{clean}}}}
+}
+\end{equation*}
+\newline\\
+\newline\\
+
+
 Definir:
 
 
@@ -1630,9 +1652,8 @@ Definir:
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{8}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{13}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{outExpAr}\;\Conid{X}\mathrel{=}i_1\;(){}\<[E]%
 \\
@@ -1661,9 +1682,8 @@ Definir:
 \\
 \>[B]{}\Varid{g\char95 eval\char95 exp}\;\Varid{x}\;(i_2\;(i_2\;(i_2\;(\Conid{E},\Varid{a}))))\mathrel{=}\Varid{expd}\;\Varid{a}{}\<[E]%
 \\[\blanklineskip]%
-\>[B]{}\Varid{clean}\;{}\<[8]%
-\>[8]{}\Varid{a}\mathrel{=}(\Varid{outExpAr}\comp \Varid{h})\;\Varid{a}\;{}\<[30]%
-\>[30]{}\mathbf{where}{}\<[E]%
+\>[B]{}\Varid{clean}\;\Varid{a}\mathrel{=}(\Varid{outExpAr}\comp \Varid{h})\;{}\<[27]%
+\>[27]{}\Varid{a}\;\mathbf{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{5}{}\<[5]%
 \>[5]{}\Varid{h}\;(\Conid{Bin}\;\Conid{Product}\;(\Conid{N}\;\mathrm{0})\;\Varid{r})\mathrel{=}\Conid{N}\;\mathrm{0}{}\<[E]%
