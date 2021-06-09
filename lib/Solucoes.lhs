@@ -47,11 +47,14 @@
 
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE TupleSections #-}
+{-# LANGUAGE ViewPatterns #-}
+{-# LANGUAGE StandaloneDeriving #-}
 module SolucoesLit where
 
 import           Cp
 import           List                    hiding ( fac )
-import Solucoes (linear1d)
+import Given (linear1d)
+
 \end{code}
 %endif
 
@@ -73,6 +76,7 @@ infixr 4 ⊕
 (⊕) ∷ (a → b) → (c → d) → a ∐ c → b ∐ d
 (⊕) = (-|-)
 
+infixr 9 °
 (°) ∷ (Functor f, Functor g) ⇒ (a → b) → f (g a) → f (g b)
 (°) = fmap . fmap
 \end{code}
@@ -86,6 +90,15 @@ out  = \case
   ([],_)            → Left ()
   (_,[])            → Left ()
   ((a:as), (b:bs))  → Right ((a,b) , (as,bs))
+
+type OutTuple a b = () ∐ ((a × b) × ([a] × [b]))
+
+class Interpretation a b where
+    to ∷ a → b
+
+
+instance Interpretation (a→b) (OutTuple a b) where
+  to = undefined
 
 zip' ∷ [a] × [b] → [a × b]
 zip' = anaList out
@@ -213,13 +226,117 @@ zipWithM'19 ∷ ((a × b) → c → d) → c → ([a] × [b]) → [d]
 zipWithM'19 f e = hyloList (either nil h) out where
     h = cons . (flip f e × id)
 
+
+zipWithM'''19 :: ((a1 × b) -> a2 -> a3) -> a2 -> ([a1] × [b]) -> [a3]
+zipWithM'''19 = rotate2 out . (hyloList . either nil . (cons .)) ° rotate2 id . (×) ° flip
+
+
+rotate1 a b = b a
+rotate2 x y y0 = y y0 x
+
+--outTuple :: [a] -> [b] -> () ∐ ((a × b) × ([a] × [b]))
+outTuple = out ° (,)
+
+loc a b = (a,b)
+
+
+rot :: (t -> p -> a -> b -> d) -> t -> a -> b -> p -> d
+rot a b c d e = a b e c d
+
+hh = rot zipWithM''19
+
+
+zipWithM''19 ∷ (a → b → p → d) → p → [a] → [b] → [d]
+zipWithM''19 f e = hylo ° (,) where
+    hylo = hyloList (either nil h) out
+    h = cons . (flip (uncurry f) e × id)
+
+
+rotate3 f x y z = f y z x
+
+zz1 a b = rotate3 zipWithM'19 (a,b)
 --zipWithM' ∷ (a → b → ((→) m c)) → [a] → [b] → ((→) m [c])
 
 zipWithM' ∷ (a → b → p → d) → [a] → [b] → p → [d]
 zipWithM' f xs ys e = zipWithM'19 (uncurry f) e (xs,ys)
 
+lla :: ((a × b, [c]) -> [c]) -> ([a],[b]) -> [c]
+lla f =  hyloList (either nil f) out
+
+fix :: (a -> a) -> a
+fix f = let x = f x in x
+
+newtype Rec a = In { out1 :: Rec a -> a }
+
+outNat 0 = i1 ()
+outNat (n+1) = i2 n
+asdac f  = In . f
+
+yza :: (a -> a) -> a
+yza f = g1 (In g1) where
+    g1 x = f (out1 x x)
+
+g1 :: (t1 -> t2) -> Rec t1 -> t2
+g1 f x = f (out1 x x)
+
+kk :: (a1 -> b -> t -> a2) -> [a1] -> [b] -> t -> [a2]
+kk g xs ys p = hyloList (either nil g2) out (xs, ys) where
+    g2 = cons . (flip (uncurry g) p >< id)
+
+kk1 :: (a1 -> b -> t -> a2) -> t -> ((a1, b), [a2]) -> [a2]
+kk1 g p x = cons (((\ y -> uncurry g y p) >< id) x)
+
+zipWithM''' :: (a1 -> b -> a2 -> d) -> [a1] -> [b] -> a2 -> [d]
+zipWithM''' = (. (,)) °° flip . zipWithM'19 . uncurry
+
+
+infixl 8 °°
+(°°) :: (((a1 -> b) -> a1 -> c1) -> c2) -> (a2 -> b -> c1) -> a2 -> c2
+f °° g = f . (.) . g
+
+{- zipWithM'19 (uncurry f) e (xs,ys)
+= hyloList (either nil h) out where
+    h = cons . (flip f e × id)
+-}
+
 calcLine' ∷ [ℚ] → [ℚ] → Float → [ℚ]
 calcLine' = zipWithM' linear1d
+
+zipWithM'19PL ∷ ((a × b) → c → d) → c → ([a] × [b]) → [d]
+zipWithM'19PL = flip flip out . ((hyloList . either nil . (cons .)) .) . flip flip id . ((×) .) . flip
+
+zipWithM'PL ∷ (a → b → p → d) → [a] → [b] → p → [d]
+zipWithM'PL = (. (,)) . (.) . flip . flip flip out . ((hyloList . either nil . (cons .)) .) . flip flip id . ((×) .) . flip . uncurry
+
+calcLine'PL = (flip (flip hyloList out . either nil . (cons .) . (>< id) . flip (uncurry linear1d)) .) . (,)
+
+calcLine'UNPL ∷ [ℚ] → [ℚ] → Float → [ℚ]
+calcLine'UNPL as bs e = hyloList (either nil g1) out (as,bs) where
+    g1 = cons . (flip (uncurry linear1d) e × id)
+
+
+data T t where
+    S :: T ((a -> b -> c) -> (a -> b) -> (a -> c))
+    K :: T (a -> b -> a)
+    I :: T (a -> a)
+    C :: T ((a -> b -> c) -> (b -> a -> c))
+    B :: T ((b -> c) -> (a -> b) -> (a -> c))
+    (:$) :: T (a -> b) -> T a -> T b
+
+class Functor2 f g where
+   fmap2 :: f a -> g a
+
+newtype LA f g a = LA (f (g a))
+
+
+data F a = F a | F1 a
+data G a = G a
+
+instance Functor2 F G where
+    fmap2 (F a) = G a
+
+--flip flip (,) . ((:::) .) . flip flip out . ((hyloList . either nil . (cons .)) .) . flip flip id . ((><) .) . flip . uncurry
+calcLine'2 xs ys e = zipWithM'19 (uncurry linear1d) e (xs,ys)
 
 calcLine'1 ∷ [ℚ] → [ℚ] → Float → [ℚ]
 calcLine'1 = curry (zipWithM'18 (uncurry linear1d))
