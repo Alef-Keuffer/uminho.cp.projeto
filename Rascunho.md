@@ -174,8 +174,9 @@ zipWithM f xs ys  =  sequenceA (zipWith f xs ys)
   sequenceA = traverse id
   -- sequenceA = traverse id = sequenceA ⋅ (T id)
   -- sequenceA = sequenceA ⋅ (T id)
-  -- ...
-  -- ...
+  -- sequenceA = sequenceA ⋅ ⦇in ⋅ B(id,id)⦈
+  -- sequenceA = sequenceA ⋅ ⦇in ⋅ id⦈
+  -- sequenceA = sequenceA ⋅ ⦇in⦈
   -- sequenceA a = ⦇[nil, h]⦈ where h (f, fs) = f a : fs
 
 ```
