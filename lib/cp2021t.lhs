@@ -1108,6 +1108,33 @@ ad v = p2 . cataExpAr (ad_gen v)
 }
 \end{equation*}
 \newline\\
+\\
+\\
+\begin{equation*}
+\xymatrix@@C=2cm@@R=3cm{
+    & ExpAr \ A\ar[r]^(0.25){clean} \ar[d]_{|ana (clean)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |ana(clean)|}\\
+    & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr}\ar[d]_{|cata (gopt a)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |cata (gopt a)|}\ar@@/^2pc/[l]^{inExpAr}  \\
+    & |Nat0|  & 1 + |Nat0| + BinOp \times |Nat0|^2 + UnOp \times |Nat0|\ar[l]_(0.6){gopt \ a}
+}
+\end{equation*}
+\newline\\
+\\
+\\
+\begin{equation*}
+\xymatrix@@C=2cm@@R=3cm{
+    & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr}\ar[d]_{|cata (sd_gen)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |cata (sd_gen)|}\ar@@/^2pc/[l]^{inExpAr}  \\
+    & (ExpAr A)^2   & 1 + A + BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2) + UnOp \times (ExpAr A)^2\ar[l]_(0.73){sd\_gen}
+}
+\end{equation*}
+\newline\\
+\\
+\\
+\begin{equation*}
+\xymatrix@@C=2cm@@R=3cm{
+    & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr}\ar[d]_{|cata (ad_gen a)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |cata (ad_gen a)|}\ar@@/^2pc/[l]^{inExpAr}  \\
+    & |Nat0|^2   & 1 + A + BinOp \times (|Nat0|^2 \times |Nat0|^2) + UnOp \times (|Nat0|^2)\ar[l]_(0.73){ad\_gen \ a }
+}
+\end{equation*}
 \newline\\
 
 
@@ -1171,9 +1198,9 @@ ad_gen x (Right (Right (Right (E,(e,d))))) = (expd e, d * (expd e))
 \subsection*{Problema 2}
 Definir
 \begin{code}
-loop = g where g(a,b,c) = (div (a*b) c, b+4, c+1)
+loop = g where g(c,a,b) = (div (c*a) b, a+4, b+1)
 inic = (1,2,2)
-prj = p where p(a,_,_) = a
+prj = p where p(c,_,_) = c
 \end{code}
 por forma a que
 \begin{code}
@@ -1203,6 +1230,27 @@ $\begin{array}{cccc}
 \end{array}$
 
 \subsection*{Problema 3}
+
+\\
+
+\begin{equation*}
+\xymatrix@@C=4cm@@R=2cm{
+    & |Rational|^*\ar@@/^2pc/[r]^{outList}\ar[d]_{|cata (h)|} & 1 + |Rational| \times |Rational|^* \ar[d]^{id + id \times |cata (h)|}\ar@@/^2pc/[l]^{inList}  \\
+    & |Rational|^*   & 1 + |Rational| \times |Rational|^* \ar[l]_{h = |either f g|}
+}
+\end{equation*}
+\\
+\\
+\begin{equation*}
+\xymatrix@@C=2cm@@R=3cm{
+    & |[Rational]|^*\ar[r]^{coalg} \ar[d]_{|ana (coalg)|} & |Rational| + |Rational|^*\ar[d]^{recExpAr \ |ana(coalg)|}\\
+    & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr}\ar[d]_{|cata (alg)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |cata (alg)|}\ar@@/^2pc/[l]^{inExpAr}  \\
+    & |Nat0|  & 1 + |Nat0| + BinOp \times |Nat0|^2 + UnOp \times |Nat0|\ar[l]_(0.6){alg}
+}
+\end{equation*}
+\newline\\
+
+\\
 
 \begin{code}
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
