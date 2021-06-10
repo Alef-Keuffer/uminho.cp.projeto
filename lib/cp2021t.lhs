@@ -129,15 +129,15 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 999 (preencher)
+\textbf{Grupo} nr. & 17 
 \\\hline
-a11111 & Nome1 (preencher)
+a91683 & Alef Pinto Keuffer 
 \\
-a22222 & Nome2 (preencher)
+a93546 & Fernando Maria Bicalho 
 \\
-a33333 & Nome3 (preencher)
+a88062 & Pedro Paulo Costa Pereira
 \\
-a44444 & Nome4 (preencher, se aplicável, ou apagar)
+a91693 & Tiago André Oliveira Leite 
 \end{tabular}
 \end{center}
 
@@ -1328,23 +1328,23 @@ anaC g = inC . fC(anaC g) . g
 \begin{math}
 \\
 
-|split avg lenght| \ = \ |cata (either b q|
+|split avg length| \ = \ |cata (either b q|
 \\
 \just\equiv{ Univeral-cata }
 \newline 
 
-|split avg lenght| \ . \ inL \ = \ |cata (either b q| \ . \ recL |split avg lenght| 
+|split avg length| \ . \ |inL| \ = \ |cata (either b q| \ . \ |recL| |split avg length| 
 \newline
 \end{math}
 \newline
-\just\equiv{ Fusão-+, Absorção-+, Eq-+, definição de inL, definição de recL}
+\just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de |inL|, Definição de |recL|}
 \\
 
 \begin{math}
   \left\{
     \begin{array}{l}
-                |split avg lenght| \ . \ singl = b \ . \ id \\ 
-                |split avg lenght| \ . \ cons = q \ . \ id \times |split avg lenght|
+                |split avg length| \ . \ singl = b \ . \ id \\ 
+                |split avg length| \ . \ cons = q \ . \ id \times |split avg length|
     \end{array}
   \right.
 \end{math}
@@ -1356,21 +1356,21 @@ anaC g = inC . fC(anaC g) . g
 \begin{math}
   \left\{
     \begin{array}{l}
-                (|split avg lenght| \ . \ singl) \ x = b \ x \\ 
-                (|split avg lenght| \ . \ cons) \ (x,xs) = (q \ . \ id \times |split avg lenght|) \ (x,xs)
+                (|split avg length| \ . \ singl) \ x = b \ x \\ 
+                (|split avg length| \ . \ cons) \ (x,xs) = (q \ . \ id \times |split avg length|) \ (x,xs)
     \end{array}
   \right.
 \end{math}
 \newline\\
-\just\equiv{ Def-comp, Natural-id, Def-x, Def-split, definição de singl, definição de cons }
+\just\equiv{ Def-comp, Natural-id, Def-x, Def-split, Definição de singl, Definição de cons }
 \\
 
 
 \begin{math}
   \left\{
     \begin{array}{l}
-                |split avg lenght| \ [x] = b \ x \\ 
-                |split avg lenght| \ (x:xs) = q \ (x, ( avg \ xs, lenght \ xs) 
+                |split avg length| \ [x] = b \ x \\ 
+                |split avg length| \ (x:xs) = q \ (x, ( avg \ xs, length \ xs)) 
     \end{array}
   \right.
 \end{math}
@@ -1403,7 +1403,58 @@ avg_aux = cataL (either b q) where
     & |Nat0|\times \N  & |Nat0| + (|Nat0| \times \N) \times (|Nat0| \times \N) \ar[l]_{gene \ = \ |either b q|}
 }
 \end{equation*}
+
+\begin{math}
+\\
+
+|split avg length| \ = \ |cata (gene)|
+\\
+\just\equiv{ Univeral-cata, gene = |either b q| }
+\newline 
+
+|split avg length| \ . \ |inLTree| \ = \ |cata (either b q)| \ . \ |recLTree| |split avg length| 
+\newline
+\end{math}
+\newline
+\just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de inL, Definição de recLTree}
+\\
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                |split avg length| \ . \ |Leaf| = b \ . \ id \\ 
+                |split avg length| \ . \ |Fork| = q \ . \ |split avg length| \times |split avg length|
+    \end{array}
+  \right.
+\end{math}
 \newline\\
+\just\equiv{ Igualdade extensional, Natural-id }
+\\
+
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                (|split avg length| \ . \ |Leaf|) \ a = b \ a \\ 
+                (|split avg length| \ . \ |Fork|) \ (LTree \ a, LTree \ a) = (q \ . \ |split avg length| \times |split avg length|) \ (LTree \ a, LTree \ a)
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+\just\equiv{ Def-comp, Natural-id, Def-x, Def-split, Definição de Leaf, Definição de Fork }
+\\
+
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                |split avg length| \ |Leaf| \ a = b \ a \\ 
+                |split avg length| \ |Fork| (LTree \ a, LTree \ a) = q \ (( avg \ LTree \ a, length \ LTree \ a), ( avg \ LTree \ a, length \ LTree \ a)) 
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+
 
 
 Solução para árvores de tipo \LTree:

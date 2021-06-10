@@ -306,15 +306,15 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 17 
+\textbf{Grupo} nr. & 999 (preencher)
 \\\hline
-a91683 & Alef Pinto Keuffer 
+a11111 & Nome1 (preencher)
 \\
-a93546 & Fernando Maria Bicalho 
+a22222 & Nome2 (preencher)
 \\
-a88062 & Pedro Paulo Costa Pereira
+a33333 & Nome3 (preencher)
 \\
-a91693 & Tiago André Oliveira Leite 
+a44444 & Nome4 (preencher, se aplicável, ou apagar)
 \end{tabular}
 \end{center}
 
@@ -1991,23 +1991,23 @@ Uma outra solução para o deCasteljau, criando um novo tipo de dados intermedio
 \begin{math}
 \\
 
-\ensuremath{\conj{\Varid{avg}}{\length }} \ = \ \ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}}
+\ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ = \ \ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}}
 \\
 \just\equiv{ Univeral-cata }
 \newline 
 
-\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Varid{inL}} \ = \ \ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}} \ . \ \ensuremath{\Varid{recL}} \ensuremath{\conj{\Varid{avg}}{\length }} 
+\ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ . \ inL \ = \ \ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}} \ . \ recL \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} 
 \newline
 \end{math}
 \newline
-\just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de \ensuremath{\Varid{inL}}, Definição de \ensuremath{\Varid{recL}}}
+\just\equiv{ Fusão-+, Absorção-+, Eq-+, definição de inL, definição de recL}
 \\
 
 \begin{math}
   \left\{
     \begin{array}{l}
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ . \ singl = b \ . \ id \\ 
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ . \ cons = q \ . \ id \times \ensuremath{\conj{\Varid{avg}}{\length }}
+                \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ . \ singl = b \ . \ id \\ 
+                \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ . \ cons = q \ . \ id \times \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}}
     \end{array}
   \right.
 \end{math}
@@ -2019,21 +2019,21 @@ Uma outra solução para o deCasteljau, criando um novo tipo de dados intermedio
 \begin{math}
   \left\{
     \begin{array}{l}
-                (\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ singl) \ x = b \ x \\ 
-                (\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ cons) \ (x,xs) = (q \ . \ id \times \ensuremath{\conj{\Varid{avg}}{\length }}) \ (x,xs)
+                (\ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ . \ singl) \ x = b \ x \\ 
+                (\ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ . \ cons) \ (x,xs) = (q \ . \ id \times \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}}) \ (x,xs)
     \end{array}
   \right.
 \end{math}
 \newline\\
-\just\equiv{ Def-comp, Natural-id, Def-x, Def-split, Definição de singl, Definição de cons }
+\just\equiv{ Def-comp, Natural-id, Def-x, Def-split, definição de singl, definição de cons }
 \\
 
 
 \begin{math}
   \left\{
     \begin{array}{l}
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ [x] = b \ x \\ 
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ (x:xs) = q \ (x, ( avg \ xs, length \ xs)) 
+                \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ [x] = b \ x \\ 
+                \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ (x:xs) = q \ (x, ( avg \ xs, lenght \ xs) 
     \end{array}
   \right.
 \end{math}
@@ -2079,58 +2079,7 @@ Solução para listas não vazias:
     & \ensuremath{\N_0}\times \N  & \ensuremath{\N_0} + (\ensuremath{\N_0} \times \N) \times (\ensuremath{\N_0} \times \N) \ar[l]_{gene \ = \ \ensuremath{\alt{\Varid{b}}{\Varid{q}}}}
 }
 \end{equation*}
-
-\begin{math}
-\\
-
-\ensuremath{\conj{\Varid{avg}}{\length }} \ = \ \ensuremath{\cata{\Varid{gene}}}
-\\
-\just\equiv{ Univeral-cata, gene = \ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
-\newline 
-
-\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Varid{inLTree}} \ = \ \ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}} \ . \ \ensuremath{\Varid{recLTree}} \ensuremath{\conj{\Varid{avg}}{\length }} 
-\newline
-\end{math}
-\newline
-\just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de inL, Definição de recLTree}
-\\
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Conid{Leaf}} = b \ . \ id \\ 
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Conid{Fork}} = q \ . \ \ensuremath{\conj{\Varid{avg}}{\length }} \times \ensuremath{\conj{\Varid{avg}}{\length }}
-    \end{array}
-  \right.
-\end{math}
 \newline\\
-\just\equiv{ Igualdade extensional, Natural-id }
-\\
-
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                (\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Conid{Leaf}}) \ a = b \ a \\ 
-                (\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Conid{Fork}}) \ (LTree \ a, LTree \ a) = (q \ . \ \ensuremath{\conj{\Varid{avg}}{\length }} \times \ensuremath{\conj{\Varid{avg}}{\length }}) \ (LTree \ a, LTree \ a)
-    \end{array}
-  \right.
-\end{math}
-\newline\\
-\just\equiv{ Def-comp, Natural-id, Def-x, Def-split, Definição de Leaf, Definição de Fork }
-\\
-
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ \ensuremath{\Conid{Leaf}} \ a = b \ a \\ 
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ \ensuremath{\Conid{Fork}} (LTree \ a, LTree \ a) = q \ (( avg \ LTree \ a, length \ LTree \ a), ( avg \ LTree \ a, length \ LTree \ a)) 
-    \end{array}
-  \right.
-\end{math}
-\newline\\
-
 
 
 Solução para árvores de tipo \LTree:
