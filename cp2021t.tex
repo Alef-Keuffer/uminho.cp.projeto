@@ -1828,7 +1828,7 @@ $\begin{array}{cccc}
 \\
 \\
 \begin{equation*}
-\xymatrix@C=2cm@R=3cm{
+\xymatrix@C=3cm@R=3cm{
     & [\ensuremath{\Q }^*]\ar[r]^{coalg} \ar[d]_{\ensuremath{\ana{\Varid{coalg}}}} & [\ensuremath{\Q }^*] + [\ensuremath{\Q }^*] \times [\ensuremath{\Q }^*]\ar[d]^{id + \ensuremath{\ana{\Varid{coalg}}} \times \ensuremath{\ana{\Varid{coalg}}}}\\
     & LTree \ [\ensuremath{\Q }^*] \ar@/^2pc/[r]^{outLTree}\ar[d]_{\ensuremath{\cata{\Varid{alg}}}} & [\ensuremath{\Q }^*] + LTree \ [\ensuremath{\Q }^*] \times LTree \ [\ensuremath{\Q }^*] \ar[d]^{id + \ensuremath{\cata{\Varid{alg}}} \times \ensuremath{\cata{\Varid{alg}}} }\ar@/^2pc/[l]^{inLTree}  \\
     & \ensuremath{\Q }^*   & \ensuremath{\Q }^* + \ensuremath{\Q }^* \times \ensuremath{\Q }^* \ar[l]_{alg = \ensuremath{\alt{\Varid{a}}{\Varid{b}}}}
@@ -1980,6 +1980,67 @@ Uma outra solução para o deCasteljau, criando um novo tipo de dados intermedio
 
 \subsection*{Problema 4}
 
+
+\begin{equation*}
+\xymatrix@C=3cm@R=2cm{
+    & \ensuremath{\N_0}^*\ar@/^2pc/[r]^{outL}\ar[d]_{\ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}}} & \ensuremath{\N_0} + \ensuremath{\N_0} \times \ensuremath{\N_0}^* \ar[d]^{id + id \times \ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}}}\ar@/^2pc/[l]^{inL}  \\
+    & \ensuremath{\N_0}\times \N  & \ensuremath{\N_0} + \ensuremath{\N_0}\times (\ensuremath{\N_0} \times \N) \ar[l]_{\ensuremath{\alt{\Varid{b}}{\Varid{q}}}}
+}
+\end{equation*}
+
+\begin{math}
+\\
+
+\ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ = \ \ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}}
+\\
+\just\equiv{ Univeral-cata }
+\newline 
+
+\ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ . \ inL \ = \ \ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}} \ . \ recL \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} 
+\newline
+\end{math}
+\newline
+\just\equiv{ Fusão-+, Absorção-+, Eq-+, definição de inL, definição de recL}
+\\
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ . \ singl = b \ . \ id \\ 
+                \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ . \ cons = q \ . \ id \times \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}}
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+\just\equiv{ Igualdade extensional, Natural-id }
+\\
+
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                (\ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ . \ singl) \ x = b \ x \\ 
+                (\ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ . \ cons) \ (x,xs) = (q \ . \ id \times \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}}) \ (x,xs)
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+\just\equiv{ Def-comp, Natural-id, Def-x, Def-split, definição de singl, definição de cons }
+\\
+
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ [x] = b \ x \\ 
+                \ensuremath{\conj{\Varid{avg}}{\Varid{lenght}}} \ (x:xs) = q \ (x, ( avg \ xs, lenght \ xs) 
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+
+
+
 Solução para listas não vazias:
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1992,23 +2053,35 @@ Solução para listas não vazias:
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{4}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{inL}\mathrel{=}\alt{\Varid{singl}}{\Varid{cons}}{}\<[E]%
+\\
 \>[B]{}\Varid{outL}\;[\mskip1.5mu \Varid{a}\mskip1.5mu]\mathrel{=}i_1\;\Varid{a}{}\<[E]%
 \\
 \>[B]{}\Varid{outL}\;(\Varid{a}\mathbin{:}\Varid{x})\mathrel{=}i_2\;(\Varid{a},\Varid{x}){}\<[E]%
 \\
 \>[B]{}\Varid{recL}\;\Varid{f}\mathrel{=}\Varid{id}+\Varid{id}\times\Varid{f}{}\<[E]%
 \\
-\>[B]{}\cata{\Varid{g}}\mathrel{=}\Varid{g}\comp \Varid{recL}\;\cata{\Varid{g}}\comp \Varid{outL}{}\<[E]%
+\>[B]{}\Varid{cataL}\;\Varid{g}\mathrel{=}\Varid{g}\comp \Varid{recL}\;(\Varid{cataL}\;\Varid{g})\comp \Varid{outL}{}\<[E]%
 \\[\blanklineskip]%
-\>[B]{}\Varid{avg\char95 aux}\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}\;\mathbf{where}{}\<[E]%
+\>[B]{}\Varid{avg\char95 aux}\mathrel{=}\Varid{cataL}\;\alt{\Varid{b}}{\Varid{q}}\;\mathbf{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{b}\;\Varid{a}\mathrel{=}(\Varid{a},\mathrm{1}){}\<[E]%
+\>[4]{}\Varid{b}\;\Varid{x}\mathrel{=}(\Varid{x},\mathrm{1}){}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{q}\;(\Varid{h},(\Varid{a},\Varid{l}))\mathrel{=}((\Varid{h}\mathbin{+}(\Varid{a}\mathbin{*}\Varid{l}))\mathbin{/}(\Varid{l}\mathbin{+}\mathrm{1}),\Varid{l}\mathbin{+}\mathrm{1}){}\<[E]%
+\>[4]{}\Varid{q}\;(\Varid{x},(\Varid{a},\Varid{l}))\mathrel{=}((\Varid{x}\mathbin{+}(\Varid{a}\mathbin{*}\Varid{l}))\mathbin{/}(\Varid{l}\mathbin{+}\mathrm{1}),\Varid{l}\mathbin{+}\mathrm{1}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
+\\
+\begin{equation*}
+\xymatrix@C=3cm@R=2cm{
+    & LTree \ \ensuremath{\N_0}\ar@/^2pc/[r]^{outLTree}\ar[d]_{\ensuremath{\cata{\Varid{gene}}}} & \ensuremath{\N_0} + LTree \ \ensuremath{\N_0} \times LTree \ \ensuremath{\N_0} \ar[d]^{id + \ensuremath{\cata{\Varid{gene}}} \times \ensuremath{\cata{\Varid{gene}}}}\ar@/^2pc/[l]^{inLTree}  \\
+    & \ensuremath{\N_0}\times \N  & \ensuremath{\N_0} + (\ensuremath{\N_0} \times \N) \times (\ensuremath{\N_0} \times \N) \ar[l]_{gene \ = \ \ensuremath{\alt{\Varid{b}}{\Varid{q}}}}
+}
+\end{equation*}
+\newline\\
+
+
 Solução para árvores de tipo \LTree:
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -2018,10 +2091,10 @@ Solução para árvores de tipo \LTree:
 \>[B]{}\Varid{avgLTree}\mathrel{=}\p1\comp \llparenthesis\, \Varid{gene}\,\rrparenthesis\;\mathbf{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{gene}\mathrel{=}\alt{\Varid{g}}{\Varid{q}}\;\mathbf{where}{}\<[E]%
+\>[4]{}\Varid{gene}\mathrel{=}\alt{\Varid{b}}{\Varid{q}}\;\mathbf{where}{}\<[E]%
 \\
 \>[4]{}\hsindent{3}{}\<[7]%
-\>[7]{}\Varid{g}\;\Varid{a}\mathrel{=}(\Varid{a},\mathrm{1}){}\<[E]%
+\>[7]{}\Varid{b}\;\Varid{a}\mathrel{=}(\Varid{a},\mathrm{1}){}\<[E]%
 \\
 \>[4]{}\hsindent{3}{}\<[7]%
 \>[7]{}\Varid{q}\;((\Varid{a1},\Varid{l1}),(\Varid{a2},\Varid{l2}))\mathrel{=}(((\Varid{a1}\mathbin{*}\Varid{l1})\mathbin{+}(\Varid{a2}\mathbin{*}\Varid{l2}))\mathbin{/}(\Varid{l1}\mathbin{+}\Varid{l2}),\Varid{l1}\mathbin{+}\Varid{l2}){}\<[E]%

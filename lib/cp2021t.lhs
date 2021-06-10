@@ -99,7 +99,6 @@
 %format (cataLTree (x)) = "\llparenthesis\, " x "\,\rrparenthesis"
 %format (anaLTree (x)) = "\mathopen{[\!(}" x "\mathclose{)\!]}"
 %format delta = "\Delta "
-%format (cataL (f)) = "\cata{" f "}"
 %format (ana (f)) = "\ana{" f "}"
 
 
@@ -1242,7 +1241,7 @@ $\begin{array}{cccc}
 \\
 \\
 \begin{equation*}
-\xymatrix@@C=4cm@@R=3cm{
+\xymatrix@@C=3cm@@R=3cm{
     & [|Rational|^*]\ar[r]^{coalg} \ar[d]_{|ana (coalg)|} & [|Rational|^*] + [|Rational|^*] \times [|Rational|^*]\ar[d]^{id + |ana(coalg)| \times |ana(coalg)|}\\
     & LTree \ [|Rational|^*] \ar@@/^2pc/[r]^{outLTree}\ar[d]_{|cata (alg)|} & [|Rational|^*] + LTree \ [|Rational|^*] \times LTree \ [|Rational|^*] \ar[d]^{id + |cata (alg)| \times |cata (alg)| }\ar@@/^2pc/[l]^{inLTree}  \\
     & |Rational|^*   & |Rational|^* + |Rational|^* \times |Rational|^* \ar[l]_{alg = |either a b|}
@@ -1318,6 +1317,67 @@ anaC g = inC . fC(anaC g) . g
 
 \subsection*{Problema 4}
 
+
+\begin{equation*}
+\xymatrix@@C=3cm@@R=2cm{
+    & |Nat0|^*\ar@@/^2pc/[r]^{outL}\ar[d]_{|cata (either b q)|} & |Nat0| + |Nat0| \times |Nat0|^* \ar[d]^{id + id \times |cata (either b q)|}\ar@@/^2pc/[l]^{inL}  \\
+    & |Nat0|\times \N  & |Nat0| + |Nat0|\times (|Nat0| \times \N) \ar[l]_{|either b q|}
+}
+\end{equation*}
+
+\begin{math}
+\\
+
+|split avg lenght| \ = \ |cata (either b q|
+\\
+\just\equiv{ Univeral-cata }
+\newline 
+
+|split avg lenght| \ . \ inL \ = \ |cata (either b q| \ . \ recL |split avg lenght| 
+\newline
+\end{math}
+\newline
+\just\equiv{ Fusão-+, Absorção-+, Eq-+, definição de inL, definição de recL}
+\\
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                |split avg lenght| \ . \ singl = b \ . \ id \\ 
+                |split avg lenght| \ . \ cons = q \ . \ id \times |split avg lenght|
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+\just\equiv{ Igualdade extensional, Natural-id }
+\\
+
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                (|split avg lenght| \ . \ singl) \ x = b \ x \\ 
+                (|split avg lenght| \ . \ cons) \ (x,xs) = (q \ . \ id \times |split avg lenght|) \ (x,xs)
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+\just\equiv{ Def-comp, Natural-id, Def-x, Def-split, definição de singl, definição de cons }
+\\
+
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+                |split avg lenght| \ [x] = b \ x \\ 
+                |split avg lenght| \ (x:xs) = q \ (x, ( avg \ xs, lenght \ xs) 
+    \end{array}
+  \right.
+\end{math}
+\newline\\
+
+
+
 Solução para listas não vazias:
 \begin{code}
 avg = p1.avg_aux
@@ -1325,21 +1385,32 @@ avg = p1.avg_aux
 
 \begin{code}
 
+inL = either singl cons
 outL [a] = i1 a
 outL (a:x) = i2 (a,x)
 recL f = id -|- id >< f 
 cataL g = g . recL (cataL g) . outL 
 
 avg_aux = cataL (either b q) where
-   b a = (a,1)
-   q (h,(a,l)) = ((h + (a*l)) / (l+1) ,l+1)
+   b x = (x,1)
+   q (x,(a,l)) = ((x + (a*l)) / (l+1) ,l+1)
 
 \end{code}
+\\
+\begin{equation*}
+\xymatrix@@C=3cm@@R=2cm{
+    & LTree \ |Nat0|\ar@@/^2pc/[r]^{outLTree}\ar[d]_{|cata (gene)|} & |Nat0| + LTree \ |Nat0| \times LTree \ |Nat0| \ar[d]^{id + |cata (gene)| \times |cata (gene)|}\ar@@/^2pc/[l]^{inLTree}  \\
+    & |Nat0|\times \N  & |Nat0| + (|Nat0| \times \N) \times (|Nat0| \times \N) \ar[l]_{gene \ = \ |either b q|}
+}
+\end{equation*}
+\newline\\
+
+
 Solução para árvores de tipo \LTree:
 \begin{code}
 avgLTree = p1.cataLTree gene where
-   gene = either g q where
-      g a = (a,1)
+   gene = either b q where
+      b a = (a,1)
       q((a1,l1),(a2,l2)) = (((a1*l1)+(a2*l2))/(l1+l2),l1+l2)
 \end{code}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.6)  10 JUN 2021 16:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.6)  10 JUN 2021 18:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1522,21 +1522,304 @@ l.1840
 \openout5 = `cp2021t.ptb'.
 
  [17]
-\openout5 = `cp2021t.ptb'.
+
+! LaTeX Error: Environment equation* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1984 \begin{equation*}
+                        
+? 
+<xymatrix 3x2 245>
+
+! LaTeX Error: \begin{document} ended by \end{equation*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1989 \end{equation*}
+                      
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1993 
+       
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1991--1993
+
+ []
+
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.1996 \just\equiv{ Univeral-cata }
+                                   
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1996 \just\equiv{ Univeral-cata }
+                                   
+? 
+! Misplaced alignment tab character &.
+\just #1#2->\\ &#1&
+                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
+l.1996 \just\equiv{ Univeral-cata }
+                                   
+? 
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.1996 \just\equiv{ Univeral-cata }
+                                   
+? 
+! Misplaced alignment tab character &.
+\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
+                                                   
+l.1996 \just\equiv{ Univeral-cata }
+                                   
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1998 
+       
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1994--1998
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1994--1998
+
+ []
+
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2001 \end{math}
+                 
+? 
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.2003 ...definição de inL, definição de recL}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.2003 ...definição de inL, definição de recL}
+                                                  
+? 
+! Misplaced alignment tab character &.
+\just #1#2->\\ &#1&
+                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
+l.2003 ...definição de inL, definição de recL}
+                                                  
+? 
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.2003 ...definição de inL, definição de recL}
+                                                  
+? 
+! Misplaced alignment tab character &.
+\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
+                                                   
+l.2003 ...definição de inL, definição de recL}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.2005 
+       
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1999--2005
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1999--2005
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1999--2005
+
+ []
+
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.2015 ...uiv{ Igualdade extensional, Natural-id }
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.2015 ...uiv{ Igualdade extensional, Natural-id }
+                                                  
+? 
+! Misplaced alignment tab character &.
+\just #1#2->\\ &#1&
+                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
+l.2015 ...uiv{ Igualdade extensional, Natural-id }
+                                                  
+? 
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.2015 ...uiv{ Igualdade extensional, Natural-id }
+                                                  
+? 
+! Misplaced alignment tab character &.
+\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
+                                                   
+l.2015 ...uiv{ Igualdade extensional, Natural-id }
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.2017 
+       
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 2006--2017
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2006--2017
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2006--2017
+
+ []
+
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.2028 ...inição de singl, definição de cons }
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.2028 ...inição de singl, definição de cons }
+                                                  
+? 
+! Misplaced alignment tab character &.
+\just #1#2->\\ &#1&
+                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
+l.2028 ...inição de singl, definição de cons }
+                                                  
+? 
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.2028 ...inição de singl, definição de cons }
+                                                  
+? 
+! Misplaced alignment tab character &.
+\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
+                                                   
+l.2028 ...inição de singl, definição de cons }
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.2030 
+       
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 2019--2030
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2019--2030
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2019--2030
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2032--2041
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2032--2041
+
+ []
 
 \openout5 = `cp2021t.ptb'.
 
+\openout5 = `cp2021t.ptb'.
+
+
+! LaTeX Error: Environment equation* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2076 \begin{equation*}
+                        
+? 
+<xymatrix 3x2 245>
+
+! LaTeX Error: \begin{document} ended by \end{equation*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2081 \end{equation*}
+                      
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 2074--2083
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2074--2083
+
+ []
+
+[18]
 \openout5 = `cp2021t.ptb'.
 
 
 No file cp2021t.ind.
 No file cp2021t.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2050.
-[18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2050.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2123.
+[19]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2123.
  (./cp2021t.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2050.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2050.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2123.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2123.
 
 Package rerunfilecheck Info: File `cp2021t.out' has not changed.
 (rerunfilecheck)             Checksum: 7ABFEEFBC6EDEE4EAEC2BDEF142178CE;514.
@@ -1547,16 +1830,16 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2050.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2123.
  ) 
 Here is how much of TeX's memory you used:
- 13380 strings out of 483107
- 194259 string characters out of 5964631
+ 13381 strings out of 483107
+ 194266 string characters out of 5964631
  532871 words of memory out of 5000000
  27990 multiletter control sequences out of 15000+600000
  567979 words of font info for 125 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 48i,18n,77p,3294b,743s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,18n,77p,3294b,769s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
@@ -1583,10 +1866,10 @@ exmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/xypic/xyatip10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/xypi
 c/xybtip10.pfb>
-Output written on cp2021t.pdf (18 pages, 353632 bytes).
+Output written on cp2021t.pdf (19 pages, 356793 bytes).
 PDF statistics:
- 374 PDF objects out of 1000 (max. 8388607)
- 321 compressed objects within 4 object streams
- 76 named destinations out of 1000 (max. 500000)
+ 379 PDF objects out of 1000 (max. 8388607)
+ 325 compressed objects within 4 object streams
+ 77 named destinations out of 1000 (max. 500000)
  70 words of extra memory for PDF output out of 10000 (max. 10000000)
 
