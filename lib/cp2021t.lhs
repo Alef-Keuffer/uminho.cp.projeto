@@ -1233,9 +1233,9 @@ $\begin{array}{cccc}
 \\
 
 \begin{equation*}
-\xymatrix@@C=4cm@@R=2cm{
+\xymatrix@@C=3cm@@R=2cm{
     & |Rational|^*\ar@@/^2pc/[r]^{outList}\ar[d]_{|cata (h)|} & 1 + |Rational| \times |Rational|^* \ar[d]^{id + id \times |cata (h)|}\ar@@/^2pc/[l]^{inList}  \\
-    & |Rational|^*   & 1 + |Rational| \times |Rational|^* \ar[l]_{h = |either f g|}
+    & |OverTime| \ |Rational|^*   & 1 + |Rational| \times |OverTime| \ |Rational|^* \ar[l]_{h = |either f g|}
 }
 \end{equation*}
 \\
@@ -1244,7 +1244,7 @@ $\begin{array}{cccc}
 \xymatrix@@C=3cm@@R=3cm{
     & [|Rational|^*]\ar[r]^{coalg} \ar[d]_{|ana (coalg)|} & [|Rational|^*] + [|Rational|^*] \times [|Rational|^*]\ar[d]^{id + |ana(coalg)| \times |ana(coalg)|}\\
     & LTree \ [|Rational|^*] \ar@@/^2pc/[r]^{outLTree}\ar[d]_{|cata (alg)|} & [|Rational|^*] + LTree \ [|Rational|^*] \times LTree \ [|Rational|^*] \ar[d]^{id + |cata (alg)| \times |cata (alg)| }\ar@@/^2pc/[l]^{inLTree}  \\
-    & |Rational|^*   & |Rational|^* + |Rational|^* \times |Rational|^* \ar[l]_{alg = |either a b|}
+    & |OverTime| \ |Rational|^*   & |Rational|^* + |OverTime| \ |Rational|^* \times |OverTime| \ |Rational|^* \ar[l]_(0.6){alg \ = \ |either a b|}
 }
 \end{equation*}
 \newline\\
