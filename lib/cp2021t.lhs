@@ -1242,7 +1242,7 @@ $\begin{array}{cccc}
 \\
 \\
 \begin{equation*}
-\xymatrix@@C=2cm@@R=3cm{
+\xymatrix@@C=4cm@@R=3cm{
     & [|Rational|^*]\ar[r]^{coalg} \ar[d]_{|ana (coalg)|} & [|Rational|^*] + [|Rational|^*] \times [|Rational|^*]\ar[d]^{id + |ana(coalg)| \times |ana(coalg)|}\\
     & LTree \ [|Rational|^*] \ar@@/^2pc/[r]^{outLTree}\ar[d]_{|cata (alg)|} & [|Rational|^*] + LTree \ [|Rational|^*] \times LTree \ [|Rational|^*] \ar[d]^{id + |cata (alg)| \times |cata (alg)| }\ar@@/^2pc/[l]^{inLTree}  \\
     & |Rational|^*   & |Rational|^* + |Rational|^* \times |Rational|^* \ar[l]_{alg = |either a b|}
