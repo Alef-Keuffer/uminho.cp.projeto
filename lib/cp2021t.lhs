@@ -1243,9 +1243,9 @@ $\begin{array}{cccc}
 \\
 \begin{equation*}
 \xymatrix@@C=2cm@@R=3cm{
-    & |[Rational]|^*\ar[r]^{coalg} \ar[d]_{|ana (coalg)|} & |Rational| + |Rational|^*\ar[d]^{recExpAr \ |ana(coalg)|}\\
-    & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr}\ar[d]_{|cata (alg)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |cata (alg)|}\ar@@/^2pc/[l]^{inExpAr}  \\
-    & |Nat0|  & 1 + |Nat0| + BinOp \times |Nat0|^2 + UnOp \times |Nat0|\ar[l]_(0.6){alg}
+    & [|Rational|^*]\ar[r]^{coalg} \ar[d]_{|ana (coalg)|} & [|Rational|^*] + [|Rational|^*] \times [|Rational|^*]\ar[d]^{id + |ana(coalg)| \times |ana(coalg)|}\\
+    & LTree \ [|Rational|^*] \ar@@/^2pc/[r]^{outLTree}\ar[d]_{|cata (alg)|} & [|Rational|^*] + LTree \ [|Rational|^*] \times LTree \ [|Rational|^*] \ar[d]^{id + |cata (alg)| \times |cata (alg)| }\ar@@/^2pc/[l]^{inLTree}  \\
+    & |Rational|^*   & |Rational|^* + |Rational|^* \times |Rational|^* \ar[l]_{alg = |either a b|}
 }
 \end{equation*}
 \newline\\
@@ -1278,7 +1278,7 @@ hyloAlgForm = hyloLTree
 
 \end{code}
 
-Uma outra solução para o deCasteljau, criando uma novo tipo de dados.
+Uma outra solução para o deCasteljau, criando um novo tipo de dados intermedio.
 
 \begin{code}                        
 deCasteljau' :: [NPoint] -> OverTime NPoint

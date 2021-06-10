@@ -1642,6 +1642,33 @@ São dadas:
 }
 \end{equation*}
 \newline\\
+\\
+\\
+\begin{equation*}
+\xymatrix@C=2cm@R=3cm{
+    & ExpAr \ A\ar[r]^(0.25){clean} \ar[d]_{\ensuremath{\ana{\Varid{clean}}}} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ \ensuremath{\ana{\Varid{clean}}}}\\
+    & ExpAr \ A\ar@/^2pc/[r]^{outExpAr}\ar[d]_{\ensuremath{\cata{\Varid{gopt}\;\Varid{a}}}} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ \ensuremath{\cata{\Varid{gopt}\;\Varid{a}}}}\ar@/^2pc/[l]^{inExpAr}  \\
+    & \ensuremath{\N_0}  & 1 + \ensuremath{\N_0} + BinOp \times \ensuremath{\N_0}^2 + UnOp \times \ensuremath{\N_0}\ar[l]_(0.6){gopt \ a}
+}
+\end{equation*}
+\newline\\
+\\
+\\
+\begin{equation*}
+\xymatrix@C=2cm@R=3cm{
+    & ExpAr \ A\ar@/^2pc/[r]^{outExpAr}\ar[d]_{\ensuremath{\cata{\Varid{sd\char95 gen}}}} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ \ensuremath{\cata{\Varid{sd\char95 gen}}}}\ar@/^2pc/[l]^{inExpAr}  \\
+    & (ExpAr A)^2   & 1 + A + BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2) + UnOp \times (ExpAr A)^2\ar[l]_(0.73){sd\_gen}
+}
+\end{equation*}
+\newline\\
+\\
+\\
+\begin{equation*}
+\xymatrix@C=2cm@R=3cm{
+    & ExpAr \ A\ar@/^2pc/[r]^{outExpAr}\ar[d]_{\ensuremath{\cata{\Varid{ad\char95 gen}\;\Varid{a}}}} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ \ensuremath{\cata{\Varid{ad\char95 gen}\;\Varid{a}}}}\ar@/^2pc/[l]^{inExpAr}  \\
+    & \ensuremath{\N_0}^2   & 1 + A + BinOp \times (\ensuremath{\N_0}^2 \times \ensuremath{\N_0}^2) + UnOp \times (\ensuremath{\N_0}^2)\ar[l]_(0.73){ad\_gen \ a }
+}
+\end{equation*}
 \newline\\
 
 
@@ -1751,11 +1778,11 @@ Definir
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{loop}\mathrel{=}\Varid{g}\;\mathbf{where}\;\Varid{g}\;(\Varid{a},\Varid{b},\Varid{c})\mathrel{=}(\Varid{a}\mathbin{*}\Varid{b}\div \Varid{c},\Varid{b}\mathbin{+}\mathrm{4},\Varid{c}\mathbin{+}\mathrm{1}){}\<[E]%
+\>[B]{}\Varid{loop}\mathrel{=}\Varid{g}\;\mathbf{where}\;\Varid{g}\;(\Varid{c},\Varid{a},\Varid{b})\mathrel{=}(\Varid{c}\mathbin{*}\Varid{a}\div \Varid{b},\Varid{a}\mathbin{+}\mathrm{4},\Varid{b}\mathbin{+}\mathrm{1}){}\<[E]%
 \\
 \>[B]{}\Varid{inic}\mathrel{=}(\mathrm{1},\mathrm{2},\mathrm{2}){}\<[E]%
 \\
-\>[B]{}\Varid{prj}\mathrel{=}\Varid{p}\;\mathbf{where}\;\Varid{p}\;(\Varid{a},\anonymous ,\anonymous )\mathrel{=}\Varid{a}{}\<[E]%
+\>[B]{}\Varid{prj}\mathrel{=}\Varid{p}\;\mathbf{where}\;\Varid{p}\;(\Varid{c},\anonymous ,\anonymous )\mathrel{=}\Varid{c}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 por forma a que
@@ -1789,6 +1816,27 @@ $\begin{array}{cccc}
 \end{array}$
 
 \subsection*{Problema 3}
+
+\\
+
+\begin{equation*}
+\xymatrix@C=4cm@R=2cm{
+    & \ensuremath{\Q }^*\ar@/^2pc/[r]^{outList}\ar[d]_{\ensuremath{\cata{\Varid{h}}}} & 1 + \ensuremath{\Q } \times \ensuremath{\Q }^* \ar[d]^{id + id \times \ensuremath{\cata{\Varid{h}}}}\ar@/^2pc/[l]^{inList}  \\
+    & \ensuremath{\Q }^*   & 1 + \ensuremath{\Q } \times \ensuremath{\Q }^* \ar[l]_{h = \ensuremath{\alt{\Varid{f}}{\Varid{g}}}}
+}
+\end{equation*}
+\\
+\\
+\begin{equation*}
+\xymatrix@C=2cm@R=3cm{
+    & [\ensuremath{\Q }^*]\ar[r]^{coalg} \ar[d]_{\ensuremath{\ana{\Varid{coalg}}}} & [\ensuremath{\Q }^*] + [\ensuremath{\Q }^*] \times [\ensuremath{\Q }^*]\ar[d]^{id + \ensuremath{\ana{\Varid{coalg}}} \times \ensuremath{\ana{\Varid{coalg}}}}\\
+    & LTree \ [\ensuremath{\Q }^*] \ar@/^2pc/[r]^{outLTree}\ar[d]_{\ensuremath{\cata{\Varid{alg}}}} & [\ensuremath{\Q }^*] + LTree \ [\ensuremath{\Q }^*] \times LTree \ [\ensuremath{\Q }^*] \ar[d]^{id + \ensuremath{\cata{\Varid{alg}}} \times \ensuremath{\cata{\Varid{alg}}} }\ar@/^2pc/[l]^{inLTree}  \\
+    & \ensuremath{\Q }^*   & \ensuremath{\Q }^* + \ensuremath{\Q }^* \times \ensuremath{\Q }^* \ar[l]_{alg = \ensuremath{\alt{\Varid{a}}{\Varid{b}}}}
+}
+\end{equation*}
+\newline\\
+
+\\
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1863,7 +1911,7 @@ $\begin{array}{cccc}
 \ColumnHook
 \end{hscode}\resethooks
 
-Uma outra solução para o deCasteljau, criando uma novo tipo de dados.
+Uma outra solução para o deCasteljau, criando um novo tipo de dados intermedio.
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
