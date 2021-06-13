@@ -37,11 +37,13 @@ library
   exposed-modules:
     BTree
     Cp
+    Given
+    HaddockTeste
     List
     LTree
+    Mixed
     Nat
     Solucoes
-    HaddockTeste
 
   other-extensions:
   build-depends:
