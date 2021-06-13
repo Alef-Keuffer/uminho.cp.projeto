@@ -306,15 +306,15 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 17 
+\textbf{Grupo} nr. & 17
 \\\hline
-a91683 & Alef Pinto Keuffer 
+a91683 & Alef Pinto Keuffer
 \\
-a93546 & Fernando Maria Bicalho 
+a93546 & Fernando Maria Bicalho
 \\
 a88062 & Pedro Paulo Costa Pereira
 \\
-a91693 & Tiago André Oliveira Leite 
+a91693 & Tiago André Oliveira Leite
 \end{tabular}
 \end{center}
 
@@ -1556,52 +1556,24 @@ São dadas:
 \end{hscode}\resethooks
 
 \\
-
-\begin{math}
-\ensuremath{\Varid{outExpAr}} \ . \ \ensuremath{\Varid{inExpAr}} = \ensuremath{\Varid{id}}
-\\
-\just\equiv{ Definição de inExpAr, Fusão-+,  Cancelamento-+ }
-\\
-
-  \left\{
-    \begin{array}{l}
-                outExpAr\ .\ \ensuremath{\underline{\Conid{X}}} = id\ .\ \ensuremath{i_1}\\ 
-                outExpAr\ .\ N  = id\ .\ \ensuremath{i_2} \ . \ \ensuremath{i_1} \\ 
-                outExpAr\ .\ bin  = id\ . \ \ensuremath{i_2} \ . \ \ensuremath{i_2} \ . \ \ensuremath{i_1}\\
-                outExpAr\ .\ \ensuremath{\uncurry{\Conid{Un}}} = id\ .\ \ensuremath{i_2}\ .\ \ensuremath{i_2}\ .\ \ensuremath{i_2}
-    \end{array}
-  \right.
-\end{math}
-\newline\\
+\begin{eqnarray*}
+\start
+\ensuremath{\Varid{outExpAr}\comp \Varid{inExpAr}\mathrel{=}\Varid{id}}
+%
+\just\equiv{Definição de inExpAr, Fusão-+,  Cancelamento-+}
+%
+\ensuremath{\begin{lcbr}\Varid{outExpAr}\comp \underline{\Conid{X}}\mathrel{=}\Varid{id}\comp i_1\\\begin{lcbr}\Varid{outExpAr}\comp \Conid{N}\mathrel{=}\Varid{id}\comp i_2\comp i_1\\\begin{lcbr}\Varid{outExpAr}\comp \Varid{bin}\mathrel{=}\Varid{id}\comp i_2\comp i_2\comp i_1\\\Varid{outExpAr}\comp \uncurry{\Conid{Un}}\mathrel{=}\Varid{id}\comp i_2\comp i_2\comp i_2\end{lcbr}\end{lcbr}\end{lcbr}}
+%
 \just\equiv{ Igualdade extensional, Natural-id }
-\\
+%
+\ensuremath{\begin{lcbr}(\Varid{outExpAr}\comp \underline{\Conid{X}})\;()\mathrel{=}i_1\;()\\\begin{lcbr}(\Varid{outExpAr}\comp \Conid{N})\;\Varid{a}\mathrel{=}(i_2\comp i_1)\;\Varid{a}\\\begin{lcbr}(\Varid{outExpAr}\comp \Varid{bin})\;(\Varid{op},(\Varid{l},\Varid{r}))\mathrel{=}(i_2\comp i_2\comp i_1)\;(\Varid{op},(\Varid{l},\Varid{r}))\\(\Varid{outExpAr}\comp \uncurry{\Conid{Un}})\;(\Varid{op},\Varid{a})\mathrel{=}(i_2\comp i_2\comp i_2)\;(\Varid{op},\Varid{a})\end{lcbr}\end{lcbr}\end{lcbr}}
+%
+\just\equiv{ Def-comp, Def-const, Def-\ensuremath{\Conid{N}}, Def-\ensuremath{\Varid{bin}}, Def-Uncurry, Def-\ensuremath{\Conid{Un}} }
+%
+\ensuremath{\begin{lcbr}\Varid{outExpAr}\;\Conid{X}\mathrel{=}i_1\;()\\\begin{lcbr}\Varid{outExpAr}\;(\Conid{N}\;\Varid{a})\mathrel{=}i_2\mathbin{\$}i_1\;\Varid{a}\\\begin{lcbr}\Varid{outExpAr}\;(\Conid{Bin}\;\Varid{op}\;\Varid{l}\;\Varid{r})\mathrel{=}i_2\mathbin{\$}i_2\mathbin{\$}i_1\;(\Varid{op},(\Varid{l},\Varid{r}))\\\Varid{outExpAr}\;(\Conid{Un}\;\Varid{op}\;\Varid{a})\mathrel{=}i_2\mathbin{\$}i_2\mathbin{\$}i_2\;(\Varid{op},\Varid{a})\end{lcbr}\end{lcbr}\end{lcbr}}
+\qed
+\end{eqnarray*}
 
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                (outExpAr\ . \ \ensuremath{\underline{\Conid{X}}})\ () = \ensuremath{i_1}\ ()\\ 
-                (outExpAr\ .\ N) \ a  =  (\ensuremath{i_2} \ . \ \ensuremath{i_1}) \ a \\ 
-                (outExpAr\ .\ bin) \  (op,(l,r))  = (\ensuremath{i_2} \ . \ \ensuremath{i_2} \ . \ \ensuremath{i_1})\ (op,(l,r)) \\
-                (outExpAr\  .\ \ensuremath{\uncurry{\Conid{Un}}}) \ (op,a) = (\ensuremath{i_2}\ . \ \ensuremath{i_2} \ . \ \ensuremath{i_2}) \ (op,a)
-    \end{array}
-  \right.
-\end{math}
-\newline\\
-\just\equiv{ Def-comp , Def-const, Definição de N, Definição de bin, Uncurry, Definição de Un }
-\\
-
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                outExpAr \ X  =  \ensuremath{i_1} \ ()\\ 
-                outExpAr \ (N \ a) = \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{i_1} \ a \\ 
-                outExpAr\ (Bin \ op \ l \  r)  = \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{i_1}\ (op,(l,r)) \\
-                outExpAr \ (Un \ op \ a) = \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{i_2} \ \ensuremath{\mathbin{\$}} \ \ensuremath{i_2} \  (op,a)
-    \end{array}
-  \right.
-\end{math}
-\newline\\
 \\
 \begin{equation*}
 \xymatrix@C=2cm{
@@ -1611,20 +1583,16 @@ São dadas:
 \newline\\
 \end{equation*}
 
-
-\\ 
-
-
-
-\begin{math}
-\ensuremath{\Varid{recExprAr}\;\Varid{f}} =   \ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\mathbin{+}(\Varid{id}\times(\Varid{f}\times\Varid{f})\mathbin{+}\Varid{id}\times\Varid{f}))}
 \\
-\just\equiv{ Definição de baseExpAr }
-
-\ensuremath{\Varid{recExprAr}} \ \ensuremath{\Varid{f}} = \ensuremath{\Varid{baseExpAr}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{f}} \ \ensuremath{\Varid{f}} \ \ensuremath{\Varid{id}} \ \ensuremath{\Varid{f}}
-\newline\\
-\end{math}
-\newline\\
+\begin{eqnarray*}
+\start
+\ensuremath{\Varid{recExprAr}\;\Varid{f}\mathrel{=}\Varid{id}\mathbin{+}(\Varid{id}\mathbin{+}(\Varid{id}\times(\Varid{f}\times\Varid{f})\mathbin{+}\Varid{id}\times\Varid{f}))}
+%
+\just\equiv{ Def-baseExpAr }
+%
+\ensuremath{\Varid{recExprAr}\;\Varid{f}\mathrel{=}\Varid{baseExpAr}\;\Varid{id}\;\Varid{id}\;\Varid{id}\;\Varid{f}\;\Varid{f}\;\Varid{id}\;\Varid{f}}
+\qed
+\end{eqnarray*}
 \\
 \begin{equation*}
 \xymatrix@C=2cm@R=3cm{
@@ -1988,58 +1956,29 @@ Uma outra solução para o deCasteljau, criando um novo tipo de dados intermedio
 }
 \end{equation*}
 
-\begin{math}
-\\
-
-\ensuremath{\conj{\Varid{avg}}{\length }} \ = \ \ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}}
-\\
+\begin{eqnarray*}
+\start
+\ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}}
+%
 \just\equiv{ Univeral-cata }
-\newline 
-
-\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Varid{inL}} \ = \ \ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}} \ . \ \ensuremath{\Varid{recL}} \ensuremath{\conj{\Varid{avg}}{\length }} 
-\newline
-\end{math}
-\newline
+%
+\ensuremath{\conj{\Varid{avg}}{\length }\comp \Varid{inL}\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}\comp \Varid{recL}\;\conj{\Varid{avg}}{\length }}
+%
 \just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de \ensuremath{\Varid{inL}}, Definição de \ensuremath{\Varid{recL}}}
-\\
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ . \ singl = b \ . \ id \\ 
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ . \ cons = q \ . \ id \times \ensuremath{\conj{\Varid{avg}}{\length }}
-    \end{array}
-  \right.
-\end{math}
-\newline\\
+%
+\ensuremath{\begin{lcbr}\conj{\Varid{avg}}{\length }\comp \Varid{singl}\mathrel{=}\Varid{b}\comp \Varid{id}\\\conj{\Varid{avg}}{\length }\comp \Varid{cons}\mathrel{=}\Varid{q}\comp \Varid{id}\times\conj{\Varid{avg}}{\length }\end{lcbr}}
+%
 \just\equiv{ Igualdade extensional, Natural-id }
-\\
-
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                (\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ singl) \ x = b \ x \\ 
-                (\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ cons) \ (x,xs) = (q \ . \ id \times \ensuremath{\conj{\Varid{avg}}{\length }}) \ (x,xs)
-    \end{array}
-  \right.
-\end{math}
-\newline\\
+%
+\ensuremath{\begin{lcbr}(\conj{\Varid{avg}}{\length }\comp \Varid{singl})\;\Varid{x}\mathrel{=}\Varid{b}\;\Varid{x}\\(\conj{\Varid{avg}}{\length }\comp \Varid{cons})\;(\Varid{x},\Varid{xs})\mathrel{=}(\Varid{q}\comp \Varid{id}\times\conj{\Varid{avg}}{\length })\;(\Varid{x},\Varid{xs})\end{lcbr}}
+%
 \just\equiv{ Def-comp, Natural-id, Def-x, Def-split, Definição de singl, Definição de cons }
-\\
+%
+\ensuremath{\begin{lcbr}\conj{\Varid{avg}}{\length }\;[\mskip1.5mu \Varid{x}\mskip1.5mu]\mathrel{=}\Varid{b}\;\Varid{x}\\\conj{\Varid{avg}}{\length }\;(\Varid{x}\mathbin{:}\Varid{xs})\mathrel{=}\Varid{q}\;(\Varid{x},(\Varid{avg}\;\Varid{xs},\length \;\Varid{xs}))\end{lcbr}}
+\qed
+\end{eqnarray*}
 
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ [x] = b \ x \\ 
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ (x:xs) = q \ (x, ( avg \ xs, length \ xs)) 
-    \end{array}
-  \right.
-\end{math}
 \newline\\
-
-
 
 Solução para listas não vazias:
 \begin{hscode}\SaveRestoreHook
@@ -2080,57 +2019,28 @@ Solução para listas não vazias:
 }
 \end{equation*}
 
-\begin{math}
-\\
 
-\ensuremath{\conj{\Varid{avg}}{\length }} \ = \ \ensuremath{\cata{\Varid{gene}}}
-\\
+\begin{math}
+\start
+\ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\Varid{gene}}}
+%
 \just\equiv{ Univeral-cata, gene = \ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
-\newline 
-
-\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Varid{inLTree}} \ = \ \ensuremath{\cata{\alt{\Varid{b}}{\Varid{q}}}} \ . \ \ensuremath{\Varid{recLTree}} \ensuremath{\conj{\Varid{avg}}{\length }} 
-\newline
-\end{math}
-\newline
+%
+\ensuremath{\conj{\Varid{avg}}{\length }\comp \Varid{inLTree}\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}\comp \Varid{recLTree}\;\conj{\Varid{avg}}{\length }}
+%
 \just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de inL, Definição de recLTree}
-\\
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Conid{Leaf}} = b \ . \ id \\ 
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Conid{Fork}} = q \ . \ \ensuremath{\conj{\Varid{avg}}{\length }} \times \ensuremath{\conj{\Varid{avg}}{\length }}
-    \end{array}
-  \right.
-\end{math}
-\newline\\
+%
+\ensuremath{\begin{lcbr}\conj{\Varid{avg}}{\length }\comp \Conid{Leaf}\mathrel{=}\Varid{b}\comp \Varid{id}\\\conj{\Varid{avg}}{\length }\comp \Conid{Fork}\mathrel{=}\Varid{q}\comp \conj{\Varid{avg}}{\length }\times\conj{\Varid{avg}}{\length }\end{lcbr}}
+%
 \just\equiv{ Igualdade extensional, Natural-id }
-\\
-
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                (\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Conid{Leaf}}) \ a = b \ a \\ 
-                (\ensuremath{\conj{\Varid{avg}}{\length }} \ . \ \ensuremath{\Conid{Fork}}) \ (LTree \ a, LTree \ a) = (q \ . \ \ensuremath{\conj{\Varid{avg}}{\length }} \times \ensuremath{\conj{\Varid{avg}}{\length }}) \ (LTree \ a, LTree \ a)
-    \end{array}
-  \right.
-\end{math}
-\newline\\
+%
+\ensuremath{\begin{lcbr}(\conj{\Varid{avg}}{\length }\comp \Conid{Leaf})\;\Varid{a}\mathrel{=}\Varid{b}\;\Varid{a}\\(\conj{\Varid{avg}}{\length }\comp \Conid{Fork})\;(\mathsf{LTree}\;\Varid{a},\mathsf{LTree}\;\Varid{a})\mathrel{=}(\Varid{q}\comp \conj{\Varid{avg}}{\length }\times\conj{\Varid{avg}}{\length })\;(\mathsf{LTree}\;\Varid{a},\mathsf{LTree}\;\Varid{a})\end{lcbr}}
+%
 \just\equiv{ Def-comp, Natural-id, Def-x, Def-split, Definição de Leaf, Definição de Fork }
-\\
-
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ \ensuremath{\Conid{Leaf}} \ a = b \ a \\ 
-                \ensuremath{\conj{\Varid{avg}}{\length }} \ \ensuremath{\Conid{Fork}} (LTree \ a, LTree \ a) = q \ (( avg \ LTree \ a, length \ LTree \ a), ( avg \ LTree \ a, length \ LTree \ a)) 
-    \end{array}
-  \right.
+%
+\ensuremath{\begin{lcbr}\conj{\Varid{avg}}{\length }\;(\Conid{Leaf}\;\Varid{a})\mathrel{=}\Varid{b}\;\Varid{a}\\\conj{\Varid{avg}}{\length }\;(\Conid{Fork}\;(\mathsf{LTree}\;\Varid{a},\mathsf{LTree}\;\Varid{a}))\mathrel{=}\Varid{q}\;((\Varid{avg}\;(\mathsf{LTree}\;\Varid{a}),\length \;(\mathsf{LTree}\;\Varid{a})),(\Varid{avg}\;(\mathsf{LTree}\;\Varid{a}),\length \;(\mathsf{LTree}\;\Varid{a})))\end{lcbr}}
+\qed
 \end{math}
-\newline\\
-
 
 
 Solução para árvores de tipo \LTree:

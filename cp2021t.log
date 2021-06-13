@@ -1,547 +1,479 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.6)  10 JUN 2021 22:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.6.4)  13 JUN 2021 18:12
 entering extended mode
- restricted \write18 enabled.
- %&-line parsing enabled.
-**cp2021t.tex
-(./cp2021t.tex
-LaTeX2e <2020-02-02> patch level 2
-L3 programming layer <2020-02-14>
-(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+**./cp2021t.tex
+(cp2021t.tex
+LaTeX2e <2021-06-01>
+L3 programming layer <2021-06-01> (/usr/local/share/miktex-texmf/tex/latex/base
+/article.cls
+Document Class: article 2021/02/12 v1.4n Standard LaTeX document class
+(/usr/local/share/miktex-texmf/tex/latex/base/size10.clo
+File: size10.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count167
-\c@section=\count168
-\c@subsection=\count169
-\c@subsubsection=\count170
-\c@paragraph=\count171
-\c@subparagraph=\count172
-\c@figure=\count173
-\c@table=\count174
+\c@part=\count182
+\c@section=\count183
+\c@subsection=\count184
+\c@subsubsection=\count185
+\c@paragraph=\count186
+\c@subparagraph=\count187
+\c@figure=\count188
+\c@table=\count189
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
-\bibindent=\dimen134
-)
-(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+\bibindent=\dimen138
+) (/home/alef/.miktex/texmfs/install/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
-
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+(/usr/local/share/miktex-texmf/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks14
-)
-(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+\KV@toks@=\toks16
+) (/usr/local/share/miktex-texmf/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
-
-(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2019/11/07 v1.0c TeX engine tests
+(/usr/local/share/miktex-texmf/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
-\Gm@cnth=\count175
-\Gm@cntv=\count176
-\c@Gm@tempcnt=\count177
-\Gm@bindingoffset=\dimen135
-\Gm@wd@mp=\dimen136
-\Gm@odd@mp=\dimen137
-\Gm@even@mp=\dimen138
-\Gm@layoutwidth=\dimen139
-\Gm@layoutheight=\dimen140
-\Gm@layouthoffset=\dimen141
-\Gm@layoutvoffset=\dimen142
-\Gm@dimlist=\toks15
+\Gm@cnth=\count190
+\Gm@cntv=\count191
+\c@Gm@tempcnt=\count192
+\Gm@bindingoffset=\dimen139
+\Gm@wd@mp=\dimen140
+\Gm@odd@mp=\dimen141
+\Gm@even@mp=\dimen142
+\Gm@layoutwidth=\dimen143
+\Gm@layoutheight=\dimen144
+\Gm@layouthoffset=\dimen145
+\Gm@layoutvoffset=\dimen146
+\Gm@dimlist=\toks17
+(/home/alef/.miktex/texmfs/install/tex/latex/geometry/geometry.cfg)) (/home/ale
+f/.miktex/texmfs/install/tex/latex/psnfss/palatino.sty
+Package: palatino 2020/03/25 PSNFSS-v9.3 (SPQR) 
+) (/usr/local/share/miktex-texmf/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
+(/home/alef/.miktex/texmfs/install/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+) (/usr/local/share/miktex-texmf/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/palatino.sty
-Package: palatino 2005/04/12 PSNFSS-v9.2a (SPQR) 
-)
-(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2020/01/14 v7.00d Hypertext links for LaTeX
-
-(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
-Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/latex/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO
-)
-
-(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+(/home/alef/.miktex/texmfs/install/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-)
-(/usr/share/texlive/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+) (/home/alef/.miktex/texmfs/install/tex/generic/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+) (/home/alef/.miktex/texmfs/install/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+) (/home/alef/.miktex/texmfs/install/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
+) (/home/alef/.miktex/texmfs/install/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+) (/home/alef/.miktex/texmfs/install/tex/latex/letltxmacro/letltxmacro.sty
 Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
+) (/home/alef/.miktex/texmfs/install/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+) (/home/alef/.miktex/texmfs/install/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
-Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
-)
-\@linkdim=\dimen143
-\Hy@linkcounter=\count178
-\Hy@pagecounter=\count179
-
-(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2020/01/14 v7.00d Hyperref: PDFDocEncoding definition (HO)
+\@linkdim=\dimen147
+\Hy@linkcounter=\count193
+\Hy@pagecounter=\count194
+(/usr/local/share/miktex-texmf/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2021-02-27 v7.00k Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-)
-(/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
+) (/usr/local/share/miktex-texmf/tex/latex/hyperref/hyperref-langpatches.def
+File: hyperref-langpatches.def 2021-02-27 v7.00k Hyperref: patches for babel la
+nguages
+) (/home/alef/.miktex/texmfs/install/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+) (/home/alef/.miktex/texmfs/install/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count180
-\pdfmajorversion=\count181
-Package hyperref Info: Option `colorlinks' set `true' on input line 4421.
-Package hyperref Info: Hyper figures OFF on input line 4547.
-Package hyperref Info: Link nesting OFF on input line 4552.
-Package hyperref Info: Hyper index ON on input line 4555.
-Package hyperref Info: Plain pages OFF on input line 4562.
-Package hyperref Info: Backreferencing OFF on input line 4567.
+\Hy@SavedSpaceFactor=\count195
+(/usr/local/share/miktex-texmf/tex/latex/hyperref/puenc.def
+File: puenc.def 2021-02-27 v7.00k Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 4073.
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4800.
-\c@Hy@tempcnt=\count182
-
-(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count196
+(/usr/local/share/miktex-texmf/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 5159.
-\XeTeXLinkMargin=\dimen144
-
-(/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen148
+(/home/alef/.miktex/texmfs/install/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+(/home/alef/.miktex/texmfs/install/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count183
-\Field@Width=\dimen145
-\Fld@charsize=\dimen146
-Package hyperref Info: Hyper figures OFF on input line 6430.
-Package hyperref Info: Link nesting OFF on input line 6435.
-Package hyperref Info: Hyper index ON on input line 6438.
-Package hyperref Info: backreferencing OFF on input line 6445.
-Package hyperref Info: Link coloring ON on input line 6448.
-Package hyperref Info: Link coloring with OCG OFF on input line 6455.
-Package hyperref Info: PDF/A mode OFF on input line 6460.
-LaTeX Info: Redefining \ref on input line 6500.
-LaTeX Info: Redefining \pageref on input line 6504.
-
-(/usr/share/texlive/texmf-dist/tex/generic/atbegshi/atbegshi.sty
-Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
+\Fld@menulength=\count197
+\Field@Width=\dimen149
+\Fld@charsize=\dimen150
+Package hyperref Info: Hyper figures OFF on input line 6075.
+Package hyperref Info: Link nesting OFF on input line 6080.
+Package hyperref Info: Hyper index ON on input line 6083.
+Package hyperref Info: backreferencing OFF on input line 6090.
+Package hyperref Info: Link coloring ON on input line 6093.
+Package hyperref Info: Link coloring with OCG OFF on input line 6100.
+Package hyperref Info: PDF/A mode OFF on input line 6105.
+LaTeX Info: Redefining \ref on input line 6145.
+LaTeX Info: Redefining \pageref on input line 6149.
+(/usr/local/share/miktex-texmf/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
 )
-\Hy@abspage=\count184
-\c@Item=\count185
-\c@Hfootnote=\count186
+\Hy@abspage=\count198
+\c@Item=\count199
+\c@Hfootnote=\count266
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
-
-(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2020/01/14 v7.00d Hyperref driver for pdfTeX
-
-(/usr/share/texlive/texmf-dist/tex/latex/atveryend/atveryend.sty
-Package: atveryend 2019-12-11 v1.11 Hooks at the very end of document (HO)
-Package atveryend Info: \enddocument detected (standard20110627).
+(/usr/local/share/miktex-texmf/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2021-02-27 v7.00k Hyperref driver for pdfTeX
+(/usr/local/share/miktex-texmf/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
+e
+with kernel methods
 )
-\Fld@listcount=\count187
-\c@bookmark@seq@number=\count188
-
-(/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+\Fld@listcount=\count267
+\c@bookmark@seq@number=\count268
+(/home/alef/.miktex/texmfs/install/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+(/home/alef/.miktex/texmfs/install/tex/generic/uniquecounter/uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 86.
 )
 \Hy@SectionHShift=\skip49
-)
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
-
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
-
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+) (/usr/local/share/miktex-texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/local/share/miktex-texmf/tex/latex/graphics/graphics.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+(/usr/local/share/miktex-texmf/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
-)
-(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+) (/usr/local/share/miktex-texmf/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 105.
-
-(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+Package graphics Info: Driver file: pdftex.def on input line 107.
+(/usr/local/share/miktex-texmf/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen147
-\Gin@req@width=\dimen148
-)
-(./cp2021t.sty (/usr/share/texlive/texmf-dist/tex/latex/base/fleqn.sty
+\Gin@req@height=\dimen151
+\Gin@req@width=\dimen152
+) (cp2021t.sty (/usr/local/share/miktex-texmf/tex/latex/base/fleqn.sty
 
 LaTeX Warning: inputting `fleqn.clo' instead of obsolete `fleqn.sty'.
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/fleqn.clo
+(/usr/local/share/miktex-texmf/tex/latex/base/fleqn.clo
 File: fleqn.clo 2016/12/29 v1.2b Standard LaTeX option (flush left equations)
-\mathindent=\dimen149
+\mathindent=\skip50
 Applying: [2015/01/01] Make \[ robust on input line 50.
 LaTeX Info: Redefining \[ on input line 51.
 Already applied: [0000/00/00] Make \[ robust on input line 62.
 Applying: [2015/01/01] Make \] robust on input line 74.
 LaTeX Info: Redefining \] on input line 75.
 Already applied: [0000/00/00] Make \] robust on input line 83.
-))
-(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2020/02/14 3.40 The Babel package
-
-(/usr/share/texlive/texmf-dist/tex/generic/babel/switch.def
-File: switch.def 2020/02/14 3.40 Babel switching mechanism
-)
-
-! Package babel Error: Unknown option `portuguese'. Either you misspelled it
-(babel)                or the language definition file portuguese.ldf was not f
-ound.
-
-See the babel package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.542 \ProcessOptions*
-                      
-? 
-Package babel Info: You haven't specified a language. I'll use 'nil'
-(babel)             as the main language. Reported on input line 572.
-(/usr/share/texlive/texmf-dist/tex/generic/babel/nil.ldf
-Language: nil 2020/02/14 3.40 Nil language
-
-(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2020/02/14 3.40 Babel common definitions
-\babel@savecnt=\count189
-\U@D=\dimen150
-
-(/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def)
+)) (/usr/local/share/miktex-texmf/tex/generic/babel/babel.sty
+Package: babel 2021/06/02 3.60 The Babel package
+(/usr/local/share/miktex-texmf/tex/generic/babel/babel.def
+File: babel.def 2021/06/02 3.60 Babel common definitions
+\babel@savecnt=\count269
+\U@D=\dimen153
+\l@unhyphenated=\language2
+(/usr/local/share/miktex-texmf/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read2
-\bbl@dirlevel=\count190
 )
-\l@nil=\language7
-))
-(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2018/08/11 v1.3c Input encoding file
-\inpenc@prehook=\toks16
-\inpenc@posthook=\toks17
-)
-\c@teste=\count191
-\c@propriedade=\count192
+\bbl@dirlevel=\count270
+*************************************
+* Local config file bblopts.cfg used
+*
+(/usr/local/share/miktex-texmf/tex/latex/arabi/bblopts.cfg
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+) (/home/alef/.miktex/texmfs/install/tex/latex/babel-portuges/portuguese.ldf
+Language: portuges 2021/02/04 v1.2s Portuguese support from the babel system
 
-(/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2020/01/13 v3.5 verbatim text (tvz,hv)
-\FV@CodeLineNo=\count193
-\FV@InFile=\read3
-\FV@TabBox=\box45
-\c@FancyVerbLine=\count194
-\FV@StepNumber=\count195
-\FV@OutFile=\write3
+Package babel Warning: No hyphenation patterns were preloaded for
+(babel)                the language 'Portuguese' into the format.
+(babel)                Please, configure your TeX system to add them and
+(babel)                rebuild the format. Now I will use the patterns
+(babel)                preloaded for \language=0 instead on input line 53.
+
+Package babel Info: Making " an active character on input line 143.
+)) (/usr/local/share/miktex-texmf/tex/latex/base/inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks18
+\inpenc@posthook=\toks19
 )
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xy.sty
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xy.tex Bootstrap'ing:
-catcodes, docmode, (/usr/share/texlive/texmf-dist/tex/generic/xypic/xyrecat.tex
-) (/usr/share/texlive/texmf-dist/tex/generic/xypic/xyidioms.tex)
+\c@teste=\count271
+\c@propriedade=\count272
+(/home/alef/.miktex/texmfs/install/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2021/01/20 v3.7 verbatim text (tvz,hv)
+\FV@CodeLineNo=\count273
+\FV@InFile=\read3
+\FV@TabBox=\box50
+\c@FancyVerbLine=\count274
+\FV@StepNumber=\count275
+\FV@OutFile=\write3
+) (/home/alef/.miktex/texmfs/install/tex/generic/xypic/xy.sty (/home/alef/.mikt
+ex/texmfs/install/tex/generic/xypic/xy.tex Bootstrap'ing: catcodes, docmode, (/
+home/alef/.miktex/texmfs/install/tex/generic/xypic/xyrecat.tex) (/home/alef/.mi
+ktex/texmfs/install/tex/generic/xypic/xyidioms.tex)
 
  Xy-pic version 3.8.9 <2013/10/06>
  Copyright (c) 1991-2013 by Kristoffer H. Rose <krisrose@tug.org> and others
  Xy-pic is free software: see the User's Guide for details.
 
 Loading kernel: messages; fonts; allocations: state,
-\X@c=\dimen151
-\Y@c=\dimen152
-\U@c=\dimen153
-\D@c=\dimen154
-\L@c=\dimen155
-\R@c=\dimen156
-\Edge@c=\toks18
-\X@p=\dimen157
-\Y@p=\dimen158
-\U@p=\dimen159
-\D@p=\dimen160
-\L@p=\dimen161
-\R@p=\dimen162
-\Edge@p=\toks19
-\X@origin=\dimen163
-\Y@origin=\dimen164
-\X@xbase=\dimen165
-\Y@xbase=\dimen166
-\X@ybase=\dimen167
-\Y@ybase=\dimen168
-\X@min=\dimen169
-\Y@min=\dimen170
-\X@max=\dimen171
-\Y@max=\dimen172
-\lastobjectbox@=\box46
-\zerodotbox@=\box47
-\almostz@=\dimen173
- direction,
-\d@X=\dimen174
-\d@Y=\dimen175
-\K@=\count196
-\KK@=\count197
-\Direction=\count198
-\K@dXdY=\dimen176
-\K@dYdX=\dimen177
+\X@c=\dimen154
+\Y@c=\dimen155
+\U@c=\dimen156
+\D@c=\dimen157
+\L@c=\dimen158
+\R@c=\dimen159
+\Edge@c=\toks20
+\X@p=\dimen160
+\Y@p=\dimen161
+\U@p=\dimen162
+\D@p=\dimen163
+\L@p=\dimen164
+\R@p=\dimen165
+\Edge@p=\toks21
+\X@origin=\dimen166
+\Y@origin=\dimen167
+\X@xbase=\dimen168
+\Y@xbase=\dimen169
+\X@ybase=\dimen170
+\Y@ybase=\dimen171
+\X@min=\dimen172
+\Y@min=\dimen173
+\X@max=\dimen174
+\Y@max=\dimen175
+\lastobjectbox@=\box51
+\zerodotbox@=\box52
+\almostz@=\dimen176
+direction,
+\d@X=\dimen177
+\d@Y=\dimen178
+\K@=\count276
+\KK@=\count277
+\Direction=\count278
+\K@dXdY=\dimen179
+\K@dYdX=\dimen180
 \xyread@=\read4
 \xywrite@=\write4
-\csp@=\count199
-\quotPTK@=\dimen178
-
+\csp@=\count279
+\quotPTK@=\dimen181
 utility macros; pictures: \xy, positions,
-\swaptoks@@=\toks20
-\connectobjectbox@@=\box48
- objects,
-\styletoks@=\toks21
- decorations;
-kernel objects: directionals, circles, text; options; algorithms: directions,
-edges, connections;  Xy-pic loaded)
-(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifpdf.sty
+\swaptoks@@=\toks22
+\connectobjectbox@@=\box53
+objects,
+\styletoks@=\toks23
+decorations; kernel objects: directionals, circles, text; options; algorithms: 
+directions, edges, connections;  Xy-pic loaded) (/usr/local/share/miktex-texmf/
+tex/generic/iftex/ifpdf.sty
 Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
 )
 Package: xy 2013/10/06 Xy-pic version 3.8.9
-
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xyall.tex
- Xy-pic option: All features v.3.8
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xycurve.tex
- Xy-pic option: Curve and Spline extension v.3.12 curve,
-\crv@cnt@=\count266
-\crvpts@=\toks22
-\splinebox@=\box49
-\splineval@=\dimen179
-\splinedepth@=\dimen180
-\splinetol@=\dimen181
-\splinelength@=\dimen182
- circles,
-\L@=\dimen183
- loaded)
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xyframe.tex
- Xy-pic option: Frame and Bracket extension v.3.14 loaded)
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xycmtip.tex
- Xy-pic option: Computer Modern tip extension v.3.7
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xytips.tex
- Xy-pic option: More Tips extension v.3.11 loaded) loaded)
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xyline.tex
- Xy-pic option: Line styles extension v.3.10
-\xylinethick@=\dimen184
- loaded)
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xyrotate.tex
- Xy-pic option: Rotate and Scale extension v.3.8 loaded)
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xycolor.tex
- Xy-pic option: Colour extension v.3.11 loaded)
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xymatrix.tex
- Xy-pic option: Matrix feature v.3.14
-\Row=\count267
-\Col=\count268
-\queue@=\toks23
-\queue@@=\toks24
-\qcount@=\count269
-\qcount@@=\count270
-\matrixsize@=\count271
- loaded)
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xyarrow.tex
- Xy-pic option: Arrow and Path feature v.3.9 path, \ar, loaded)
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xygraph.tex
- Xy-pic option: Graph feature v.3.11 loaded) loaded)
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf.tex
- Xy-pic option: PDF driver v.1.7 Xy-pic pdf driver: `color' extension support
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf-co.tex loaded)
-Xy-pic pdf driver: `curve' extension support
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf-cu.tex loaded)
-Xy-pic pdf driver: `frame' extension support
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf-fr.tex loaded)
-Xy-pic pdf driver: `line' extension support
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf-li.tex loaded)
-Xy-pic pdf driver: `rotate' extension support
-(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf-ro.tex loaded) loaded))
-(/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty
+(/home/alef/.miktex/texmfs/install/tex/generic/xypic/xyall.tex  Xy-pic option: 
+All features v.3.8 (/home/alef/.miktex/texmfs/install/tex/generic/xypic/xycurve
+.tex  Xy-pic option: Curve and Spline extension v.3.12 curve,
+\crv@cnt@=\count280
+\crvpts@=\toks24
+\splinebox@=\box54
+\splineval@=\dimen182
+\splinedepth@=\dimen183
+\splinetol@=\dimen184
+\splinelength@=\dimen185
+circles,
+\L@=\dimen186
+loaded) (/home/alef/.miktex/texmfs/install/tex/generic/xypic/xyframe.tex  Xy-pi
+c option: Frame and Bracket extension v.3.14 loaded) (/home/alef/.miktex/texmfs
+/install/tex/generic/xypic/xycmtip.tex  Xy-pic option: Computer Modern tip exte
+nsion v.3.7 (/home/alef/.miktex/texmfs/install/tex/generic/xypic/xytips.tex  Xy
+-pic option: More Tips extension v.3.11 loaded) loaded) (/home/alef/.miktex/tex
+mfs/install/tex/generic/xypic/xyline.tex  Xy-pic option: Line styles extension 
+v.3.10
+\xylinethick@=\dimen187
+loaded) (/home/alef/.miktex/texmfs/install/tex/generic/xypic/xyrotate.tex  Xy-p
+ic option: Rotate and Scale extension v.3.8 loaded) (/home/alef/.miktex/texmfs/
+install/tex/generic/xypic/xycolor.tex  Xy-pic option: Colour extension v.3.11 l
+oaded) (/home/alef/.miktex/texmfs/install/tex/generic/xypic/xymatrix.tex  Xy-pi
+c option: Matrix feature v.3.14
+\Row=\count281
+\Col=\count282
+\queue@=\toks25
+\queue@@=\toks26
+\qcount@=\count283
+\qcount@@=\count284
+\matrixsize@=\count285
+loaded) (/home/alef/.miktex/texmfs/install/tex/generic/xypic/xyarrow.tex  Xy-pi
+c option: Arrow and Path feature v.3.9 path, \ar, loaded) (/home/alef/.miktex/t
+exmfs/install/tex/generic/xypic/xygraph.tex  Xy-pic option: Graph feature v.3.1
+1 loaded) loaded) (/home/alef/.miktex/texmfs/install/tex/generic/xypic/xypdf.te
+x  Xy-pic option: PDF driver v.1.7 Xy-pic pdf driver: `color' extension support
+(/home/alef/.miktex/texmfs/install/tex/generic/xypic/xypdf-co.tex loaded) Xy-pi
+c pdf driver: `curve' extension support (/home/alef/.miktex/texmfs/install/tex/
+generic/xypic/xypdf-cu.tex loaded) Xy-pic pdf driver: `frame' extension support
+(/home/alef/.miktex/texmfs/install/tex/generic/xypic/xypdf-fr.tex loaded) Xy-pi
+c pdf driver: `line' extension support (/home/alef/.miktex/texmfs/install/tex/g
+eneric/xypic/xypdf-li.tex loaded) Xy-pic pdf driver: `rotate' extension support
+(/home/alef/.miktex/texmfs/install/tex/generic/xypic/xypdf-ro.tex loaded) loade
+d)) (/usr/local/share/miktex-texmf/tex/latex/base/makeidx.sty
 Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
 )
-\pn=\count272
-)
-(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
-Package: subcaption 2020/01/22 v1.3d Sub-captions (AR)
-
-(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2020/01/03 v3.4h Customizing captions (AR)
-
-(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
-Package: caption3 2020/01/03 v1.8h caption3 kernel (AR)
-Package caption3 Info: TeX engine: e-TeX on input line 61.
-\captionmargin=\dimen185
-\captionmargin@=\dimen186
-\captionwidth=\dimen187
-\caption@tempdima=\dimen188
-\caption@indent=\dimen189
-\caption@parindent=\dimen190
-\caption@hangindent=\dimen191
+\pn=\count286
+) (/home/alef/.miktex/texmfs/install/tex/latex/caption/subcaption.sty
+Package: subcaption 2020/10/07 v1.3j Sub-captions (AR)
+(/home/alef/.miktex/texmfs/install/tex/latex/caption/caption.sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+(/home/alef/.miktex/texmfs/install/tex/latex/caption/caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen188
+\captionmargin@=\dimen189
+\captionwidth=\dimen190
+\caption@tempdima=\dimen191
+\caption@indent=\dimen192
+\caption@parindent=\dimen193
+\caption@hangindent=\dimen194
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count273
-\c@continuedfloat=\count274
+\c@caption@flags=\count287
+\c@continuedfloat=\count288
 Package caption Info: hyperref package is loaded.
 )
-\c@subfigure=\count275
-\c@subtable=\count276
+\c@subfigure=\count289
+\c@subtable=\count290
+) (/home/alef/.miktex/texmfs/install/tex/latex/adjustbox/adjustbox.sty
+Package: adjustbox 2020/08/19 v1.3 Adjusting TeX boxes (trim, clip, ...)
+(/usr/local/share/miktex-texmf/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
+(/usr/local/share/miktex-texmf/tex/generic/xkeyval/xkeyval.tex (/usr/local/shar
+e/miktex-texmf/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks27
+\XKV@tempa@toks=\toks28
 )
-(/usr/share/texlive/texmf-dist/tex/latex/adjustbox/adjustbox.sty
-Package: adjustbox 2019/01/04 v1.2 Adjusting TeX boxes (trim, clip, ...)
-
-(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
-
-(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
-(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks25
-\XKV@tempa@toks=\toks26
-)
-\XKV@depth=\count277
+\XKV@depth=\count291
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-))
-(/usr/share/texlive/texmf-dist/tex/latex/adjustbox/adjcalc.sty
+)) (/home/alef/.miktex/texmfs/install/tex/latex/adjustbox/adjcalc.sty
 Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
 -ends (calc, etex, pgfmath)
-)
-(/usr/share/texlive/texmf-dist/tex/latex/adjustbox/trimclip.sty
-Package: trimclip 2018/04/08 v1.1 Trim and clip general TeX material
-
-(/usr/share/texlive/texmf-dist/tex/latex/collectbox/collectbox.sty
+) (/home/alef/.miktex/texmfs/install/tex/latex/adjustbox/trimclip.sty
+Package: trimclip 2020/08/19 v1.2 Trim and clip general TeX material
+(/home/alef/.miktex/texmfs/install/tex/latex/collectbox/collectbox.sty
 Package: collectbox 2012/05/17 v0.4b Collect macro arguments as boxes
-\collectedbox=\box50
+\collectedbox=\box55
 )
-\tc@llx=\dimen192
-\tc@lly=\dimen193
-\tc@urx=\dimen194
-\tc@ury=\dimen195
+\tc@llx=\dimen195
+\tc@lly=\dimen196
+\tc@urx=\dimen197
+\tc@ury=\dimen198
 Package trimclip Info: Using driver 'tc-pdftex.def'.
-
-(/usr/share/texlive/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
+(/home/alef/.miktex/texmfs/install/tex/latex/adjustbox/tc-pdftex.def
 File: tc-pdftex.def 2019/01/04 v2.2 Clipping driver for pdftex
 ))
-\adjbox@Width=\dimen196
-\adjbox@Height=\dimen197
-\adjbox@Depth=\dimen198
-\adjbox@Totalheight=\dimen199
-\adjbox@pwidth=\dimen256
-\adjbox@pheight=\dimen257
-\adjbox@pdepth=\dimen258
-\adjbox@ptotalheight=\dimen259
-
-(/usr/share/texlive/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+\adjbox@Width=\dimen199
+\adjbox@Height=\dimen256
+\adjbox@Depth=\dimen257
+\adjbox@Totalheight=\dimen258
+\adjbox@pwidth=\dimen259
+\adjbox@pheight=\dimen260
+\adjbox@pdepth=\dimen261
+\adjbox@ptotalheight=\dimen262
+(/home/alef/.miktex/texmfs/install/tex/latex/ifoddpage/ifoddpage.sty
 Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
-\c@checkoddpage=\count278
-)
-(/usr/share/texlive/texmf-dist/tex/latex/varwidth/varwidth.sty
+\c@checkoddpage=\count292
+) (/home/alef/.miktex/texmfs/install/tex/latex/varwidth/varwidth.sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box51
-\sift@deathcycles=\count279
-\@vwid@loff=\dimen260
-\@vwid@roff=\dimen261
-))
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
-Package: color 2019/11/23 v1.2a Standard LaTeX Color (DPC)
-
-(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+\@vwid@box=\box56
+\sift@deathcycles=\count293
+\@vwid@loff=\dimen263
+\@vwid@roff=\dimen264
+)) (/usr/local/share/miktex-texmf/tex/latex/graphics/color.sty
+Package: color 2020/02/24 v1.2b Standard LaTeX Color (DPC)
+(/usr/local/share/miktex-texmf/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package color Info: Driver file: pdftex.def on input line 147.
+Package color Info: Driver file: pdftex.def on input line 149.
 )
 Package color Info: Redefining color red on input line 10.
 Package color Info: Redefining color blue on input line 11.
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/share/miktex-texmf/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01 AMS text
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+(/usr/local/share/miktex-texmf/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks27
-\ex@=\dimen262
-))
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+\@emptytoks=\toks29
+\ex@=\dimen265
+)) (/usr/local/share/miktex-texmf/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+(/usr/local/share/miktex-texmf/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-))
-(/usr/share/texlive/texmf-dist/tex/latex/stmaryrd/stmaryrd.sty
+)) (/home/alef/.miktex/texmfs/install/tex/latex/stmaryrd/stmaryrd.sty
 Package: stmaryrd 1994/03/03 St Mary's Road symbol package
 \symstmry=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `stmry' in version `bold'
 (Font)                  U/stmry/m/n --> U/stmry/b/n on input line 89.
+) (/home/alef/.miktex/texmfs/install/tex/latex/polytable/polytable.sty
+Package: polytable 2020/07/14 v0.8.6 `polytable' package (Andres Loeh)
+(/home/alef/.miktex/texmfs/install/tex/latex/lazylist/lazylist.sty) (/home/alef
+/.miktex/texmfs/install/tex/latex/tools/array.sty
+Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
+\col@sep=\dimen266
+\ar@mcellbox=\box57
+\extrarowheight=\dimen267
+\NC@list=\toks30
+\extratabsurround=\skip51
+\backup@length=\skip52
+\ar@cellbox=\box58
 )
-(/usr/share/texmf/tex/latex/polytable/polytable.sty
-Package: polytable 2013/07/18 v0.8.5 `polytable' package (Andres Loeh)
-
-(/usr/share/texmf/tex/latex/polytable/lazylist.sty)
-(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
-Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
-\col@sep=\dimen263
-\ar@mcellbox=\box52
-\extrarowheight=\dimen264
-\NC@list=\toks28
-\extratabsurround=\skip50
-\backup@length=\skip51
-\ar@cellbox=\box53
-)
-\PT@colwidth=\dimen265
-\PT@cols=\count280
-\PT@table=\count281
-\PT@toks=\toks29
+\PT@colwidth=\dimen268
+\PT@cols=\count294
+\PT@table=\count295
+\PT@toks=\toks31
 \PT@in=\read5
 \PT@out=\write5
 )
-\blanklineskip=\skip52
-
-(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+\blanklineskip=\skip53
+(/home/alef/.miktex/texmfs/install/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count282
-\calc@Bcount=\count283
-\calc@Adimen=\dimen266
-\calc@Bdimen=\dimen267
-\calc@Askip=\skip53
-\calc@Bskip=\skip54
+\calc@Acount=\count296
+\calc@Bcount=\count297
+\calc@Adimen=\dimen269
+\calc@Bdimen=\dimen270
+\calc@Askip=\skip54
+\calc@Bskip=\skip55
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count284
-\calc@Cskip=\skip55
+\calc@Ccount=\count298
+\calc@Cskip=\skip56
 )
 \@indexfile=\write6
 \openout6 = `cp2021t.idx'.
 
-
 Writing index file cp2021t.idx
-(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
-File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count285
-\l__pdf_internal_box=\box54
-)
-(./cp2021t.aux
+LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 3
+03.
+(/home/alef/.miktex/texmfs/install/tex/latex/psnfss/ot1ppl.fd
+File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
+) (/usr/local/share/miktex-texmf/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count299
+\l__pdf_internal_box=\box59
+) (cp2021t.aux
 
 LaTeX Warning: Label `eq:cat' multiply defined.
 
@@ -564,11 +496,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 303.
 LaTeX Font Info:    ... okay on input line 303.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 303.
 LaTeX Font Info:    ... okay on input line 303.
-LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 3
-03.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ppl.fd
-File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
-)
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 303.
+LaTeX Font Info:    ... okay on input line 303.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -603,100 +532,78 @@ File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\AtBeginShipoutBox=\box55
 Package hyperref Info: Link coloring ON on input line 303.
-(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
-Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
-
-(/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
+(/usr/local/share/miktex-texmf/tex/latex/hyperref/nameref.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+(/home/alef/.miktex/texmfs/install/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 )
-(/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+(/home/alef/.miktex/texmfs/install/tex/generic/gettitlestring/gettitlestring.st
+y
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count286
+\c@section@level=\count300
 )
 LaTeX Info: Redefining \ref on input line 303.
 LaTeX Info: Redefining \pageref on input line 303.
 LaTeX Info: Redefining \nameref on input line 303.
-
-(./cp2021t.out) (./cp2021t.out)
+(cp2021t.out) (cp2021t.out)
 \@outlinefile=\write7
 \openout7 = `cp2021t.out'.
 
-
-(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+(/usr/local/share/miktex-texmf/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count287
-\scratchdimen=\dimen268
-\scratchbox=\box56
-\nofMPsegments=\count288
-\nofMParguments=\count289
-\everyMPshowfont=\toks30
-\MPscratchCnt=\count290
-\MPscratchDim=\dimen269
-\MPnumerator=\count291
-\makeMPintoPDFobject=\count292
-\everyMPtoPDFconversion=\toks31
-) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+\scratchcounter=\count301
+\scratchdimen=\dimen271
+\scratchbox=\box60
+\nofMPsegments=\count302
+\nofMParguments=\count303
+\everyMPshowfont=\toks32
+\MPscratchCnt=\count304
+\MPscratchDim=\dimen272
+\MPnumerator=\count305
+\makeMPintoPDFobject=\count306
+\everyMPtoPDFconversion=\toks33
+) (/usr/local/share/miktex-texmf/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
-
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
+(/usr/local/share/miktex-texmf/tex/latex/00miktex/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 LaTeX Font Info:    Trying to load font information for U+msa on input line 303
 .
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+(/usr/local/share/miktex-texmf/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 303
 .
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+(/usr/local/share/miktex-texmf/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for U+stmry on input line 3
 03.
-
-(/usr/share/texlive/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
+(/home/alef/.miktex/texmfs/install/tex/latex/stmaryrd/Ustmry.fd)
 Package xypdf Info: Line width: 0.39998pt on input line 303.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 3
 49.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+(/home/alef/.miktex/texmfs/install/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+{/home/alef/.miktex/texmfs/data/pdftex/config/pdftex.map}]
 Overfull \hbox (5.29178pt too wide) in paragraph at lines 386--389
-[]\OT1/ppl/m/n/10 Recomenda-se uma abordagem participativa dos membros do grupo
- de trabalho por forma a poderem
+[]\OT1/ppl/m/n/10 Recomenda-se uma abor-dagem par-tic-i-pa-tiva dos mem-bros do
+ grupo de tra-balho por forma a poderem
  []
 
 LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 4
 30.
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ppl.fd
+(/home/alef/.miktex/texmfs/install/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
-)
-Overfull \hbox (9.59102pt too wide) in paragraph at lines 447--451
-\OT1/ppl/m/n/10 Os \OT1/ppl/m/it/10 tipos de dados alg^^Sebricos \OT1/ppl/m/n/1
-0 estudados ao longo desta disciplina oferecem uma grande capacidade expressiva
-
- []
-
-[2]
-Overfull \hbox (6.65025pt too wide) in paragraph at lines 465--470
-\OT1/ppl/m/n/10 descontrolada, levando a um c[]alculo pouco eficiente. \OT1/ppl
-/m/it/10 Automatic differentiation \OT1/ppl/m/n/10 tenta resolver este problema
-,
- []
-
+) [2]
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
@@ -707,8 +614,8 @@ Overfull \hbox (6.65025pt too wide) in paragraph at lines 465--470
 
 
 Overfull \hbox (6.3199pt too wide) in paragraph at lines 561--564
-[]$[]$ \OT1/ppl/m/it/10 e $[]$ s~ao testemunhas de um isomorfismo, isto ^^Se, $
-[] []
+[]$[]$ \OT1/ppl/m/it/10 e $[]$ s~ao teste-munhas de um iso-mor-fismo, isto e, 
+$[] []
  []
 
 \openout5 = `cp2021t.ptb'.
@@ -722,12 +629,6 @@ Overfull \hbox (6.3199pt too wide) in paragraph at lines 561--564
 
 \openout5 = `cp2021t.ptb'.
 
-
-Overfull \hbox (1.88171pt too wide) in paragraph at lines 669--673
-[]\OT1/ppl/m/n/10 Para calcular a derivada de uma express[]ao, []e necess[]ario
- aplicar transforma[][]oes []a express[]ao original
- []
-
 [4]
 \openout5 = `cp2021t.ptb'.
 
@@ -736,35 +637,23 @@ Overfull \hbox (1.88171pt too wide) in paragraph at lines 669--673
 \openout5 = `cp2021t.ptb'.
 
 
-
 Package hyperref Warning: Suppressing link with empty target on input line 765.
 
 
 
 Package hyperref Warning: Suppressing link with empty target on input line 765.
 
-
-
-Overfull \hbox (17.15103pt too wide) in paragraph at lines 763--766
-\OT1/ppl/m/n/10 Nesta disciplina estudou-se como fazer [][]programa[][]ao din[]
-amica[][][] por c[]alculo, recorrendo []a lei de recursividade
- []
 
 LaTeX Font Info:    Trying to load font information for OT1+phv on input line 7
 72.
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
-File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
+(/home/alef/.miktex/texmfs/install/tex/latex/psnfss/ot1phv.fd
+File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
 )
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
 
- [5]
-Overfull \hbox (5.61159pt too wide) in paragraph at lines 803--806
-[]\OT1/ppl/m/n/10 Para as vari[]aveis escolhem-se os pr[]oprios nomes das fun[]
-[]oes, pela ordem que se achar conveniente.[][][][][] 
- []
-
+[5]
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
@@ -773,7 +662,7 @@ Overfull \hbox (5.61159pt too wide) in paragraph at lines 803--806
 
 \openout5 = `cp2021t.ptb'.
 
-<cp2021t_media/Bezier_curves.png, id=146, 433.62pt x 180.675pt>
+<cp2021t_media/Bezier_curves.png, id=144, 433.62pt x 180.675pt>
 File: cp2021t_media/Bezier_curves.png Graphic file (type png)
 <use cp2021t_media/Bezier_curves.png>
 Package pdftex.def Info: cp2021t_media/Bezier_curves.png  used on input line 88
@@ -787,12 +676,6 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 [6]
 \openout5 = `cp2021t.ptb'.
 
-
-Overfull \hbox (23.14105pt too wide) in paragraph at lines 922--925
-\OT1/ppl/m/n/10 Por exemplo, um ponto de 2 dimens[]oes e um ponto de 3 dimens[]
-oes podem ser representados, respetivamente,
- []
-
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
@@ -803,8 +686,8 @@ oes podem ser representados, respetivamente,
 
 
 Overfull \hbox (0.10011pt too wide) in paragraph at lines 963--965
-[]\OT1/ppl/m/n/10 Implemente $[]$ como um catamorfismo de listas, testando a su
-a defini[][]ao com a propriedade:[] 
+[]\OT1/ppl/m/n/10 Implemente $[]$ como um cata-mor-fismo de lis-tas, te-s-tando
+ a sua defini[][]ao com a pro-priedade:[] 
  []
 
 \openout5 = `cp2021t.ptb'.
@@ -814,7 +697,7 @@ a defini[][]ao com a propriedade:[]
 [7 <./cp2021t_media/Bezier_curves.png (PNG copy)>]
 \openout5 = `cp2021t.ptb'.
 
- [8] <xymatrix 2x2 191>
+[8] <xymatrix 2x2 191>
 
 Package hyperref Warning: Suppressing link with empty target on input line 1111
 .
@@ -842,7 +725,7 @@ Package hyperref Warning: Suppressing link with empty target on input line 1112
 
 \openout5 = `cp2021t.ptb'.
 
- [10]
+[10]
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
@@ -851,7 +734,7 @@ Package hyperref Warning: Suppressing link with empty target on input line 1112
 
 \openout5 = `cp2021t.ptb'.
 
- [11]
+[11]
 \openout5 = `cp2021t.ptb'.
 
 
@@ -935,160 +818,135 @@ Overfull \hbox (8.57883pt too wide) in paragraph at lines 1429--1478
 
 [12]
 
-! LaTeX Error: There's no line here to end.
+cp2021t.tex:1559: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1559 
-       
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.1563 ... de inExpAr, Fusão-+,  Cancelamento-+ }
+l.1559 \begin
+             {eqnarray*}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+
+cp2021t.tex:1578: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
                                                   
-? 
-! Misplaced alignment tab character &.
-\just #1#2->\\ &#1&
-                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.1563 ... de inExpAr, Fusão-+,  Cancelamento-+ }
+l.1578 \begin
+             {equation*}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+
+cp2021t.tex:1578: LaTeX Error: Environment equation* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
                                                   
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.1563 ... de inExpAr, Fusão-+,  Cancelamento-+ }
+l.1578 \begin{equation*}
+                        
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+ <xymatrix 3x1 158>
+
+
+cp2021t.tex:1583: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
                                                   
-? 
-! Misplaced alignment tab character &.
-\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
-                                                   
-l.1563 ... de inExpAr, Fusão-+,  Cancelamento-+ }
+l.1583 \newline
+               \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+
+cp2021t.tex:1584: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1565 
-       
-? 
+l.1584 \end
+           {equation*}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1560--1565
 
- []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1566   \left
-              \{
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.1576 ...uiv{ Igualdade extensional, Natural-id }
+cp2021t.tex:1584: LaTeX Error: \begin{document} ended by \end{equation*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1576 ...uiv{ Igualdade extensional, Natural-id }
+l.1584 \end{equation*}
+                      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+
+cp2021t.tex:1587: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
                                                   
-? 
-! Misplaced alignment tab character &.
-\just #1#2->\\ &#1&
-                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.1576 ...uiv{ Igualdade extensional, Natural-id }
+l.1587 \begin
+             {eqnarray*}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+
+cp2021t.tex:1597: LaTeX Error: Environment equation* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
                                                   
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.1576 ...uiv{ Igualdade extensional, Natural-id }
+l.1597 \begin{equation*}
+                        
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+ <xymatrix 3x2 246>
+
+
+cp2021t.tex:1602: LaTeX Error: \begin{document} ended by \end{equation*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
                                                   
-? 
-! Misplaced alignment tab character &.
-\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
-                                                   
-l.1576 ...uiv{ Igualdade extensional, Natural-id }
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1578 
-       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1566--1578
-
- []
+l.1602 \end{equation*}
+                      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1566--1578
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1566--1578
-
- []
-
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.1590 ...ão de bin, Uncurry, Definição de Un }
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1590 ...ão de bin, Uncurry, Definição de Un }
-                                                  
-? 
-! Misplaced alignment tab character &.
-\just #1#2->\\ &#1&
-                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.1590 ...ão de bin, Uncurry, Definição de Un }
-                                                  
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.1590 ...ão de bin, Uncurry, Definição de Un }
-                                                  
-? 
-! Misplaced alignment tab character &.
-\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
-                                                   
-l.1590 ...ão de bin, Uncurry, Definição de Un }
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1592 
-       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1579--1592
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1579--1592
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1579--1592
-
- []
-
-
-! LaTeX Error: Environment equation* undefined.
+cp2021t.tex:1606: LaTeX Error: Environment equation* undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -1096,294 +954,188 @@ Type  H <return>  for immediate help.
                                                   
 l.1606 \begin{equation*}
                         
-? 
-<xymatrix 3x1 158>
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: \begin{document} ended by \end{equation*}.
+ <xymatrix 3x2 246>
+
+
+cp2021t.tex:1611: LaTeX Error: \begin{document} ended by \end{equation*}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1612 \end{equation*}
+l.1611 \end{equation*}
                       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1594--1613
-
- []
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1594--1613
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1594--1613
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1594--1613
-
- []
-
-
-! LaTeX Error: There's no line here to end.
+cp2021t.tex:1615: LaTeX Error: Environment equation* undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1616 
-       
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.1622 \just\equiv{ Definição de baseExpAr }
-                                              
-? 
-! Misplaced alignment tab character &.
-\just #1#2->\\ &#1&
-                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.1622 \just\equiv{ Definição de baseExpAr }
-                                              
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.1622 \just\equiv{ Definição de baseExpAr }
-                                              
-? 
-! Misplaced alignment tab character &.
-\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
-                                                   
-l.1622 \just\equiv{ Definição de baseExpAr }
-                                              
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1623 
-       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1619--1623
-
- []
-
-
-! LaTeX Error: Bad math environment delimiter.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1626 \end{math}
-                 
-? 
-
-! LaTeX Error: Environment equation* undefined.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1629 \begin{equation*}
+l.1615 \begin{equation*}
                         
-? 
-<xymatrix 3x2 246>
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: \begin{document} ended by \end{equation*}.
+ <xymatrix 3x3 382>
+
+
+cp2021t.tex:1621: LaTeX Error: \begin{document} ended by \end{equation*}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1634 \end{equation*}
+l.1621 \end{equation*}
                       
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: Environment equation* undefined.
+
+
+cp2021t.tex:1625: LaTeX Error: Environment equation* undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1638 \begin{equation*}
+l.1625 \begin{equation*}
                         
-? 
-<xymatrix 3x2 246>
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: \begin{document} ended by \end{equation*}.
+ <xymatrix 3x2 246>
+
+
+cp2021t.tex:1630: LaTeX Error: \begin{document} ended by \end{equation*}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1643 \end{equation*}
+l.1630 \end{equation*}
                       
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: Environment equation* undefined.
+
+
+cp2021t.tex:1634: LaTeX Error: Environment equation* undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1647 \begin{equation*}
+l.1634 \begin{equation*}
                         
-? 
-<xymatrix 3x3 382>
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: \begin{document} ended by \end{equation*}.
+ <xymatrix 3x2 246>
+
+
+cp2021t.tex:1639: LaTeX Error: \begin{document} ended by \end{equation*}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1653 \end{equation*}
+l.1639 \end{equation*}
                       
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: Environment equation* undefined.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1657 \begin{equation*}
-                        
-? 
-<xymatrix 3x2 246>
-
-! LaTeX Error: \begin{document} ended by \end{equation*}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1662 \end{equation*}
-                      
-? 
-
-! LaTeX Error: Environment equation* undefined.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1666 \begin{equation*}
-                        
-? 
-<xymatrix 3x2 246>
-
-! LaTeX Error: \begin{document} ended by \end{equation*}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1671 \end{equation*}
-                      
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
-
- []
-
-
-Overfull \hbox (30.53845pt too wide) in paragraph at lines 1624--1673
+Overfull \hbox (30.53845pt too wide) in paragraph at lines 1595--1641
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
+Underfull \hbox (badness 10000) in paragraph at lines 1595--1641
 
  []
 
-[13] [14]
+ [13] [14]
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
@@ -1397,108 +1149,147 @@ Underfull \hbox (badness 10000) in paragraph at lines 1624--1673
 
 
 
-! LaTeX Error: There's no line here to end.
+cp2021t.tex:1789: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1821 
+l.1789 
        
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: Environment equation* undefined.
+
+
+cp2021t.tex:1790: LaTeX Error: Environment equation* undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1822 \begin{equation*}
+l.1790 \begin{equation*}
                         
-? 
-<xymatrix 3x2 245>
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: \begin{document} ended by \end{equation*}.
+ <xymatrix 3x2 245>
+
+
+cp2021t.tex:1795: LaTeX Error: \begin{document} ended by \end{equation*}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1827 \end{equation*}
+l.1795 \end{equation*}
                       
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: There's no line here to end.
+
+
+cp2021t.tex:1797: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1829 \\
+l.1797 \\
          
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: There's no line here to end.
+
+
+cp2021t.tex:1798: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1830 \begin
+l.1798 \begin
              {equation*}
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: Environment equation* undefined.
+
+
+cp2021t.tex:1798: LaTeX Error: Environment equation* undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1830 \begin{equation*}
+l.1798 \begin{equation*}
                         
-? 
-<xymatrix 3x3 381>
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: \begin{document} ended by \end{equation*}.
+ <xymatrix 3x3 381>
+
+
+cp2021t.tex:1804: LaTeX Error: \begin{document} ended by \end{equation*}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1836 \end{equation*}
+l.1804 \end{equation*}
                       
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: There's no line here to end.
+
+
+cp2021t.tex:1805: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1837 \newline
+l.1805 \newline
                \\
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: There's no line here to end.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1838 
-       
-? 
 
-! LaTeX Error: There's no line here to end.
+cp2021t.tex:1806: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1840 
+l.1806 
        
-? 
-[16]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+
+cp2021t.tex:1808: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1808 
+       
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+ [16]
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
@@ -1507,580 +1298,415 @@ l.1840
 
  [17]
 
-! LaTeX Error: Environment equation* undefined.
+
+cp2021t.tex:1952: LaTeX Error: Environment equation* undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1984 \begin{equation*}
+l.1952 \begin{equation*}
                         
-? 
-<xymatrix 3x2 245>
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: \begin{document} ended by \end{equation*}.
+ <xymatrix 3x2 245>
+
+
+cp2021t.tex:1957: LaTeX Error: \begin{document} ended by \end{equation*}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1989 \end{equation*}
+l.1957 \end{equation*}
                       
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1993 
-       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1991--1993
-
- []
-
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.1996 \just\equiv{ Univeral-cata }
-                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1996 \just\equiv{ Univeral-cata }
-                                   
-? 
-! Misplaced alignment tab character &.
-\just #1#2->\\ &#1&
-                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.1996 \just\equiv{ Univeral-cata }
-                                   
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.1996 \just\equiv{ Univeral-cata }
-                                   
-? 
-! Misplaced alignment tab character &.
-\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
-                                                   
-l.1996 \just\equiv{ Univeral-cata }
-                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1998 
-       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1994--1998
-
- []
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1994--1998
 
- []
-
-
-! LaTeX Error: Bad math environment delimiter.
+cp2021t.tex:1981: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.2001 \end{math}
-                 
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.2003 ...efinição de \ensuremath{\Varid{recL}}}
+l.1981 \newline
+               \\
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+
+cp2021t.tex:1982: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2003 ...efinição de \ensuremath{\Varid{recL}}}
-                                                  
-? 
-! Misplaced alignment tab character &.
-\just #1#2->\\ &#1&
-                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.2003 ...efinição de \ensuremath{\Varid{recL}}}
-                                                  
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.2003 ...efinição de \ensuremath{\Varid{recL}}}
-                                                  
-? 
-! Misplaced alignment tab character &.
-\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
-                                                   
-l.2003 ...efinição de \ensuremath{\Varid{recL}}}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2005 
+l.1982 
        
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1999--2005
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1999--2005
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1999--2005
-
- []
-
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.2015 ...uiv{ Igualdade extensional, Natural-id }
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2015 ...uiv{ Igualdade extensional, Natural-id }
-                                                  
-? 
-! Misplaced alignment tab character &.
-\just #1#2->\\ &#1&
-                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.2015 ...uiv{ Igualdade extensional, Natural-id }
-                                                  
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.2015 ...uiv{ Igualdade extensional, Natural-id }
-                                                  
-? 
-! Misplaced alignment tab character &.
-\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
-                                                   
-l.2015 ...uiv{ Igualdade extensional, Natural-id }
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2017 
-       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2006--2017
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2006--2017
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2006--2017
-
- []
-
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.2028 ...inição de singl, Definição de cons }
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2028 ...inição de singl, Definição de cons }
-                                                  
-? 
-! Misplaced alignment tab character &.
-\just #1#2->\\ &#1&
-                    \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.2028 ...inição de singl, Definição de cons }
-                                                  
-? 
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.2028 ...inição de singl, Definição de cons }
-                                                  
-? 
-! Misplaced alignment tab character &.
-\just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
-                                                   
-l.2028 ...inição de singl, Definição de cons }
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2030 
-       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2019--2030
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2019--2030
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2019--2030
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2032--2041
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2032--2041
-
- []
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
 
 
-! LaTeX Error: Environment equation* undefined.
+
+cp2021t.tex:2015: LaTeX Error: Environment equation* undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.2076 \begin{equation*}
+l.2015 \begin{equation*}
                         
-? 
-<xymatrix 3x2 245>
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-! LaTeX Error: \begin{document} ended by \end{equation*}.
+ <xymatrix 3x2 245>
+
+
+cp2021t.tex:2020: LaTeX Error: \begin{document} ended by \end{equation*}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.2081 \end{equation*}
+l.2020 \end{equation*}
                       
-? 
-[18]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2085 
-       
-? 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2083--2085
 
- []
+cp2021t.tex:2024: Misplaced alignment tab character &.
+\start ->&
+          &
+l.2024 \start
+             
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
-! Misplaced alignment tab character &.
+
+cp2021t.tex:2024: Misplaced alignment tab character &.
+\start ->&&
+           
+l.2024 \start
+             
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2027: Misplaced alignment tab character &.
 <recently read> &
                  
-l.2088 ...ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
+l.2027 ...ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2088 ...ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
-                                                  
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2027: Misplaced alignment tab character &.
 \just #1#2->\\ &#1&
                     \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.2088 ...ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
+l.2027 ...ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
                                                   
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2027: Misplaced alignment tab character &.
 <recently read> &
                  
-l.2088 ...ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
+l.2027 ...ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
                                                   
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2027: Misplaced alignment tab character &.
 \just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
                                                    
-l.2088 ...ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
+l.2027 ...ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2090 
-       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2086--2090
-
- []
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2086--2090
-
- []
-
-
-! LaTeX Error: Bad math environment delimiter.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.2093 \end{math}
-                 
-? 
-! Misplaced alignment tab character &.
+cp2021t.tex:2031: Misplaced alignment tab character &.
 <recently read> &
                  
-l.2095 ...nição de inL, Definição de recLTree}
+l.2031 ...nição de inL, Definição de recLTree}
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2095 ...nição de inL, Definição de recLTree}
-                                                  
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2031: Misplaced alignment tab character &.
 \just #1#2->\\ &#1&
                     \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.2095 ...nição de inL, Definição de recLTree}
+l.2031 ...nição de inL, Definição de recLTree}
                                                   
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2031: Misplaced alignment tab character &.
 <recently read> &
                  
-l.2095 ...nição de inL, Definição de recLTree}
+l.2031 ...nição de inL, Definição de recLTree}
                                                   
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2031: Misplaced alignment tab character &.
 \just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
                                                    
-l.2095 ...nição de inL, Definição de recLTree}
+l.2031 ...nição de inL, Definição de recLTree}
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2097 
-       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2091--2097
-
- []
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2091--2097
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2091--2097
-
- []
-
-! Misplaced alignment tab character &.
+cp2021t.tex:2035: Misplaced alignment tab character &.
 <recently read> &
                  
-l.2107 ...uiv{ Igualdade extensional, Natural-id }
+l.2035 ...uiv{ Igualdade extensional, Natural-id }
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2107 ...uiv{ Igualdade extensional, Natural-id }
-                                                  
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2035: Misplaced alignment tab character &.
 \just #1#2->\\ &#1&
                     \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.2107 ...uiv{ Igualdade extensional, Natural-id }
+l.2035 ...uiv{ Igualdade extensional, Natural-id }
                                                   
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2035: Misplaced alignment tab character &.
 <recently read> &
                  
-l.2107 ...uiv{ Igualdade extensional, Natural-id }
+l.2035 ...uiv{ Igualdade extensional, Natural-id }
                                                   
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2035: Misplaced alignment tab character &.
 \just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
                                                    
-l.2107 ...uiv{ Igualdade extensional, Natural-id }
+l.2035 ...uiv{ Igualdade extensional, Natural-id }
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2109 
-       
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2098--2109
-
- []
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2098--2109
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2098--2109
-
- []
-
-! Misplaced alignment tab character &.
+cp2021t.tex:2039: Misplaced alignment tab character &.
 <recently read> &
                  
-l.2120 ...finição de Leaf, Definição de Fork }
+l.2039 ...finição de Leaf, Definição de Fork }
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2120 ...finição de Leaf, Definição de Fork }
-                                                  
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2039: Misplaced alignment tab character &.
 \just #1#2->\\ &#1&
                     \rule {2em}{0pt} \{ \mbox {\rule [-.7em]{0pt}{1.8em} \sm...
-l.2120 ...finição de Leaf, Definição de Fork }
+l.2039 ...finição de Leaf, Definição de Fork }
                                                   
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2039: Misplaced alignment tab character &.
 <recently read> &
                  
-l.2120 ...finição de Leaf, Definição de Fork }
+l.2039 ...finição de Leaf, Definição de Fork }
                                                   
-? 
-! Misplaced alignment tab character &.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2039: Misplaced alignment tab character &.
 \just ...}{1.8em} \small #2 \/} \} \nonumber \\ &&
                                                    
-l.2120 ...finição de Leaf, Definição de Fork }
+l.2039 ...finição de Leaf, Definição de Fork }
                                                   
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.2122 
-       
-? 
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2111--2122
 
+cp2021t.tex:2042: Misplaced alignment tab character &.
+<recently read> &
+                 
+l.2042 \qed
+           
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+cp2021t.tex:2042: Misplaced alignment tab character &.
+\qed ->\\&\Box &
+                
+l.2042 \qed
+           
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+Overfull \hbox (38.57341pt too wide) in paragraph at lines 2023--2044
+[] [] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2111--2122
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2111--2122
-
- []
-
-
-Overfull \hbox (38.73949pt too wide) in paragraph at lines 2124--2133
-[]$[]$ 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2124--2133
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2124--2133
-
- []
-
+ [18]
 \openout5 = `cp2021t.ptb'.
 
-(./cp2021t.ind [19] [20
+ (cp2021t.ind [19] [20
 
 
-]) (./cp2021t.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2174.
- [21
+]) (cp2021t.bbl) [21
 
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2174.
- (./cp2021t.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2174.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2174.
-
-Package rerunfilecheck Info: File `cp2021t.out' has not changed.
-(rerunfilecheck)             Checksum: 7ABFEEFBC6EDEE4EAEC2BDEF142178CE;514.
-
+] (cp2021t.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2174.
+Package rerunfilecheck Info: File `cp2021t.out' has not changed.
+(rerunfilecheck)             Checksum: EA7FB4FC5A98FA43078E0E0DB4138C0B;1358.
  ) 
 Here is how much of TeX's memory you used:
- 13412 strings out of 483107
- 194563 string characters out of 5964631
- 532925 words of memory out of 5000000
- 28003 multiletter control sequences out of 15000+600000
- 570860 words of font info for 135 fonts, out of 8000000 for 9000
- 59 hyphenation exceptions out of 8191
- 48i,18n,77p,3294b,769s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmti7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/sym
-bols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symb
-ols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbo
-ls/msbm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/stmaryrd/stmary1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino
-/uplri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/xypic/xyatip10.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/xypic/xybtip10.pfb>
-Output written on cp2021t.pdf (21 pages, 387770 bytes).
+ 16557 strings out of 480802
+ 243047 string characters out of 2901137
+ 641689 words of memory out of 3000000
+ 33777 multiletter control sequences out of 15000+600000
+ 441952 words of font info for 138 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 67i,26n,77p,3296b,767s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/share/miktex-texmf/fonts/enc/dvips/base/8r.enc}</usr/local/share/
+miktex-texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/share/miktex
+-texmf/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/share/miktex-texmf
+/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/share/miktex-texmf/fonts
+/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/share/miktex-texmf/fonts/type1/
+public/amsfonts/cm/cmmi7.pfb></usr/local/share/miktex-texmf/fonts/type1/public/
+amsfonts/cm/cmmi9.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfont
+s/cm/cmr10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cm
+r5.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr7.pfb><
+/usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/loc
+al/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/sha
+re/miktex-texmf/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/share/mikt
+ex-texmf/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/share/miktex-tex
+mf/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/share/miktex-texmf/font
+s/type1/public/amsfonts/cm/cmti10.pfb></usr/local/share/miktex-texmf/fonts/type
+1/public/amsfonts/cm/cmti7.pfb></usr/local/share/miktex-texmf/fonts/type1/publi
+c/amsfonts/cm/cmti8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfo
+nts/cm/cmti9.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/sym
+bols/msam10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/symb
+ols/msbm10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/symbo
+ls/msbm7.pfb></home/alef/.miktex/texmfs/install/fonts/type1/public/hoekwater/st
+mary10.pfb></usr/local/share/miktex-texmf/fonts/type1/urw/courier/ucrr8a.pfb></
+usr/local/share/miktex-texmf/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/sh
+are/miktex-texmf/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/share/miktex-t
+exmf/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/share/miktex-texmf/fonts/t
+ype1/urw/palatino/uplr8a.pfb></usr/local/share/miktex-texmf/fonts/type1/urw/pal
+atino/uplri8a.pfb></home/alef/.miktex/texmfs/install/fonts/type1/public/xypic/x
+yatip10.pfb></home/alef/.miktex/texmfs/install/fonts/type1/public/xypic/xybtip1
+0.pfb>
+Output written on cp2021t.pdf (21 pages, 473264 bytes).
 PDF statistics:
- 482 PDF objects out of 1000 (max. 8388607)
- 422 compressed objects within 5 object streams
+ 505 PDF objects out of 1000 (max. 8388607)
  83 named destinations out of 1000 (max. 500000)
  70 words of extra memory for PDF output out of 10000 (max. 10000000)
 

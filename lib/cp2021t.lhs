@@ -129,15 +129,15 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 17 
+\textbf{Grupo} nr. & 17
 \\\hline
-a91683 & Alef Pinto Keuffer 
+a91683 & Alef Pinto Keuffer
 \\
-a93546 & Fernando Maria Bicalho 
+a93546 & Fernando Maria Bicalho
 \\
 a88062 & Pedro Paulo Costa Pereira
 \\
-a91693 & Tiago André Oliveira Leite 
+a91693 & Tiago André Oliveira Leite
 \end{tabular}
 \end{center}
 
@@ -1021,52 +1021,60 @@ ad v = p2 . cataExpAr (ad_gen v)
 \end{code}
 
 \\
-
-\begin{math}
-|outExpAr| \ . \ |inExpAr| = |id|
-\\
-\just\equiv{ Definição de inExpAr, Fusão-+,  Cancelamento-+ }
-\\
-
-  \left\{
-    \begin{array}{l}
-                outExpAr\ .\ |const X| = id\ .\ |i1|\\ 
-                outExpAr\ .\ N  = id\ .\ |i2| \ . \ |i1| \\ 
-                outExpAr\ .\ bin  = id\ . \ |i2| \ . \ |i2| \ . \ |i1|\\
-                outExpAr\ .\ |uncurry Un| = id\ .\ |i2|\ .\ |i2|\ .\ |i2|
-    \end{array}
-  \right.
-\end{math}
-\newline\\
+\begin{eqnarray*}
+\start
+|outExpAr . inExpAr = id|
+%
+\just\equiv{Definição de inExpAr, Fusão-+,  Cancelamento-+}
+%
+|lcbr(
+  outExpAr . const X = id . i1
+)(
+  lcbr(
+    outExpAr . N  = id . i2 . i1
+  )(
+    lcbr(
+      outExpAr . bin  = id . i2 . i2 . i1
+    )(
+      outExpAr . uncurry Un = id . i2 . i2 . i2
+    )
+  )
+)|
+%
 \just\equiv{ Igualdade extensional, Natural-id }
-\\
+%
+|lcbr(
+  (outExpAr . const X) () = i1 ()
+)(
+  lcbr(
+    (outExpAr . N) a  =  (i2 . i1) a
+  )(
+    lcbr(
+      (outExpAr . bin) (op,(l,r)) = (i2 . i2 . i1) (op,(l,r))
+    )(
+      (outExpAr . uncurry Un) (op,a) = (i2 . i2 . i2) (op,a)
+    )
+  )
+)|
+%
+\just\equiv{ Def-comp, Def-const, Def-|N|, Def-|bin|, Def-Uncurry, Def-|Un| }
+%
+|lcbr(
+  outExpAr X = i1 ()
+)(
+  lcbr(
+    outExpAr (N a) = i2 $ i1 a
+  )(
+    lcbr(
+      outExpAr (Bin op l r)  = i2 $ i2 $ i1 (op,(l,r))
+    )(
+      outExpAr (Un op a) = i2 $ i2 $ i2 (op,a)
+    )
+  )
+)|
+\qed
+\end{eqnarray*}
 
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                (outExpAr\ . \ |const X|)\ () = |i1|\ ()\\ 
-                (outExpAr\ .\ N) \ a  =  (|i2| \ . \ |i1|) \ a \\ 
-                (outExpAr\ .\ bin) \  (op,(l,r))  = (|i2| \ . \ |i2| \ . \ |i1|)\ (op,(l,r)) \\
-                (outExpAr\  .\ |uncurry Un|) \ (op,a) = (|i2|\ . \ |i2| \ . \ |i2|) \ (op,a)
-    \end{array}
-  \right.
-\end{math}
-\newline\\
-\just\equiv{ Def-comp , Def-const, Definição de N, Definição de bin, Uncurry, Definição de Un }
-\\
-
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                outExpAr \ X  =  |i1| \ ()\\ 
-                outExpAr \ (N \ a) = |i2| \ |$| \ |i1| \ a \\ 
-                outExpAr\ (Bin \ op \ l \  r)  = |i2| \ |$| |i2| \ |$| \ |i1|\ (op,(l,r)) \\
-                outExpAr \ (Un \ op \ a) = |i2| \ |$| \ |i2| \ |$| \ |i2| \  (op,a)
-    \end{array}
-  \right.
-\end{math}
-\newline\\
 \\
 \begin{equation*}
 \xymatrix@@C=2cm{
@@ -1076,20 +1084,16 @@ ad v = p2 . cataExpAr (ad_gen v)
 \newline\\
 \end{equation*}
 
-
-\\ 
-
-
-
-\begin{math}
-|recExprAr f| =   |id + (id + (id >< (f >< f ) + id >< f ))|
 \\
-\just\equiv{ Definição de baseExpAr }
-
-|recExprAr| \ |f| = |baseExpAr| \ |id| \ |id| \ |id| \ |f| \ |f| \ |id| \ |f|
-\newline\\
-\end{math}
-\newline\\
+\begin{eqnarray*}
+\start
+|recExprAr f = id + (id + (id >< (f >< f) + id >< f ))|
+%
+\just\equiv{ Def-baseExpAr }
+%
+|recExprAr f = baseExpAr id id id f f id f|
+\qed
+\end{eqnarray*}
 \\
 \begin{equation*}
 \xymatrix@@C=2cm@@R=3cm{
@@ -1174,12 +1178,12 @@ gopt a = g_eval_exp a
 
 \begin{code}
 sd_gen :: Floating a =>
-    Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), 
+    Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a),
     (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) -> (ExpAr a, ExpAr a)
 sd_gen (Left ()) = (X, N 1)
 sd_gen (Right (Left a)) = (N a, N 0)
 sd_gen (Right (Right (Left (Sum,((e1,d1),(e2,d2)))))) = (Bin Sum e1 e2, Bin Sum d1 d2)
-sd_gen (Right (Right (Left (Product,((e1,d1),(e2,d2)))))) 
+sd_gen (Right (Right (Left (Product,((e1,d1),(e2,d2))))))
     = (Bin Product e1 e2, Bin Sum (Bin Product e1 d2) (Bin Product d1 e2 ))
 sd_gen (Right (Right (Right (Negate,(e,d))))) = (Un Negate e , Un Negate d)
 sd_gen (Right (Right (Right (E,(e,d))))) = (Un E e , Bin Product (Un E e) d)
@@ -1255,8 +1259,8 @@ $\begin{array}{cccc}
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
 calcLine = cataList h where
     h = either f g where
-        f _ _ = nil 
-        g _ [] =  nil 
+        f _ _ = nil
+        g _ [] =  nil
         g (d,f) (x:xs) =  \z -> concat $ (sequenceA [singl . linear1d d x, f xs]) z
 \end{code}
 
@@ -1279,23 +1283,23 @@ hyloAlgForm = hyloLTree
 
 Uma outra solução para o deCasteljau, criando um novo tipo de dados intermedio.
 
-\begin{code}                        
+\begin{code}
 deCasteljau' :: [NPoint] -> OverTime NPoint
 deCasteljau' = hyloAlgForm' alg  coalg where
-   coalg = (id -|- (id -|- (split init  tail)))  . outSL 
+   coalg = (id -|- (id -|- (split init  tail)))  . outSL
    alg = either (const nil) a where
     a = either const b where
         b (e,d) = \pt -> (calcLine (e pt) (d pt)) pt
 
 outSL [] = i1 ()
-outSL [a] = i2 (i1 a) 
+outSL [a] = i2 (i1 a)
 outSL l = i2  (i2 l)
 
 hyloAlgForm' = h where
-    h a b = cataC a . anaC b 
-    
+    h a b = cataC a . anaC b
 
-data Castel a = Empty | Single a | InitTail (Castel a, Castel a) deriving Show 
+
+data Castel a = Empty | Single a | InitTail (Castel a, Castel a) deriving Show
 
 inC = either (const Empty) (either Single InitTail)
 
@@ -1307,8 +1311,6 @@ fC f = id -|- (id -|- f >< f )
 
 cataC f = f . fC (cataC f) .  outC
 anaC g = inC . fC(anaC g) . g
-
-
 \end{code}
 
 
@@ -1325,58 +1327,41 @@ anaC g = inC . fC(anaC g) . g
 }
 \end{equation*}
 
-\begin{math}
-\\
-
-|split avg length| \ = \ |cata (either b q|
-\\
+\begin{eqnarray*}
+\start
+|split avg length = cata (either b q)|
+%
 \just\equiv{ Univeral-cata }
-\newline 
-
-|split avg length| \ . \ |inL| \ = \ |cata (either b q| \ . \ |recL| |split avg length| 
-\newline
-\end{math}
-\newline
+%
+|split avg length . inL = cata (either b q) . recL (split avg length)|
+%
 \just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de |inL|, Definição de |recL|}
-\\
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                |split avg length| \ . \ singl = b \ . \ id \\ 
-                |split avg length| \ . \ cons = q \ . \ id \times |split avg length|
-    \end{array}
-  \right.
-\end{math}
-\newline\\
+%
+|lcbr(
+  split avg length . singl = b . id
+)(
+  split avg length . cons = q . id >< split avg length
+)|
+%
 \just\equiv{ Igualdade extensional, Natural-id }
-\\
-
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                (|split avg length| \ . \ singl) \ x = b \ x \\ 
-                (|split avg length| \ . \ cons) \ (x,xs) = (q \ . \ id \times |split avg length|) \ (x,xs)
-    \end{array}
-  \right.
-\end{math}
-\newline\\
+%
+|lcbr(
+  (split avg length . singl) x = b x
+)(
+  (split avg length . cons) (x,xs) = (q . id >< split avg length) (x,xs)
+)|
+%
 \just\equiv{ Def-comp, Natural-id, Def-x, Def-split, Definição de singl, Definição de cons }
-\\
+%
+|lcbr(
+  split avg length [x] = b x
+)(
+  split avg length (x:xs) = q (x, (avg xs, length xs))
+)|
+\qed
+\end{eqnarray*}
 
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                |split avg length| \ [x] = b \ x \\ 
-                |split avg length| \ (x:xs) = q \ (x, ( avg \ xs, length \ xs)) 
-    \end{array}
-  \right.
-\end{math}
 \newline\\
-
-
 
 Solução para listas não vazias:
 \begin{code}
@@ -1388,8 +1373,8 @@ avg = p1.avg_aux
 inL = either singl cons
 outL [a] = i1 a
 outL (a:x) = i2 (a,x)
-recL f = id -|- id >< f 
-cataL g = g . recL (cataL g) . outL 
+recL f = id -|- id >< f
+cataL g = g . recL (cataL g) . outL
 
 avg_aux = cataL (either b q) where
    b x = (x,1)
@@ -1404,57 +1389,40 @@ avg_aux = cataL (either b q) where
 }
 \end{equation*}
 
-\begin{math}
-\\
 
-|split avg length| \ = \ |cata (gene)|
-\\
+\begin{math}
+\start
+|split avg length = cata gene|
+%
 \just\equiv{ Univeral-cata, gene = |either b q| }
-\newline 
-
-|split avg length| \ . \ |inLTree| \ = \ |cata (either b q)| \ . \ |recLTree| |split avg length| 
-\newline
-\end{math}
-\newline
+%
+|split avg length . inLTree = cata (either b q) . recLTree (split avg length)|
+%
 \just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de inL, Definição de recLTree}
-\\
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                |split avg length| \ . \ |Leaf| = b \ . \ id \\ 
-                |split avg length| \ . \ |Fork| = q \ . \ |split avg length| \times |split avg length|
-    \end{array}
-  \right.
-\end{math}
-\newline\\
+%
+|lcbr(
+  split avg length . Leaf = b . id
+)(
+  split avg length . Fork = q . split avg length >< split avg length
+)|
+%
 \just\equiv{ Igualdade extensional, Natural-id }
-\\
-
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                (|split avg length| \ . \ |Leaf|) \ a = b \ a \\ 
-                (|split avg length| \ . \ |Fork|) \ (LTree \ a, LTree \ a) = (q \ . \ |split avg length| \times |split avg length|) \ (LTree \ a, LTree \ a)
-    \end{array}
-  \right.
-\end{math}
-\newline\\
+%
+|lcbr(
+  (split avg length . Leaf) a = b a
+)(
+  (split avg length . Fork) (LTree a, LTree a) = (q . split avg length >< split avg length) (LTree a, LTree a)
+)|
+%
 \just\equiv{ Def-comp, Natural-id, Def-x, Def-split, Definição de Leaf, Definição de Fork }
-\\
-
-
-\begin{math}
-  \left\{
-    \begin{array}{l}
-                |split avg length| \ |Leaf| \ a = b \ a \\ 
-                |split avg length| \ |Fork| (LTree \ a, LTree \ a) = q \ (( avg \ LTree \ a, length \ LTree \ a), ( avg \ LTree \ a, length \ LTree \ a)) 
-    \end{array}
-  \right.
+%
+|lcbr(
+  (split avg length) (Leaf a) = b a
+)(
+  (split avg length) (Fork (LTree a, LTree a)) = q ((avg (LTree a), length (LTree a)), (avg (LTree a), length (LTree a)))
+)|
+\qed
 \end{math}
-\newline\\
-
 
 
 Solução para árvores de tipo \LTree:
