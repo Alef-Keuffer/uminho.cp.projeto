@@ -1,4 +1,11 @@
 \documentclass[a4paper]{article}
+
+%================= local x=====================================================%
+\def\getGif#1{\includegraphics[width=0.3\textwidth]{cp2021t_media/#1.png}}
+\let\uk=\emph
+\def\aspas#1{``#1"}
+%================= lhs2tex=====================================================%
+%include polycode.fmt
 \usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
 \usepackage{palatino}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
@@ -11,12 +18,10 @@
 \definecolor{blue}{RGB}{0,0,255}
 \def\red{\color{red}}
 \def\blue{\color{blue}}
-%================= local x=====================================================%
-\def\getGif#1{\includegraphics[width=0.3\textwidth]{cp2021t_media/#1.png}}
-\let\uk=\emph
-\def\aspas#1{``#1"}
-%================= lhs2tex=====================================================%
-%include polycode.fmt
+
+\usepackage{stmaryrd}
+\usepackage{tikz}
+\usepackage[math-style=ISO]{unicode-math}
 %format (div (x)(y)) = x "\div " y
 %format succ = "\succ "
 %format ==> = "\Longrightarrow "
@@ -74,8 +79,8 @@
 %format (cataNat (g)) = "\cata{" g "}"
 %format Nat0 = "\N_0"
 %format Rational = "\Q "
-%format toRational = " to_\Q "
-%format fromRational = " from_\Q "
+%format toRational = " {to_\Q} "
+%format fromRational = " from_{\Q} "
 %format muB = "\mu "
 %format (frac (n)(m)) = "\frac{" n "}{" m "}"
 %format (fac (n)) = "{" n "!}"
@@ -96,12 +101,38 @@
 %format cdots = "\cdots "
 %format pi = "\pi "
 %format (curry (f)) = "\overline{" f "}"
-%format (cataLTree (x)) = "\llparenthesis\, " x "\,\rrparenthesis"
+
+%format sLTree = "_{" LTree "}"
+%format outLTree = "out" sLTree
+%format inLTree = "in" sLTree
+%format (cataLTree (x)) = "\cata{" x "\,}" sLTree
 %format (anaLTree (x)) = "\mathopen{[\!(}" x "\mathclose{)\!]}"
+
 %format delta = "\Delta "
 %format (ana (f)) = "\ana{" f "}"
 
+%format NList = "\mathsf{NList}"
 
+%format Castel = "\mathsf{Castel}"
+
+%format sl = "_{" [] "}"
+%format (anaList (g)) = "\ana{"g"}" sl
+%format (cataList (g)) = "\cata{" g "}" sl
+%format (hyloList (f) (g)) = "{\llbracket}{" f "," g "{\rrbracket}" sl
+%format (baseList (f) (g)) = "B_{[]}(" f "," g ")"
+
+%format sCastel = "_{"Castel"}"
+%format (cataC (g)) = "\cata{" g "}" sCastel
+%format (anaC (g)) = "\ana{" g "}" sCastel
+%format inC = "in" sCastel
+%format outC = "out" sCastel
+%format fC = "rec" sCastel
+
+%format NL = "_{"NList"}"
+%format inL = "in" NL
+%format outL = "out" NL
+%format recL = "rec" NL
+%format (cataL (g)) = "\cata{"g"}" NL
 %---------------------------------------------------------------------------
 
 \title{
@@ -194,6 +225,16 @@ o ``kit'' básico, escrito em \Haskell, para realizar o trabalho. Basta executar
 %if False
 \begin{code}
 {-# OPTIONS_GHC -XNPlusKPatterns #-}
+
+--- Extensões adicionadas por Alef para resoluções alternativas.
+--- Resouções principais não dependem delas.
+{-# LANGUAGE FlexibleInstances         #-}
+{-# LANGUAGE MultiParamTypeClasses     #-}
+{-# LANGUAGE LambdaCase                #-}
+{-# LANGUAGE TypeOperators             #-}
+{-# LANGUAGE UnicodeSyntax             #-}
+---
+
 {-# LANGUAGE GeneralizedNewtypeDeriving, DeriveDataTypeable, FlexibleInstances #-}
 module Main where
 import Cp
@@ -205,7 +246,7 @@ import Test.QuickCheck hiding ((><),choose,collect)
 import qualified Test.QuickCheck as QuickCheck
 import Graphics.Gloss
 import Graphics.Gloss.Interface.Pure.Game
-import Control.Monad
+import Control.Monad ( zipWithM )
 import Control.Applicative hiding ((<|>))
 import System.Process
 \end{code}
@@ -1024,7 +1065,7 @@ ad v = p2 . cataExpAr (ad_gen v)
 
 \begin{eqnarray*}
 \start
-|outExpAr . inExpAr = id|
+  |outExpAr . inExpAr = id|
 %
 \just\equiv{Definição de inExpAr; Fusão-+; Cancelamento-+}
 %
@@ -1076,16 +1117,15 @@ ad v = p2 . cataExpAr (ad_gen v)
 \qed
 \end{eqnarray*}
 
-\\
-\begin{equation*}
+
+\begin{eqnarray*}
 \xymatrix@@C=2cm{
     & ExpAr \ A\ar@@/^3pc/[r]^{outExpAr} \ar@@{{}{ }{}}@@/^1.8pc/[r]_{\cong}
     & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar@@/^3pc/[l]^{inExpAr}
 }
-\newline\\
-\end{equation*}
+\end{eqnarray*}
 
-\\
+
 \begin{eqnarray*}
 \start
 |recExprAr f = id + (id + (id >< (f >< f) + id >< f ))|
@@ -1095,56 +1135,46 @@ ad v = p2 . cataExpAr (ad_gen v)
 |recExprAr f = baseExpAr id id id f f id f|
 \qed
 \end{eqnarray*}
-\\
-\begin{equation*}
+
+\begin{center}
 \xymatrix@@C=2cm@@R=3cm{
     & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr}\ar[d]_{|cata (g_eval a)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |cata (g_eval a)|}\ar@@/^2pc/[l]^{inExpAr}  \\
     & |Nat0|  & 1 + |Nat0| + BinOp \times |Nat0|^2 + UnOp \times |Nat0|\ar[l]_(0.6){g\_eval \ a}
 }
-\end{equation*}
-\newline\\
-\\
-\\
-\begin{equation*}
+\end{center}
+
+\begin{center}
 \xymatrix@@C=2cm@@R=3cm{
     & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar@@/^2pc/[l]^{inExpAr}  \\
     & ExpAr \ A\ar[r]^(0.25){clean} \ar[u]^{|ana (clean)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[u]_{recExpAr \ |ana(clean)|}
 }
-\end{equation*}
-\newline\\
-\\
-\\
-\begin{equation*}
+\end{center}
+
+\begin{center}
 \xymatrix@@C=2cm@@R=3cm{
     & ExpAr \ A\ar[r]^(0.25){clean} \ar[d]_{|ana (clean)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |ana(clean)|}\\
     & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr}\ar[d]_{|cata (gopt a)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |cata (gopt a)|}\ar@@/^2pc/[l]^{inExpAr}  \\
     & |Nat0|  & 1 + |Nat0| + BinOp \times |Nat0|^2 + UnOp \times |Nat0|\ar[l]_(0.6){gopt \ a}
 }
-\end{equation*}
-\newline\\
-\\
-\\
-\begin{equation*}
+\end{center}
+
+\begin{center}
 \xymatrix@@C=2cm@@R=3cm{
-    & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr}\ar[d]_{|cata (sd_gen)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |cata (sd_gen)|}\ar@@/^2pc/[l]^{inExpAr}  \\
+    & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr}\ar[d]_{|cata (sd_gen)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{|recExpAr (cata (sd_gen))|}\ar@@/^2pc/[l]^{|inExpAr|}  \\
     & (ExpAr A)^2   & 1 + A + BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2) + UnOp \times (ExpAr A)^2\ar[l]_(0.73){sd\_gen}
 }
-\end{equation*}
-\newline\\
-\\
-\\
-\begin{equation*}
+\end{center}
+
+\begin{center}
 \xymatrix@@C=2cm@@R=3cm{
-    & ExpAr \ A\ar@@/^2pc/[r]^{outExpAr}\ar[d]_{|cata (ad_gen a)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{recExpAr \ |cata (ad_gen a)|}\ar@@/^2pc/[l]^{inExpAr}  \\
+    & ExpAr \ A\ar@@/^2pc/[r]^{|outExpAr|}\ar[d]_{|cata (ad_gen a)|} & 1 + A + BinOp \times (ExpAr A)^2 + UnOp \times (ExpAr A)\ar[d]^{|recExpAr (cata (ad_gen a))|}\ar@@/^2pc/[l]^{|inExpAr|}  \\
     & |Nat0|^2   & 1 + A + BinOp \times (|Nat0|^2 \times |Nat0|^2) + UnOp \times (|Nat0|^2)\ar[l]_(0.73){ad\_gen \ a }
 }
-\end{equation*}
-\newline\\
+\end{center}
+
 
 
 Definir:
-
-
 
 \begin{code}
 outExpAr X = i1 ()
@@ -1173,8 +1203,6 @@ clean a = (outExpAr . h)  a where
 
 
 gopt a = g_eval_exp a
-
-
 \end{code}
 
 \begin{code}
@@ -1218,7 +1246,8 @@ Apresentar de seguida a justificação da solução encontrada.
     \label{eq:cat}
 \end{eqnarray}
 
-$\begin{array}{cccc}
+\begin{math}
+\begin{array}{cccc}
  & C_{0} & = & 1\\
  & C_{n+1} & = & \frac{C_{n}a_{n}}{b_{n}}\\
 \\
@@ -1231,30 +1260,25 @@ $\begin{array}{cccc}
  & b_{0} & = & 2\\
  & b_{n+1} & = & b_{n}+1\\
 \\
-\end{array}$
+\end{array}
+\end{math}
+
 
 \subsection*{Problema 3}
-
-\\
-
-\begin{equation*}
+\begin{center}
 \xymatrix@@C=3cm@@R=2cm{
-    & |Rational|^*\ar@@/^2pc/[r]^{outList}\ar[d]_{|cata (h)|} & 1 + |Rational| \times |Rational|^* \ar[d]^{id + id \times |cata (h)|}\ar@@/^2pc/[l]^{inList}  \\
-    & |OverTime| \ |Rational|^*   & 1 + |Rational| \times |OverTime| \ |Rational|^* \ar[l]_{h = |either f g|}
+    & |Rational|^*\ar@@/^2pc/[r]^{|outList|}\ar[d]_{|cataList (h)|} & 1 + |Rational| \times |Rational|^* \ar[d]^{id + id \times |cataList (h)|}\ar@@/^2pc/[l]^{|inList|}  \\
+    & |OverTime| \ |Rational|^*   & 1 + |Rational| \times |OverTime| \ |Rational|^* \ar[l]_{|h = either f g|}
 }
-\end{equation*}
 \\
 \\
-\begin{equation*}
 \xymatrix@@C=3cm@@R=3cm{
-    & [|Rational|^*]\ar[r]^{coalg} \ar[d]_{|ana (coalg)|} & [|Rational|^*] + [|Rational|^*] \times [|Rational|^*]\ar[d]^{id + |ana(coalg)| \times |ana(coalg)|}\\
-    & LTree \ [|Rational|^*] \ar@@/^2pc/[r]^{outLTree}\ar[d]_{|cata (alg)|} & [|Rational|^*] + LTree \ [|Rational|^*] \times LTree \ [|Rational|^*] \ar[d]^{id + |cata (alg)| \times |cata (alg)| }\ar@@/^2pc/[l]^{inLTree}  \\
+    & [|Rational|^*]\ar[r]^{coalg} \ar[d]_{|anaList (coalg)|} & [|Rational|^*] + [|Rational|^*] \times [|Rational|^*]\ar[d]^{id + |anaList(coalg)| \times |anaList(coalg)|}\\
+    & LTree \ [|Rational|^*] \ar@@/^2pc/[r]^{|outLTree|}\ar[d]_{|cataLTree (alg)|} & [|Rational|^*] + LTree \ [|Rational|^*] \times LTree \ [|Rational|^*] \ar[d]^{id + |cataLTree (alg)| \times |cataLTree (alg)| }\ar@@/^2pc/[l]^{|inLTree|}  \\
     & |OverTime| \ |Rational|^*   & |Rational|^* + |OverTime| \ |Rational|^* \times |OverTime| \ |Rational|^* \ar[l]_(0.6){alg \ = \ |either a b|}
 }
-\end{equation*}
-\newline\\
+\end{center}
 
-\\
 
 \begin{code}
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
@@ -1279,18 +1303,17 @@ deCasteljau = hyloAlgForm alg  coalg where
         b (e,d) = \pt -> (calcLine (e pt) (d pt)) pt
 
 hyloAlgForm = hyloLTree
-
 \end{code}
 
-Uma outra solução para o deCasteljau, criando um novo tipo de dados intermedio.
 
+Uma outra solução para o deCasteljau, criando um novo tipo de dados intermedio.
 \begin{code}
 deCasteljau' :: [NPoint] -> OverTime NPoint
 deCasteljau' = hyloAlgForm' alg  coalg where
-   coalg = (id -|- (id -|- (split init  tail)))  . outSL
-   alg = either (const nil) a where
-    a = either const b where
-        b (e,d) = \pt -> (calcLine (e pt) (d pt)) pt
+  coalg = (id -|- (id -|- (split init  tail)))  . outSL
+  alg = either (const nil) a
+  a = either const b
+  b (e,d) = \pt -> (calcLine (e pt) (d pt)) pt
 
 outSL [] = i1 ()
 outSL [a] = i2 (i1 a)
@@ -1311,30 +1334,26 @@ outC (InitTail (e,d)) = i2 (i2 (e,d))
 fC f = id -|- (id -|- f >< f )
 
 cataC f = f . fC (cataC f) .  outC
-anaC g = inC . fC(anaC g) . g
+anaC g = inC . fC (anaC g) . g
 \end{code}
 
 
-
-
-
 \subsection*{Problema 4}
-
-
-\begin{equation*}
+\begin{center}
 \xymatrix@@C=3cm@@R=2cm{
-    & |Nat0|^*\ar@@/^2pc/[r]^{outL}\ar[d]_{|cata (either b q)|} & |Nat0| + |Nat0| \times |Nat0|^* \ar[d]^{id + id \times |cata (either b q)|}\ar@@/^2pc/[l]^{inL}  \\
+    & |Nat0|^*\ar@@/^2pc/[r]^{|outL|}\ar[d]_{|cataL (either b q) = avg_aux|} & |Nat0| + |Nat0| \times |Nat0|^* \ar[d]^{id + id \times |cataL (either b q)|}\ar@@/^2pc/[l]^{|inL|}  \\
     & |Nat0|\times \N  & |Nat0| + |Nat0|\times (|Nat0| \times \N) \ar[l]_{|either b q|}
 }
-\end{equation*}
+\end{center}
+
 
 \begin{eqnarray*}
 \start
-|split avg length = cata (either b q)|
+|split avg length = cataL (either b q)|
 %
 \just\equiv{ Univeral-cata }
 %
-|split avg length . inL = cata (either b q) . recL (split avg length)|
+|split avg length . inL = cataL (either b q) . recL (split avg length)|
 %
 \just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de |inL|, Definição de |recL|}
 %
@@ -1352,7 +1371,7 @@ anaC g = inC . fC(anaC g) . g
   (split avg length . cons) (x,xs) = (q . id >< split avg length) (x,xs)
 )|
 %
-\just\equiv{ Def-comp, Natural-id, Def-x, Def-split, Definição de singl, Definição de cons }
+\just\equiv{ Def-comp, Natural-id, Def-$\times$, Def-split, Definição de singl, Definição de cons }
 %
 |lcbr(
   split avg length [x] = b x
@@ -1362,7 +1381,7 @@ anaC g = inC . fC(anaC g) . g
 \qed
 \end{eqnarray*}
 
-\newline\\
+
 
 Solução para listas não vazias:
 \begin{code}
@@ -1370,7 +1389,6 @@ avg = p1.avg_aux
 \end{code}
 
 \begin{code}
-
 inL = either singl cons
 outL [a] = i1 a
 outL (a:x) = i2 (a,x)
@@ -1380,24 +1398,24 @@ cataL g = g . recL (cataL g) . outL
 avg_aux = cataL (either b q) where
    b x = (x,1)
    q (x,(a,l)) = ((x + (a*l)) / (l+1) ,l+1)
-
 \end{code}
-\\
-\begin{equation*}
+
+
+\begin{center}
 \xymatrix@@C=3cm@@R=2cm{
-    & LTree \ |Nat0|\ar@@/^2pc/[r]^{outLTree}\ar[d]_{|cata (gene)|} & |Nat0| + LTree \ |Nat0| \times LTree \ |Nat0| \ar[d]^{id + |cata (gene)| \times |cata (gene)|}\ar@@/^2pc/[l]^{inLTree}  \\
+    & LTree \ |Nat0|\ar@@/^2pc/[r]^{|outLTree|}\ar[d]_{|cataLTree (gene)|} & |Nat0| + LTree \ |Nat0| \times LTree \ |Nat0| \ar[d]^{id + |cataLTree (gene)| \times |cataLTree (gene)|}\ar@@/^2pc/[l]^{|inLTree|}  \\
     & |Nat0|\times \N  & |Nat0| + (|Nat0| \times \N) \times (|Nat0| \times \N) \ar[l]_{gene \ = \ |either b q|}
 }
-\end{equation*}
+\end{center}
 
 
 \begin{math}
 \start
-|split avg length = cata gene|
+|split avg length = cataLTree gene|
 %
 \just\equiv{ Univeral-cata, gene = |either b q| }
 %
-|split avg length . inLTree = cata (either b q) . recLTree (split avg length)|
+|split avg length . inLTree = cataLTree (either b q) . recLTree (split avg length)|
 %
 \just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de inL, Definição de recLTree}
 %
@@ -1415,7 +1433,7 @@ avg_aux = cataL (either b q) where
   (split avg length . Fork) (LTree a, LTree a) = (q . split avg length >< split avg length) (LTree a, LTree a)
 )|
 %
-\just\equiv{ Def-comp, Natural-id, Def-x, Def-split, Definição de Leaf, Definição de Fork }
+\just\equiv{ Def-comp, Natural-id, Def-$\times$, Def-split, Definição de Leaf, Definição de Fork }
 %
 |lcbr(
   (split avg length) (Leaf a) = b a
@@ -1428,10 +1446,10 @@ avg_aux = cataL (either b q) where
 
 Solução para árvores de tipo \LTree:
 \begin{code}
-avgLTree = p1.cataLTree gene where
-   gene = either b q where
-      b a = (a,1)
-      q((a1,l1),(a2,l2)) = (((a1*l1)+(a2*l2))/(l1+l2),l1+l2)
+avgLTree = p1 . cataLTree (gene) where
+  gene = either b q
+  b a = (a,1)
+  q((a1,l1),(a2,l2)) = (((a1*l1)+(a2*l2))/(l1+l2),l1+l2)
 \end{code}
 
 
@@ -1441,6 +1459,667 @@ Inserir em baixo o código \Fsharp\ desenvolvido, entre \verb!\begin{verbatim}! 
 
 \begin{verbatim}
 \end{verbatim}
+
+\section{Resoluções Alternativas e Simplificações sugeridas por Alef}
+%format outUnOp = "out_{" UnOp "}"
+%format outBinOp = "out_{" BinOp "}"
+
+%format out = "out_{A^{*}\times B^{*}}"
+
+%format sl = "_{" [] "}"
+%format (anaList (g)) = "\ana{"g"}" sl
+%format (cataList (g)) = "\cata{" g "}" sl
+%format (hyloList (f) (g)) = "{\llbracket}{" f "," g "}{\rrbracket}" sl
+%format (baseList (f) (g)) = "B_{[]}(" f "," g ")"
+
+%format sCastel = "_{Castel}"
+%format (cataC (g)) = "\cata{" g "}" sCastel
+%format (anaC (g)) = "\ana{" g "}" sCastel
+%format inC = "in" sCastel
+%format outC = "out" sCastel
+
+%format NL = "_{"NList"}"
+%format outL = "out" NL
+%format recL = "rec" NL
+%format (cataL (g)) = "\cata{"g"}" NL
+
+%format ℚ = "\BbbQ"
+
+%format ⊕ = "+"
+
+%format (cataCastel (g)) = "\cata{" g "}_{Castel}"
+%format (anaCastel (g)) = "\ana{" g "}_{Castel}"
+%format inCastel = "in_{" Castel "}"
+%format outCastel = "out_{" Castel "}"
+%format fC  = "T_{Castel}"
+
+%format ExpAr = "\mathsf{ExpAr}"
+%format sExpAr = "{_{"ExpAr"}}"
+%format outExpAr = "out" sExpAr
+
+Nessa seção mostro uma forma alternativa que percebi
+de resolver alguns problemas que não poderiam ser colocadas
+na seção principal por alguma razão, entre elas por
+usarem extensões que não estavam já no trabalho.
+
+Também tem simplificações triviais que acho que,
+para alguns pode facilitar o entendimento. São simplesmente
+funções que já estão no trabalho reescritas com uma sintaxe
+mais simples em Haskell (muitas vezes usando lambda case).
+Conversando com o Tiago, ele achou que seria
+mais complicado explicar dessa forma. Como no final são equivalentes,
+decidi deixar aqui caso alguém ache mais fácil ou simplesmente esteja
+interessado em ver um pouco mais da sintaxe de Haskell, já que a última
+vez que tivemos uma cadeira que usasse a linguagem diretamente foi no
+1° ano.
+
+\subsection{Problema 1}
+Para criar uma interpretação de um tipo |A| como um tipo |B|. Assim, por exemplo,
+posso definir que uma expressão $x$ do tipo |ExpAr a| pode ser interpretada como
+|Left ()| do tipo |OutExpAr a|.
+\begin{code}
+class Interpretation a b where
+    to ∷ a → b
+\end{code}
+
+
+A fim de diminuir o número de parêntese e facilitar a legibilidade defini as funções:
+
+bimap de tuplos (|(,)|):
+\begin{code}
+infixr 6 ×
+type a × b = (a, b)
+(×) ∷ (a → b) → (c → d) → (a, c) → (b, d)
+(×) = (><)
+\end{code}
+
+
+bimap de |Either|:
+\begin{code}
+infixr 4 ⊕
+(⊕) ∷ (a → b) → (c → d) → a ∐ c → b ∐ d
+(⊕) = (-|-)
+\end{code}
+
+
+\begin{code}
+infixr 4 ∐
+type (∐) = Either
+(∐) ∷ (a → c) → (b → c) → a ∐ b → c
+(∐) = either
+\end{code}
+
+
+Novamente, para simplificar a tipagem:
+\begin{code}
+type BinExp d = BinOp × ExpAr d × ExpAr d
+\end{code}
+Note que por conta de precedência |BinExp d ≡ BinOp × (ExpAr d × ExpAr d)|.
+
+\begin{code}
+type UnExp d = UnOp × ExpAr d
+\end{code}
+
+
+Isso é uma redefinição do que o Professor definiu.
+É igual excepto os símbolos mais fáceis de ler.
+%format OutExpAr' = OutExpAr
+\begin{code}
+type OutExpAr' a = () ∐ a ∐ BinExp a ∐ UnExp a
+\end{code}
+
+
+Vamos criar uma interpretação de |ExpAr a| como |OutExpAr a|.
+Ou seja, essa interpretação é |outExpAr|.
+\begin{code}
+instance Interpretation (ExpAr a) (OutExpAr a) where
+  to X             = i1 ()
+  to (N a       )  = i2 $ i1 a
+  to (Bin op l r)  = i2 $ i2 $ i1 (op, (l, r))
+  to (Un op a   )  = i2 $ i2 $ i2 (op, a)
+\end{code}
+
+
+Como dito, temos
+%format outExpAr' = outExpAr
+\begin{code}
+outExpAr' ∷ ExpAr a → OutExpAr a
+outExpAr' = to ∷ ExpAr a → OutExpAr a
+\end{code}
+
+Agora vou interpretar os símbolos que representam as operações como
+as funções que representam essas operações.
+
+
+Interpretamos cada símbolo |BinOp| como uma função |(c,c) → c|.
+Por exemplo, o símbolo |Sum| é interpretado como a função |add|.
+\begin{code}
+instance (Num c) ⇒ Interpretation BinOp ((c, c) → c) where
+  to Sum      = add
+  to Product  = mul
+\end{code}
+
+
+Na nossa linguagem mais usual:
+\begin{code}
+outBinOp ∷ Num c ⇒ BinOp → (c × c) → c
+outBinOp = to ∷ (Num c) ⇒ BinOp → (c × c → c)
+\end{code}
+
+
+Interpretamos cada símbolo |UnOp| como uma função |c→c| onde |c|
+é da classe |Floating|.
+\begin{code}
+instance (Floating c) ⇒ Interpretation UnOp (c → c) where
+  to Negate  = negate
+  to E       = Prelude.exp
+\end{code}
+
+
+Na nossa linguagem mais usual
+\begin{code}
+outUnOp ∷ Floating c ⇒ UnOp → (c → c)
+outUnOp = to ∷ (Floating c) ⇒ UnOp → (c → c)
+\end{code}
+
+%format recExpAr' = recExpAr
+%format g_eval_exp' = g_eval_exp
+
+%if False
+\begin{code}
+recExpAr' ∷ (a → e) → b ∐ c ∐ d × a × a ∐ g × a → b ∐ c ∐ d × e × e ∐ g × e
+recExpAr' f = baseExpAr id id id f f id f
+\end{code}
+%endif
+
+Graças a essas funções auxiliares (que acho intuitivas),
+podemos simplificar a escrita de |g_eval_exp'|:
+\begin{code}
+g_eval_exp' ∷ Floating c ⇒ c → b ∐ c ∐ BinOp × c × c ∐ UnOp × c → c
+g_eval_exp' a = const a ∐ id ∐ ap . (outBinOp × id) ∐ ap . (outUnOp × id)
+\end{code}
+
+
+Sabemos que $e^0 = 1$, $-0 = 0$ e
+$a = 0 ∨ b = 0 ⟹ ab = 0$.
+Nós optimizamos esses 4 casos:
+%format clean' = clean
+\begin{code}
+clean' ∷ (Eq a, Num a) ⇒ ExpAr a → OutExpAr a
+clean' = \case
+  (Un   E        (N 0)       )  → tag 1
+  (Un   Negate   (N 0)       )  → tag 0
+  (Bin  Product  (N 0)  _    )  → tag 0
+  (Bin  Product  _      (N 0))  → tag 0
+  a                             → outExpAr a
+  where tag = i2 . i1
+\end{code}
+
+%format gopt' = gopt
+%if False
+\begin{code}
+gopt' ∷ Floating a ⇒ a → () ∐ a ∐ BinOp × a × a ∐ UnOp × a → a
+gopt' = g_eval_exp
+\end{code}
+%endif
+
+Baseado na função |dup| definida em \texttt{Cp.hs}:
+\begin{code}
+type Dup d = d × d
+\end{code}
+
+
+Mais dois sinônimos:
+\begin{code}
+type Bin d  = BinOp × Dup d
+type Un d   = UnOp × d
+\end{code}
+
+%{
+%format e1
+%format e2
+%format d1
+%format d2
+%format un1  = "\circleddash"
+%format un2 = "\boxminus"
+%format ^^ = "\;"
+%format '(⊛)' = "⊛"
+%subst dummy = "{}"
+%format bin_aux (f) (g) h = "{bin}_{aux}" ^^ f ^^ g ^^ h
+%format un_aux f (g) h i = "{un}_{aux}" ^^ f ^^ g ^^ h ^^ i
+
+
+A fim de criar código mais sucinto extrai o que se
+repetia nas funções |sd_gen| e |ad_gen| do Tiago.
+\begin{code}
+bin_aux ∷ (t → t → t) → (t → t → t) → (BinOp, Dup (Dup t)) → Dup t
+bin_aux (♢) (□) (op, ((e1, d1), (e2, d2))) = case op of
+  Sum      → (e1 ♢ e2, d1 ♢ d2)
+  Product  → (e1 □ e2, (e1 □ d2) ♢ (d1 □ e2))
+
+un_aux ∷ (a → b) → (b → a → b) → (a → b) → (UnOp, Dup a) → Dup b
+un_aux un1 (⊛) un2 (op, (e, d)) = case op of
+  Negate  → (un1 e, un1 d)
+  E       → (un2 e, (un2 e) ⊛ d)
+\end{code}
+%}
+
+%format bin_aux = "{bin}_{aux}"
+%format un_aux = "{un}_{aux}"
+
+
+Agora podemos escrever:
+%format sd_gen' = sd_gen
+%format ad_gen' = ad_gen
+\begin{code}
+sd_gen' ∷ Floating a ⇒ () ∐ a ∐ Bin (Dup (ExpAr a)) ∐ Un (Dup (ExpAr a)) → Dup (ExpAr a)
+sd_gen' = f ∐ g ∐ h ∐ k where
+  f    = const (X, N 1)
+  g a  = (N a, N 0)
+  h    = bin_aux (Bin Sum) (Bin Product)
+  k    = un_aux (Un Negate) (Bin Product) (Un E)
+
+ad_gen' ∷ Floating a ⇒ a → () ∐ a ∐ (BinOp, Dup (Dup a)) ∐ (UnOp, Dup a) → Dup a
+ad_gen' x = f ∐ g ∐ h ∐ k where
+  f    = const (x, 1)
+  g a  = (a, 0)
+  h    = bin_aux (+) (*)
+  k    = un_aux negate (*) expd
+\end{code}
+
+%if False
+\subsection{Problema 2}
+%format loop' = loop
+%format prj' = prj
+%format cat' = cat
+%format inic' = inic
+\begin{code}
+loop' ∷ Integral c ⇒ (c, c, c) → (c, c, c)
+loop' = g where g (a, b, c) = (div (a * b) c, b + 4, c + 1)
+
+prj' ∷ (a, b, c) → a
+prj' = p where p (a, _, _) = a
+
+inic' ∷ (Num a, Num b, Num c) ⇒ (a, b, c)
+inic' = (1, 2, 2)
+
+cat' ∷ (Integral c1, Integral c2) ⇒ c1 → c2
+cat' = prj' . for loop' inic'
+\end{code}
+%endif
+
+
+
+\subsection{Problema 3}
+%{
+%format sequenceA'1 = sequenceA'
+%format calcLine'1 = calcLine
+%format (fmap (f)) = "T_{[]}" f
+%format (fmap2 (f)) = "T" f
+%format zipWithM'2 = zipWithM'
+%format zipWithM'3 = zipWithM'
+%format zipWithM''4 = zipWithM'
+%format zipWithM''5 = zipWithM'
+%format zipWithM''6 = zipWithM'
+%format zipWithM''7 = zipWithM'
+%format zipWithM''8 = zipWithM'
+%format zipWithM''9 = zipWithM'
+%format zipWithM''10 = zipWithM'
+%format zipWithM''11 = zipWithM'
+%format zipWithM''12 = zipWithM'
+%format zipWithM''13 = zipWithM'
+%format zipWithM''14 = zipWithM'
+%format zipWithM''15 = zipWithM'
+É interessante ver que podemos ver |calcLine| como um hilomorfismo.
+
+A ideia que levou a isso parte da definição alternativa
+|calcLine = zipWithM linear1d|.
+
+
+Sabemos que:
+\begin{spec}
+zipWithM ∷ (Applicative m) ⇒ (a → b → m c) → [a] → [b] → m [c]
+zipWithM f xs ys = sequenceA (zipWith f xs ys)
+\end{spec}
+
+
+Percebi que podia escrever uma função (|curry zip|):
+\begin{code}
+zip' ∷ [a] × [b] → [a × b]
+zip' = anaList out
+\end{code}
+
+
+Desde que transforme os pares de lista de uma forma que respeite
+o funcionamento de |zipWith| que será descrito em seguida dessa definição:
+\begin{code}
+out ∷ [a] × [b] → Either () ((a × b) × ([a] × [b]))
+out = \case
+  ([],_)            → i1 ()
+  (_,[])            → i1 ()
+  (a : as, b : bs)  → i2 ((a,b) , (as,bs))
+\end{code}
+
+
+|zipWith| pega uma função (de aridade 2), por exemplo, $f$, e
+duas listas (digamos $a$ e $b$) e devolve uma lista (digamos $c$)
+onde $c[i] = f(a[i],b[i])$ para todo $0≤i≤|min(length a,length b)|$.
+
+
+Ora, então posso pegar uma função curried e pegar uma par de listas.
+Transformo o par de listas numa lista de pares com |out| e aplico a
+função argumento em cada um dos pares. Logo tenho a seguinte definição:
+\begin{code}
+zipWith' ∷ ((a × b) → c) → ([a] × [b]) → [c]
+zipWith' f = (fmap f) . zip'
+\end{code}
+
+
+A próxima etapa é baseada nas seguintes definições
+\begin{spec}
+sequenceA ∷ Applicative f ⇒ t (f a) → f (t a)
+sequenceA = traverse id
+
+traverse ∷ Applicative f ⇒ (a → f b) → t a → f (t b)
+traverse f = sequenceA . fmap f
+\end{spec}
+
+
+Ora, vamos ver como |traverse| é definido para listas
+\begin{spec}
+instance Traversable [] where
+    traverse f = foldr cons_f (pure [])
+      where cons_f x ys = liftA2 (:) (f x) ys
+\end{spec}
+
+
+Vou criar um |sequenceA'| (será uma versão menos genérica de |sequenceA|
+uma vez que estamos sendo específicos no trabalho com listas).
+\begin{spec}
+sequenceA = traverse id = foldr cons_f (pure []) where
+  cons_f x ys = liftA2 (:) x ys
+\end{spec}
+
+
+Já fizemos o catamorfismo para |foldr| nas aulas:
+\begin{code}
+foldrC :: (a -> b -> b) -> b -> [a] -> b
+foldrC f u = cataList (either (const u) (uncurry f))
+\end{code}
+
+
+Então temos:
+\begin{code}
+sequenceA'1 ∷ Applicative f ⇒ [f a] → f [a]
+sequenceA'1 = cataList (either b (uncurry g)) where
+  b = (const (pure []))
+  g x ys = liftA2 (:) x ys
+\end{code}
+
+
+Sabemos que, em |Applicative ((→) r)|, @pure = const@ e
+|liftA2 q f g x = q (f x) (g x)|. Logo:
+\begin{code}
+sequenceA' ∷ [a → b] → a → [b]
+sequenceA' = cataList (either b (uncurry g)) where
+  b = (const (const []))
+  g x ys = (\z → x z : ys z)
+\end{code}
+
+
+
+Lembre que |zipWithM'| como vimos recebia duas listas. No nosso caso
+essas duas listas (digamos |xs| e |ys|) estão em um só argumento |t=(xs,ys)|
+A seguir seguem uma série de equivalências. Dentro de cada @{}@ está uma
+explicação/justificativa do que foi feito de uma passo para outro.
+\def\commentbegin{\quad\{\ }
+\def\commentend{\}}
+\begin{code}
+zipWithM'2 f t  = sequenceA' (zipWith' f t)
+
+{- |(.) f g = \x -> f (g x)| -}
+
+zipWithM'3 f    = sequenceA' . zipWith' f
+
+{- Def-|zipWith'| -}
+
+zipWithM''4 f   = sequenceA' . (fmap f . zip')
+
+{- Assoc-comp -}
+
+zipWithM''5 f   = (sequenceA' . fmap f) . zip'
+
+{- Def-|sequenceA'| -}
+
+zipWithM''6 f   = (cataList (either (const (const [])) (uncurry g)) . fmap f) . zip' where g x ys = (\z → x z : ys z)
+
+{- Absorção-cata -}
+
+zipWithM''7 f   = cataList (either (const (const [])) (uncurry g) . (baseList f id)) . zip' where g x ys = (\z → x z : ys z)
+
+{- Def-baseList -}
+
+zipWithM''8 f   = cataList (either (const (const [])) (uncurry g) . (id ⊕ f × id)) . zip' where g x ys = (\z → x z : ys z)
+
+{- Absorção-|⊕|; Natural-const -}
+
+zipWithM''9 f   = cataList (either (const (const [])) (uncurry g . (f × id))) . zip' where g x ys  = (\z → x z : ys z)
+
+{- |(.) f g = \x -> f (g x)| -}
+
+zipWithM''10 f  = cataList (either (const (const [])) (\(a,b) → (uncurry g) ((f × id) (a,b)))) . zip' where g x ys = (\z → x z : ys z)
+
+{- Def-|×| -}
+
+zipWithM''11 f  = cataList (either (const (const [])) (\(a,b) → g (f a, b))) . zip' where g (x, ys) = (\z → x z : ys z)
+
+{- Deixe que |h= (\(a,b) → g (f a, b))|; Notação-|\| -}
+
+zipWithM''12 f  = cataList (either (const (const [])) h) . zip' where h (a,b) = (\z → (f a) z: b z)
+
+{- Def-|zip'|; Notação-|\| -}
+
+zipWithM''13 f  = cataList (either (const (const [])) h) . (anaList out) where h (a,b) z = (f a) z : b z
+
+{- catamorfismo após anamorfismo é um hilomorfismo -}
+
+zipWithM''14 f  = hyloList (either (const (const [])) h) out where h (a,b) z = (f a) z : b z
+
+zipWithM''15 f  = hyloList (either (const (const [])) h) out where h (a,b) = cons . split (f a) b
+\end{code}
+
+
+Portanto, lembrando que |calcLine = zipWithM linear1d|
+e tendo em mente que |calcLine ∷ [ℚ] → [ℚ] → Float → [ℚ]|,
+mas |zipWithM''15 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]|
+%format calcLine' = calcLine
+\begin{code}
+calcLine'1 = curry (zipWithM''15 (uncurry linear1d))
+
+{- Def-|zipWithM''15| -}
+
+calcLine' = curry (hyloList (either (const (const [])) h) out) where h (a,b) = cons . split (uncurry linear1d a) b
+\end{code}
+
+%if False
+\begin{code}
+calcLine'1 ∷ [ℚ] → [ℚ] → Float → [ℚ]
+calcLine' ∷ [ℚ] → [ℚ] → Float → [ℚ]
+
+zipWithM'2 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM'3 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+
+zipWithM''4 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM''5 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM''6 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM''7 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM''8 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM''9 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM''10 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM''11 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM''12 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM''13 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM''14 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM''15 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+
+
+zipWithM'4 =  sequenceA' ° zipWith'
+zipWithM'5 =  sequenceA' ° zipWith'
+zipWithM'6 =  sequenceA' ° (fmap << zip')
+zipWithM'7 =  (sequenceA' ° fmap) << zip'
+zipWithM'8 =  ((fmap) sequenceA' . fmap) << zip'
+zipWithM'4 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM'5 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM'6 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM'7 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+zipWithM'8 ∷ ((a × b) → c → d) → ([a] × [b]) → c → [d]
+\end{code}
+%endif
+%}
+
+%format deCasteljau'' = deCasteljau
+%format outSL' = outSL
+%format hyloAlgForm'' = hyloAlgForm
+%format fC' = fC
+
+
+%if False
+\begin{code}
+deCasteljau'' ∷ [NPoint] → OverTime NPoint
+deCasteljau'' = hyloAlgForm'' alg coalg where
+   coalg = (id ⊕ id ⊕ split init tail) . outSL'
+   alg = const nil ∐ a
+   a = const ∐ b
+   b (e,d) pt = calcLine' (e pt) (d pt) pt
+\end{code}
+%endif
+
+\subsubsection{Notação case}
+
+Notação lambda simplifica expressão das funções:
+\begin{code}
+outSL' ∷ [a] → () ∐ a ∐ [a]
+outSL' = \case
+  []   → i1 ()
+  [a]  → i2 (i1 a)
+  l    → i2 (i2 l)
+\end{code}
+
+
+%if False
+\begin{code}
+hyloAlgForm'' ∷ (() ∐ b ∐ c × c → c) → (a → d ∐ b ∐ a × a) → a → c
+hyloAlgForm'' = h where
+    h a b = cataCastel a . anaCastel b
+
+newtype Castel' a = Castel' (() ∐ a ∐ Castel a × Castel a)
+data Castel'' a = Empty' | Single' a | InitTail' (Castel a × Castel a) deriving Show
+
+inCastel ∷ b ∐ a ∐ Castel a × Castel a → Castel a
+inCastel = const Empty ∐ Single ∐ InitTail
+\end{code}
+%endif
+
+
+A notação case que acho mais simples mas requer uma extensão não usada no trabalho.
+\begin{code}
+outCastel ∷ Castel a → () ∐ a ∐ Castel a × Castel a
+outCastel = \case
+  Empty           → i1 ()
+  Single a        → i2 (i1 a)
+  InitTail (e,d)  → i2 (i2 (e,d))
+\end{code}
+
+%if False
+\begin{code}
+fC' ∷ (a → d) → b1 ∐ b2 ∐ a × a → b1 ∐ b2 ∐ d × d
+fC' f = id ⊕ id ⊕ f × f
+
+cataCastel ∷ (() ∐ b ∐ d × d → d) → Castel b → d
+cataCastel f = f . fC (cataCastel f) . outCastel
+anaCastel ∷ (a1 → b ∐ a2 ∐ a1 × a1) → a1 → Castel a2
+anaCastel g = inCastel . fC (anaCastel g) . g
+\end{code}
+%endif
+
+
+\subsection{Problema 4}
+%format outL' = outL
+\subsubsection{Notação case}
+Notação lambda facilita legibilidade:
+\begin{code}
+outL' ∷ [a] → a ∐ a × [a]
+outL' = \case
+  [a]   → i1 a
+  (a:x) → i2 (a,x)
+\end{code}
+
+%format recL' = recL
+%format cataL' = cataL
+%if False
+\begin{code}
+recL' ∷ (c → d) → (b1 ∐ b2 × c) → b1 ∐ b2 × d
+recL'  f   = id ⊕ id × f
+
+cataL' ∷ (b ∐ b × d → d) → [b] → d
+cataL' g   = g . recL (cataL g) . outL
+\end{code}
+%endif
+
+%{
+%format a1
+%format a2
+%format l1
+%format l2
+
+%format avg_aux' = avg_aux
+%format avgLTree' = avgLTree
+
+%if False
+\begin{code}
+avg_aux' ∷ Fractional b ⇒ [b] → (b × b)
+avg_aux' = cataL (either b q) where
+   b a = (a,1)
+   q (h,(a,l)) = ((h + (a*l)) / (l+1) ,l+1)
+\end{code}
+%endif
+
+%if False
+\begin{code}
+avgLTree' ∷ Fractional b ⇒ LTree b → b
+avgLTree' = p1 . cataLTree (either g q) where
+  g a = (a,1)
+  q((a1,l1),(a2,l2)) = (((a1*l1)+(a2*l2))/(l1+l2),l1+l2)
+\end{code}
+%endif
+%}
+
+
+%if False
+\begin{code}
+infixr 9 °
+(°) ∷ (Functor f, Functor g) ⇒ (a → b) → f (g a) → f (g b)
+(°) = fmap . fmap
+
+(°°) ∷ (Functor f1, Functor g, Functor f2) ⇒(a → b) → f1 (g (f2 a)) → f1 (g (f2 b))
+(°°) = (°) . fmap
+
+infixr 8 <<
+(<<) ∷ (a1 → b → c) → (a2 → b) → a1 → a2 → c
+g << f = (. f) . g
+\end{code}
+%endif
+
+%if False
+\begin{code}
+type ℚ = Rational
+toℚ ∷ Real a ⇒ a → ℚ
+toℚ = toRational
+fromℚ ∷ Fractional a ⇒ ℚ → a
+fromℚ = fromRational
+\end{code}
+%endif
+
 
 %----------------- Fim do anexo com soluções dos alunos ------------------------%
 

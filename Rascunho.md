@@ -167,6 +167,23 @@ calcLine' = (sequenceA' .) . zipWith' linear1d
 calcLine' = (sequenceA' .) . ((fmap (uncurry linear1d) .) . zip)
 ```
 
+\begin{spec}
+  sequenceA = traverse id
+
+==  {- Def-|transverse| -}
+
+  sequenceA = sequenceA . 𝑇 id
+
+== {- Def-mapa-cata -}
+
+   sequenceA = sequenceA . ⦇in . 𝐵(id,id)⦈
+k = ⦇in . 𝐵(id,id)⦈ ≡ k . in = in . 𝐵(id,id) . 𝐵(id,k)
+                    ≡ k . in = in . 𝐵(id,k)
+                    ≡ k = ⦇in⦈
+==
+
+
+\end{spec}
 
 ```text
 zipWithM f xs ys  =  sequenceA (zipWith f xs ys)
