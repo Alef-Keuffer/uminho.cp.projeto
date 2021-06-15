@@ -1270,8 +1270,11 @@ Apresentar de seguida a justificação da solução encontrada.
     & |Rational|^*\ar@@/^2pc/[r]^{|outList|}\ar[d]_{|cataList (h)|} & 1 + |Rational| \times |Rational|^* \ar[d]^{id + id \times |cataList (h)|}\ar@@/^2pc/[l]^{|inList|}  \\
     & |OverTime| \ |Rational|^*   & 1 + |Rational| \times |OverTime| \ |Rational|^* \ar[l]_{|h = either f g|}
 }
+\end{center}
+
 \\
-\\
+
+\begin{center}
 \xymatrix@@C=3cm@@R=3cm{
     & [|Rational|^*]\ar[r]^{coalg} \ar[d]_{|anaList (coalg)|} & [|Rational|^*] + [|Rational|^*] \times [|Rational|^*]\ar[d]^{id + |anaList(coalg)| \times |anaList(coalg)|}\\
     & LTree \ [|Rational|^*] \ar@@/^2pc/[r]^{|outLTree|}\ar[d]_{|cataLTree (alg)|} & [|Rational|^*] + LTree \ [|Rational|^*] \times LTree \ [|Rational|^*] \ar[d]^{id + |cataLTree (alg)| \times |cataLTree (alg)| }\ar@@/^2pc/[l]^{|inLTree|}  \\
