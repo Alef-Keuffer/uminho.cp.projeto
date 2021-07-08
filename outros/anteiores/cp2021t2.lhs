@@ -1354,9 +1354,9 @@ anaC g = inC . fC (anaC g) . g
 \start
 |split avg length = cataL (either b q)|
 %
-\just\equiv{ Universal-cata }
+\just\equiv{ Univeral-cata }
 %
-|split avg length . inL = (either b q) . recL (split avg length)|
+|split avg length . inL = cataL (either b q) . recL (split avg length)|
 %
 \just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de |inL|, Definição de |recL|}
 %
@@ -1416,9 +1416,9 @@ avg_aux = cataL (either b q) where
 \start
 |split avg length = cataLTree gene|
 %
-\just\equiv{ Universal-cata, gene = |either b q| }
+\just\equiv{ Univeral-cata, gene = |either b q| }
 %
-|split avg length . inLTree = (either b q) . recLTree (split avg length)|
+|split avg length . inLTree = cataLTree (either b q) . recLTree (split avg length)|
 %
 \just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de inL, Definição de recLTree}
 %

@@ -1954,9 +1954,9 @@ Uma outra solução para o deCasteljau, criando um novo tipo de dados intermedio
 \start
 \ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}_{\mathsf{NList}}}
 %
-\just\equiv{ Universal-cata }
+\just\equiv{ Univeral-cata }
 %
-\ensuremath{\conj{\Varid{avg}}{\length }\comp in_{\mathsf{NList}}\mathrel{=}\alt{\Varid{b}}{\Varid{q}}\comp rec_{\mathsf{NList}}\;\conj{\Varid{avg}}{\length }}
+\ensuremath{\conj{\Varid{avg}}{\length }\comp in_{\mathsf{NList}}\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}_{\mathsf{NList}}\comp rec_{\mathsf{NList}}\;\conj{\Varid{avg}}{\length }}
 %
 \just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de \ensuremath{in_{\mathsf{NList}}}, Definição de \ensuremath{rec_{\mathsf{NList}}}}
 %
@@ -2019,9 +2019,9 @@ Solução para listas não vazias:
 \start
 \ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\Varid{gene}\,}_{\mathsf{LTree}}}
 %
-\just\equiv{ Universal-cata, gene = \ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
+\just\equiv{ Univeral-cata, gene = \ensuremath{\alt{\Varid{b}}{\Varid{q}}} }
 %
-\ensuremath{\conj{\Varid{avg}}{\length }\comp in_{\mathsf{LTree}}\mathrel{=}\alt{\Varid{b}}{\Varid{q}}\comp \Varid{recLTree}\;\conj{\Varid{avg}}{\length }}
+\ensuremath{\conj{\Varid{avg}}{\length }\comp in_{\mathsf{LTree}}\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}\,}_{\mathsf{LTree}}\comp \Varid{recLTree}\;\conj{\Varid{avg}}{\length }}
 %
 \just\equiv{ Fusão-+, Absorção-+, Eq-+, Definição de inL, Definição de recLTree}
 %
