@@ -5,14 +5,14 @@
 \indexentry{Programação!literária|hyperpage}{1}
 \indexentry{Programação!literária|hyperpage}{1}
 \indexentry{Cálculo de Programas!Material Pedagógico|hyperpage}{1}
-\indexentry{\LaTeX !\texttt  {lhs2TeX}|hyperpage}{1}
-\indexentry{\LaTeX |hyperpage}{1}
+\indexentry{\LaTeX  !\texttt  {lhs2TeX}|hyperpage}{1}
+\indexentry{\LaTeX  |hyperpage}{1}
 \indexentry{Haskell|hyperpage}{1}
 \indexentry{Haskell!Literate Haskell|hyperpage}{1}
 \indexentry{Haskell!interpretador!GHCi|hyperpage}{2}
 \indexentry{Cálculo de Programas|hyperpage}{2}
-\indexentry{\LaTeX !\texttt  {bibtex}|hyperpage}{2}
-\indexentry{\LaTeX !\texttt  {makeindex}|hyperpage}{2}
+\indexentry{\LaTeX  !\texttt  {bibtex}|hyperpage}{2}
+\indexentry{\LaTeX  !\texttt  {makeindex}|hyperpage}{2}
 \indexentry{Haskell!QuickCheck|hyperpage}{2}
 \indexentry{Haskell|hyperpage}{2}
 \indexentry{Haskell!Gloss|hyperpage}{2}
@@ -28,13 +28,13 @@
 \indexentry{Função!\emph  {uncurry}|hyperpage}{3}
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{3}
 \indexentry{Programação!dinâmica|hyperpage}{5}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{5}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{5}
 \indexentry{Functor|hyperpage}{5}
 \indexentry{Cálculo de Programas|hyperpage}{5}
-\indexentry{Função!$\pi _1$|hyperpage}{6}
+\indexentry{Função!$\mitpi _1$|hyperpage}{6}
 \indexentry{Função!\emph  {for}|hyperpage}{6}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{6}
-\indexentry{Função!$\pi _1$|hyperpage}{6}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{6}
+\indexentry{Função!$\mitpi _1$|hyperpage}{6}
 \indexentry{Função!\emph  {for}|hyperpage}{6}
 \indexentry{Números de Catalan|hyperpage}{6}
 \indexentry{Função!\emph  {for}|hyperpage}{6}
@@ -65,13 +65,13 @@
 \indexentry{Cálculo de Programas!Material Pedagógico!LTree.hs|hyperpage}{8}
 \indexentry{F\#|hyperpage}{8}
 \indexentry{Cálculo de Programas!Material Pedagógico!BTree.hs|hyperpage}{8}
-\indexentry{Função!$\pi _1$|hyperpage}{9}
-\indexentry{Função!$\pi _2$|hyperpage}{9}
-\indexentry{Função!$\pi _1$|hyperpage}{9}
-\indexentry{Função!$\pi _2$|hyperpage}{9}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{9}
+\indexentry{Função!$\mitpi _1$|hyperpage}{9}
+\indexentry{Função!$\mitpi _2$|hyperpage}{9}
+\indexentry{Função!$\mitpi _1$|hyperpage}{9}
+\indexentry{Função!$\mitpi _2$|hyperpage}{9}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{9}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{9}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{9}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{9}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{9}
 \indexentry{Função!\emph  {for}|hyperpage}{9}
 \indexentry{Racionais|hyperpage}{10}
@@ -92,30 +92,30 @@
 \indexentry{Função!\emph  {map}|hyperpage}{12}
 \indexentry{Racionais|hyperpage}{12}
 \indexentry{Racionais|hyperpage}{12}
-\indexentry{Função!$\pi _2$|hyperpage}{13}
-\indexentry{Função!$\pi _2$|hyperpage}{13}
+\indexentry{Função!$\mitpi _2$|hyperpage}{13}
+\indexentry{Função!$\mitpi _2$|hyperpage}{13}
 \indexentry{Função!\emph  {uncurry}|hyperpage}{13}
 \indexentry{Função!\emph  {uncurry}|hyperpage}{13}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{14}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{14}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{14}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{14}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{14}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{14}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{14}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{14}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{14}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{14}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{14}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{14}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{14}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{14}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{14}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{14}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{14}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{14}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{14}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{14}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{14}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{14}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{15}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{15}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{15}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{15}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{15}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{15}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{15}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{15}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{15}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{15}
 \indexentry{Função!\emph  {for}|hyperpage}{16}
 \indexentry{Racionais|hyperpage}{16}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{16}
@@ -152,24 +152,24 @@
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{17}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{17}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{17}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{17}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{17}
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{17}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{17}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{17}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{17}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{17}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{17}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{17}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{17}
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{17}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{17}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{17}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{17}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{17}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{17}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{17}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{17}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{17}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{17}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{17}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{17}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{17}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{17}
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{17}
-\indexentry{Função!\emph  {length}|hyperpage}{17}
-\indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{17}
-\indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{17}
+\indexentry{Função!\emph  {length}|hyperpage}{18}
+\indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{18}
+\indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{18}
 \indexentry{Função!\emph  {length}|hyperpage}{18}
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{18}
 \indexentry{Função!\emph  {length}|hyperpage}{18}
@@ -182,26 +182,26 @@
 \indexentry{Função!\emph  {length}|hyperpage}{18}
 \indexentry{Função!\emph  {length}|hyperpage}{18}
 \indexentry{Função!\emph  {length}|hyperpage}{18}
-\indexentry{Função!$\pi _1$|hyperpage}{18}
+\indexentry{Função!$\mitpi _1$|hyperpage}{18}
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{18}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{18}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{18}
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{18}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{18}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{18}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{18}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{18}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{18}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{18}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{18}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{18}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{18}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{18}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{18}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{18}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{18}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{18}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{18}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{18}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{18}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{18}
-\indexentry{Números naturais ($I\mskip -\thinmuskip \mskip -\thinmuskip N$)|hyperpage}{18}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{18}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{18}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{18}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{18}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{18}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{18}
+\indexentry{Números naturais ($I\!\!N$)|hyperpage}{18}
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{18}
 \indexentry{Função!\emph  {length}|hyperpage}{18}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{18}
@@ -217,14 +217,14 @@
 \indexentry{Função!\emph  {length}|hyperpage}{18}
 \indexentry{Função!\emph  {length}|hyperpage}{18}
 \indexentry{Função!\emph  {length}|hyperpage}{18}
-\indexentry{Função!\emph  {length}|hyperpage}{18}
-\indexentry{Função!\emph  {length}|hyperpage}{18}
-\indexentry{Função!\emph  {length}|hyperpage}{18}
-\indexentry{Função!\emph  {length}|hyperpage}{18}
-\indexentry{Cálculo de Programas!Material Pedagógico!LTree.hs|hyperpage}{18}
-\indexentry{Função!$\pi _1$|hyperpage}{18}
-\indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{18}
-\indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{18}
+\indexentry{Função!\emph  {length}|hyperpage}{19}
+\indexentry{Função!\emph  {length}|hyperpage}{19}
+\indexentry{Função!\emph  {length}|hyperpage}{19}
+\indexentry{Função!\emph  {length}|hyperpage}{19}
+\indexentry{Cálculo de Programas!Material Pedagógico!LTree.hs|hyperpage}{19}
+\indexentry{Função!$\mitpi _1$|hyperpage}{19}
+\indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{19}
+\indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{19}
 \indexentry{F\#|hyperpage}{19}
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{19}
 \indexentry{Função!\emph  {length}|hyperpage}{21}
@@ -241,15 +241,15 @@
 \indexentry{Função!\emph  {uncurry}|hyperpage}{22}
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{22}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{22}
-\indexentry{Função!\emph  {uncurry}|hyperpage}{22}
-\indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{22}
-\indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{22}
-\indexentry{Função!\emph  {uncurry}|hyperpage}{22}
-\indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{22}
-\indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{22}
-\indexentry{Função!\emph  {uncurry}|hyperpage}{22}
-\indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{22}
-\indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{22}
+\indexentry{Função!\emph  {uncurry}|hyperpage}{23}
+\indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{23}
+\indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{23}
+\indexentry{Função!\emph  {uncurry}|hyperpage}{23}
+\indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{23}
+\indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{23}
+\indexentry{Função!\emph  {uncurry}|hyperpage}{23}
+\indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{23}
+\indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{23}
 \indexentry{Função!\emph  {uncurry}|hyperpage}{23}
 \indexentry{Combinador ``pointfree''!\emph  {either}|hyperpage}{23}
 \indexentry{Combinador ``pointfree''!\emph  {cata}|hyperpage}{23}
