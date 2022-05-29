@@ -136,17 +136,17 @@
 %---------------------------------------------------------------------------
 
 \title{
-       	Cálculo de Programas
+        Cálculo de Programas
 \\
-       	Trabalho Prático
+        Trabalho Prático
 \\
-       	MiEI+LCC --- 2020/21
+        MiEI+LCC --- 2020/21
 }
 
 \author{
-       	\dium
+        \dium
 \\
-       	Universidade do Minho
+        Universidade do Minho
 }
 
 
@@ -414,7 +414,7 @@ prop_out_in_idExpAr = outExpAr . inExpAr .==. id
     \end{propriedade}
 
   \item Dada uma expressão aritmética e um escalar para substituir o |X|,
-	a função
+    a função
 
 \begin{quote}
       |eval_exp :: Floating a => a -> (ExpAr a) -> a|
@@ -476,17 +476,17 @@ prop_optimize_respects_semantics a exp = eval_exp a exp .=?=. optmize_eval a exp
 
 \item Para calcular a derivada de uma expressão, é necessário aplicar transformações
 à expressão original que respeitem as regras das derivadas:\footnote{%
-	Apesar da adição e multiplicação gozarem da propriedade comutativa,
-	há que ter em atenção a ordem das operações por causa dos testes.}
+    Apesar da adição e multiplicação gozarem da propriedade comutativa,
+    há que ter em atenção a ordem das operações por causa dos testes.}
 
 \begin{itemize}
   \item Regra da soma:
 \begin{eqnarray*}
-	\frac{d}{dx}(f(x)+g(x))=\frac{d}{dx}(f(x))+\frac{d}{dx}(g(x))
+    \frac{d}{dx}(f(x)+g(x))=\frac{d}{dx}(f(x))+\frac{d}{dx}(g(x))
 \end{eqnarray*}
   \item Regra do produto:
 \begin{eqnarray*}
-	\frac{d}{dx}(f(x)g(x))=f(x)\cdot \frac{d}{dx}(g(x))+\frac{d}{dx}(f(x))\cdot g(x)
+    \frac{d}{dx}(f(x)g(x))=f(x)\cdot \frac{d}{dx}(g(x))+\frac{d}{dx}(f(x))\cdot g(x)
 \end{eqnarray*}
 \end{itemize}
 
@@ -552,8 +552,8 @@ em \cite{Ol18}, página \pageref{eq:fokkinga}.}
 
 Para o caso de funções sobre os números naturais (|Nat0|, com functor |fF
 X = 1 + X|) é fácil derivar-se da lei que foi estudada uma
-	\emph{regra de algibeira}
-	\label{pg:regra}
+    \emph{regra de algibeira}
+    \label{pg:regra}
 que se pode ensinar a programadores que não tenham estudado
 \cp{Cálculo de Programas}. Apresenta-se de seguida essa regra, tomando como exemplo o
 cálculo do ciclo-\textsf{for} que implementa a função de Fibonacci, recordar
@@ -573,12 +573,12 @@ fib' = p1 . for loop init where
 \end{code}
 usando as regras seguintes:
 \begin{itemize}
-\item	O corpo do ciclo |loop| terá tantos argumentos quanto o número de funções mutuamente recursivas.
-\item	Para as variáveis escolhem-se os próprios nomes das funções, pela ordem
+\item   O corpo do ciclo |loop| terá tantos argumentos quanto o número de funções mutuamente recursivas.
+\item   Para as variáveis escolhem-se os próprios nomes das funções, pela ordem
 que se achar conveniente.\footnote{Podem obviamente usar-se outros símbolos, mas numa primeira leitura
 dá jeito usarem-se tais nomes.}
-\item	Para os resultados vão-se buscar as expressões respectivas, retirando a variável |n|.
-\item	Em |init| coleccionam-se os resultados dos casos de base das funções, pela mesma ordem.
+\item   Para os resultados vão-se buscar as expressões respectivas, retirando a variável |n|.
+\item   Em |init| coleccionam-se os resultados dos casos de base das funções, pela mesma ordem.
 \end{itemize}
 Mais um exemplo, envolvendo polinómios do segundo grau $ax^2 + b x + c$ em |Nat0|.
 Seguindo o método estudado nas aulas\footnote{Secção 3.17 de \cite{Ol18} e tópico
@@ -600,8 +600,8 @@ f' a b c = p1 . for loop init where
 O que se pede então, nesta pergunta?
 Dada a fórmula que dá o |n|-ésimo \catalan{número de Catalan},
 \begin{eqnarray}
-	C_n = \frac{(2n)!}{(n+1)! (n!) }
-	\label{eq:cat}
+    C_n = \frac{(2n)!}{(n+1)! (n!) }
+    \label{eq:cat}
 \end{eqnarray}
 derivar uma implementação de $C_n$ que não calcule factoriais nenhuns.
 Isto é, derivar um ciclo-\textsf{for}
@@ -646,12 +646,11 @@ $N-1$ pontos e da curva de Bézier dos últimos $N-1$ pontos.
 
 A interpolação linear entre 2 números, no intervalo $[0, 1]$, é dada pela
 seguinte função:
-
 \begin{code}
 linear1d :: Rational -> Rational -> OverTime Rational
-linear1d a b = formula a b where
-  formula :: Rational -> Rational -> Float -> Rational
-  formula x y t = ((1.0 :: Rational) - (toRational t)) * x + (toRational t) * y
+linear1d a b = formula a  b where
+    formula :: Rational -> Rational -> Float -> Rational
+formula x y t = ((1.0 :: Rational) - (toRational t)) * x + (toRational t) * y
 \end{code}
 %
 A interpolação linear entre 2 pontos de dimensão $N$ é calculada através
@@ -725,19 +724,19 @@ avg\ x = \frac 1 k\sum_{i=1}^{k} x_i
 onde $k=length\ x$. Isto é, para sabermos a média de uma lista precisamos de dois catamorfismos: o que faz o somatório e o que calcula o comprimento a lista.
 Contudo, é facil de ver que
 \begin{quote}
-	$avg\ [a]=a$
+    $avg\ [a]=a$
 \\
-	$avg (a:x) = \frac 1 {k+1}(a+\sum_{i=1}^{k} x_i) = \frac{a+k(avg\ x)}{k+1}$ para $k=length\ x$
+    $avg (a:x) = \frac 1 {k+1}(a+\sum_{i=1}^{k} x_i) = \frac{a+k(avg\ x)}{k+1}$ para $k=length\ x$
 \end{quote}
 Logo $avg$ está em recursividade mútua com $length$ e o par de funções pode ser expresso por um único catamorfismo, significando que a lista apenas é percorrida uma vez.
 
 \begin{enumerate}
 
-\item	Recorra à lei de recursividade mútua para derivar a função
+\item   Recorra à lei de recursividade mútua para derivar a função
 |avg_aux = cata (either b q)| tal que
 |avg_aux = split avg length| em listas não vazias.
 
-\item	Generalize o raciocínio anterior para o cálculo da média de todos os elementos de uma \LTree\ recorrendo a uma única travessia da árvore (i.e.\ catamorfismo).
+\item   Generalize o raciocínio anterior para o cálculo da média de todos os elementos de uma \LTree\ recorrendo a uma única travessia da árvore (i.e.\ catamorfismo).
 
 \end{enumerate}
 Verifique as suas funções testando a propriedade seguinte:
@@ -752,7 +751,7 @@ prop_avg = nonempty .==>. diff .<=. const 0.000001 where
 \end{code}
 \end{propriedade}
 
-\Problema	(\textbf{NB}: Esta questão é \textbf{opcional} e funciona como \textbf{valorização} apenas para os alunos que desejarem fazê-la.)
+\Problema   (\textbf{NB}: Esta questão é \textbf{opcional} e funciona como \textbf{valorização} apenas para os alunos que desejarem fazê-la.)
 
 \vskip 1em \noindent
 Existem muitas linguagens funcionais para além do \Haskell, que é a linguagem usada neste trabalho prático. Uma delas é o \Fsharp\ da Microsoft. Na directoria \verb!fsharp! encontram-se os módulos \Cp, \Nat\ e \LTree\ codificados em \Fsharp. O que se pede é a biblioteca \BTree\ escrita na mesma linguagem.
@@ -770,23 +769,23 @@ Como primeiro exemplo, estudar o texto fonte deste trabalho para obter o
 efeito:\footnote{Exemplos tirados de \cite{Ol18}.}
 \begin{eqnarray*}
 \start
-	|id = split f g|
+    |id = split f g|
 %
 \just\equiv{ universal property }
 %
         |lcbr(
-		p1 . id = f
-	)(
-		p2 . id = g
-	)|
+        p1 . id = f
+    )(
+        p2 . id = g
+    )|
 %
 \just\equiv{ identity }
 %
         |lcbr(
-		p1 = f
-	)(
-		p2 = g
-	)|
+        p1 = f
+    )(
+        p2 = g
+    )|
 \qed
 \end{eqnarray*}
 
@@ -817,9 +816,9 @@ onde se pretende implementar um ciclo que implemente
 o cálculo da aproximação até |i=n| da função exponencial $exp\ x = e^x$,
 via série de Taylor:
 \begin{eqnarray}
-	exp\ x
+    exp\ x
 & = &
-	\sum_{i=0}^{\infty} \frac {x^i} {i!}
+    \sum_{i=0}^{\infty} \frac {x^i} {i!}
 \end{eqnarray}
 Seja $e\ x\ n = \sum_{i=0}^{n} \frac {x^i} {i!}$ a função que dá essa aproximação.
 É fácil de ver que |e x 0 = 1| e que $|e x (n+1)| = |e x n| + \frac {x^{n+1}} {(n+1)!}$.
