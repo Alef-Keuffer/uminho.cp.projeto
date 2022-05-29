@@ -1,3 +1,7 @@
+% arara: xelatex: { interaction: nonstopmode }
+% arara: makeindex
+% arara: biber
+% arara: xelatex: { interaction: nonstopmode }
 \documentclass[a4paper]{article}
 
 %================= local x=====================================================%
@@ -648,14 +652,13 @@ A interpolação linear entre 2 números, no intervalo $[0, 1]$, é dada pela
 seguinte função:
 \begin{code}
 linear1d :: Rational -> Rational -> OverTime Rational
-linear1d a b = formula a  b where
-    formula :: Rational -> Rational -> Float -> Rational
-formula x y t = ((1.0 :: Rational) - (toRational t)) * x + (toRational t) * y
+linear1d a b = formula a b where
+  formula :: Rational -> Rational -> Float -> Rational
+  formula x y t = ((1.0 :: Rational) - (toRational t)) * x + (toRational t) * y
 \end{code}
-%
 A interpolação linear entre 2 pontos de dimensão $N$ é calculada através
 da interpolação linear de cada dimensão.
-
+%
 O tipo de dados |NPoint| representa um ponto com $N$ dimensões.
 \begin{code}
 type NPoint = [Rational]
