@@ -1243,7 +1243,6 @@ seja a função pretendida.
 Apresentar de seguida a justificação da solução encontrada.
 \begin{eqnarray}
     C_n = \frac{(2n)!}{(n+1)! (n!) }
-    \label{eq:cat}
 \end{eqnarray}
 
 \begin{math}
